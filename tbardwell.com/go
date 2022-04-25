@@ -1,2 +1,2 @@
 TERM=linux
-%PS1='> '
+PS1='> '

@@ -1,0 +1,53 @@
+# increase by 5%
+@XF86AudioRaiseVolume
+    amixer -q sset Master 5%+ && pkill -RTMIN+1 i3blocks && pkill -RTMIN+1 i3blocks
+
+# decrease by 5%
+@XF86AudioLowerVolume
+    amixer -q sset Master 5%- && pkill -RTMIN+1 i3blocks && pkill -RTMIN+1 i3blocks
+
+# increase by 1%
+shift + @XF86AudioRaiseVolume
+    amixer -q sset Master 1%+ && pkill -RTMIN+1 i3blocks && pkill -RTMIN+1 i3blocks
+
+# decrease by 1%
+shift + @XF86AudioLowerVolume
+    amixer -q sset Master 1%- && pkill -RTMIN+1 i3blocks && pkill -RTMIN+1 i3blocks
+
+# mute/unmute
+@XF86AudioMute
+    amixer -q sset Master toggle && pkill -RTMIN+1 i3blocks && pkill -RTMIN+1 i3blocks
+
+# media control
+@XF86AudioPlay
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+
+@XF86AudioNext
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+
+@XF86AudioPrev
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+
+@XF86AudioStop
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop
+
+# screen shots
+@Print
+    gnome-screenshot
+
+shift + @Print
+    gnome-screenshot -a
+
+# brightness controls
+@XF86MonBrightnessUp
+    xbacklight -inc 10
+
+@XF86MonBrightnessDown
+    xbacklight -dec 10
+
+# brightness controls
+shift + @XF86MonBrightnessUp
+    xbacklight -inc 1
+
+shift + @XF86MonBrightnessDown
+    xbacklight -dec 1

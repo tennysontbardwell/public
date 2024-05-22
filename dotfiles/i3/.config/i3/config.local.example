@@ -1,0 +1,8 @@
+bindsym $mod+q exec xscreensaver-command -lock && xset dpms force off
+bindsym $mod+q exec xscreensaver-command -lock
+
+bindsym $mod+space exec gnome-do
+bindsym $mod+space exec synapse
+
+bindsym $mod+m move workspace to output left
+bindsym $mod+m move workspace to output up

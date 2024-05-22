@@ -1,0 +1,4 @@
+bindsym $mod+q exec xscreensaver-command -lock && xset dpms force off
+exec amixer -c PCH cset 'name=Headphone Mic Boost Volume' 1 # also in xinit
+exec ~/.config/xinit/trackpad.sh
+exec ~/.config/xinit/keyboard.sh

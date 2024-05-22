@@ -1,0 +1,86 @@
+! Put this in you .Xdefaults or in the .Xressources at you home dir
+
+
+! PaperColor Theme dark
+URxvt*cursorColor: #25c3dc
+URxvt*pointerColor: #25c3dc
+URxvt.foreground: #f2f2f2
+URxvt.background: #1C1C1C
+! black
+URxvt.color0: #2c2c2c
+URxvt.color8: #969694
+! red
+URxvt.color1: #c62828
+URxvt.color9: #f15250
+! green
+URxvt.color2: #558b2e
+URxvt.color10: #86bd47
+! yellow / orange
+URxvt.color3: #f9a825
+URxvt.color11: #f8e63a
+! blue
+URxvt.color4: #1565c1
+URxvt.color12: #77b2f6
+! magenta
+URxvt.color5: #6a1e9a
+URxvt.color13: #b963c8
+! cyan
+URxvt.color6: #00838f
+URxvt.color14: #25c3dc
+! white
+URxvt.color7: #ffffff
+URxvt.color15: #ffffff
+
+!-------------------------------------------------------------------------------
+! Xft settings
+!-------------------------------------------------------------------------------
+
+Xft.antialias:              true
+Xft.rgba:                   rgb
+Xft.hinting:                true
+Xft.hintstyle:              hintslight
+
+
+URxvt.depth:                32
+URxvt.geometry:             90x30
+URxvt.transparent:          false
+URxvt.fading:               0
+!URxvt.urgentOnBell:         true
+!URxvt.visualBell:           true
+URxvt.loginShell:           true
+URxvt.saveLines:            50000
+!URxvt.internalBorder:       3
+URxvt.lineSpace:            0
+
+! Fonts
+URxvt.allow_bold:           true
+! URxvt.font: xft:Monaco:size=8,xft:UbuntuMono:size=8
+!URxvt.font: xft:Lekton:size=8
+/* URxft.font: xft:DejaVu Sans Mono Bold for Powerline Nerd Font Complete Mono:size=10 */
+/* URxvt.font:     xft:bitstream vera sans mono:size=8:antialias=true */
+URxvt.font:     xft:Monaco:size=9,xft:bitstreamverasansmono nerd font:size=9,xft:BitstreamVeraSansMono Nerd Font Mono:size=9,xft:Droid Sans Mono for Powerline Plus Nerd File Types Mono:pixelsize=16:antialias=true:hinting=true
+! Fix font space
+URxvt*letterSpace: -1
+
+! Scrollbar
+URxvt.scrollStyle:          rxvt
+URxvt.scrollBar:            true
+
+! Perl extensions
+URxvt.perl-ext-common:      default,matcher
+URxvt.matcher.button:       1
+URxvt.urlLauncher:          firefox
+
+! Cursor
+URxvt.cursorBlink:          true
+URxvt.cursorColor:          #657b83
+URxvt.cursorUnderline:      false
+
+! Pointer
+URxvt.pointerBlank:         true
+
+
+
+URxvt*scrollTtyOutput:      false
+URxvt*scrollWithBuffer:     true
+URxvt*scrollTtyKeypress:    true

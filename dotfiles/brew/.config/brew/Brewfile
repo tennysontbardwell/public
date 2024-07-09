@@ -82,7 +82,7 @@ brew "socat"
 brew "stow"
 brew "tmux"
 brew "tree"
-brew "vdirsyncer"
+brew "vdirsyncer", link: false
 brew "vim"
 brew "watch"
 brew "wget"

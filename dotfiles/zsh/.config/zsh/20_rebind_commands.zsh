@@ -38,6 +38,6 @@ fi
 # }
 
 # macos #######################################################################
-if [[ `uname` == 'Darwin' ]]; then
-    alias sed=gsed
-fi
+# if [[ `uname` == 'Darwin' ]]; then
+#     alias sed=gsed
+# fi

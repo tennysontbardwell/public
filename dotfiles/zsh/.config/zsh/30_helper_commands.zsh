@@ -3,8 +3,8 @@ alias vnice=tbardwell__vnice
 alias cd\.\.='tennyson_cd_up'
 alias cl="cls -l"
 alias cls="colorls -A"
-alias do_not_disturb="kill -SIGUSR1 $(pidof dunst)"
-alias do_not_disturb_off="kill -SIGUSR2 $(pidof dunst)"
+# alias do_not_disturb="kill -SIGUSR1 $(pidof dunst)"
+# alias do_not_disturb_off="kill -SIGUSR2 $(pidof dunst)"
 alias ggcheck='gitcheck --maxdepth=2 --quiet --dir=$HOME -a -u' # list dirty git dir
 alias ggwip='gst && (gwip || :) && ggpnp'
 alias new='bbg terminator --working-dir=$PWD' # new terminal same dir

@@ -26,6 +26,7 @@ then
     autoload -U promptinit; promptinit
     prompt pure
     export PURE_PROMPT_SYMBOL="$"
+    zstyle :prompt:pure:prompt:success color green
 fi
 
 # other plugins ###############################################################

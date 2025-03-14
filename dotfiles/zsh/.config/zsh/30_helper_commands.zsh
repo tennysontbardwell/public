@@ -91,6 +91,12 @@ if [[ $(uname) == 'Linux' ]]; then
 fi
 
 # new or temp #################################################################
+
+function fork () {
+    nohup "$@" > /dev/null 2>&1 &
+    disown
+}
+
 function rmtmp {
     dir="$(echo $PWD | sed -ne "s|^\\($HOME/tmp/[^/]\\+\\).*|\\1|p")"
     [[ $dir = *[![:space:]]* ]] && cd $HOME && echo rm -rf $dir && rm -rf $dir

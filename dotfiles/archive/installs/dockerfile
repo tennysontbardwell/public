@@ -1,0 +1,22 @@
+FROM archlinux
+
+RUN pacman --noconfirm -Sy archlinux-keyring
+
+RUN /usr/bin/pacman --noconfirm -Syu
+RUN /usr/bin/pacman --noconfirm -S git sudo go
+
+RUN useradd user -d /home/user
+RUN mkdir /home/user
+RUN chown user:user -R /home/user
+RUN echo 'ALL            ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+USER user
+RUN mkdir /home/user/dotfiles
+ADD scripts /home/user/dotfiles/scripts
+ADD all-install.sh /home/user/dotfiles
+ADD arch-install.sh /home/user/dotfiles
+
+RUN /bin/bash /home/user/dotfiles/all-install.sh
+RUN /bin/bash /home/user/dotfiles/arch-install.sh -a
+
+CMD /bin/bash

@@ -45,4 +45,4 @@ stdenv.mkDerivation (finalAttrs: {
     platforms = platforms.all;
     mainProgram = "pqiv";
   };
-});
+})

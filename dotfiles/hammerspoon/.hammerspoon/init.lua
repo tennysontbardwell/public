@@ -105,6 +105,36 @@ defaultLeader("N", function() spoon.KSheet:toggle() end)
 -- defaultLeader("N", mouseHighlight)
 
 --------------------------------------------------------------------------------
+--- Other Key Bindings
+--------------------------------------------------------------------------------
+
+-- keyboardTracker = hs.eventtap.new({ events.keyDown }, function (e)
+--   local flags = e:getFlags()
+--   local noMods = now (flags.cmd or flags.ctrl or flags.option or flags.alt or flags.fn)
+
+--   if (e:getKeyCode() == hs.keycodes.map.j) and noMods then
+--     local application = hs.application.frontmostApplication()
+--     hs.alerts.show(application:bundleID())
+--     if (application:bundleID() == "com.google.Chrome") then
+--       if keyCode == hs.keycodes.map.f then
+--         if not allowOverride then
+--           return true
+--         end
+--         allowOverride = false
+--       elseif keyCode == hs.keycodes.map.n then
+--         hs.eventtap.event.newKeyEvent(hs.keycodes.map.cmd, true):post()
+--         hs.eventtap.event.newKeyEvent("f", true):post()
+--         hs.eventtap.event.newKeyEvent("f", false):post()
+--         hs.eventtap.event.newKeyEvent(hs.keycodes.map.cmd, false):post()
+
+--         allowOverride = true
+--         return true
+--       end
+--     end
+--   end
+-- end)
+
+--------------------------------------------------------------------------------
 --- Menu Bar
 --------------------------------------------------------------------------------
 

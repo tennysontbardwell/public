@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
   paths = with pkgs; [
+    #tmp
+    pqiv
+
     #### general tools
 
     # editors / top

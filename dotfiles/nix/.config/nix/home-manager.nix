@@ -45,6 +45,7 @@
 
           # broken
           # yacreader
+          # qview
 
           # not in nix (maybe not free?)
           # alfred # cask

@@ -32,8 +32,9 @@
 
         overlays = [
           (final: prev: {
-            sioyek = prev.callPackage ./sioyek-unstable.nix { };
-            gallery-dl = prev.callPackage ./gallery-dl.nix { };
+            pqiv = prev.callPackage ./overlay/pqiv.nix { };
+            sioyek = prev.callPackage ./overlay/sioyek-unstable.nix { };
+            gallery-dl = prev.callPackage ./overlay/gallery-dl.nix { };
             rstudioWrapper = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
               packages = [];
               recommendedPackages = with pkgs.rPackages; [

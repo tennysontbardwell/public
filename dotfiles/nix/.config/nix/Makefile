@@ -3,4 +3,4 @@
 default: build
 
 build:
-	nix profile upgrade nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'
+	nix profile upgrade dotfiles/nix/.config/nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'

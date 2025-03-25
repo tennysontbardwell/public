@@ -1,5 +1,5 @@
 { pkgs, ... }:
-{
+let
   myPythonEnv = pkgs.python3.withPackages (ps: with ps; with pkgs.python312Packages;
     [
       ### misc/basic
@@ -58,7 +58,8 @@
       # accelerate
       # bitsandbytes
   ]);
-
+in
+{
   paths = with pkgs; [
     myPythonEnv
     uv

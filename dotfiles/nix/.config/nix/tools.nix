@@ -130,9 +130,6 @@
     nodejs
     yarn
     php
-    # R
-    myREnv
-    myRStudio
 
     #### fun random things
 

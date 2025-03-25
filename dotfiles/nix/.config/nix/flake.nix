@@ -1,5 +1,7 @@
 # installed on mac via https://zero-to-nix.com/start/install
 {
+  description = "tennyson-nix";
+
   inputs = {
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs.url = "github:NixOS/nixpkgs";
@@ -25,6 +27,9 @@
       pkgs = import nixpkgs {
         inherit system;
         config.cudaSupport = false;
+
+        emacs30 = unstablepkgs.emacs30 { };
+
         overlays = [
           (final: prev: {
             sioyek = prev.callPackage ./sioyek-unstable.nix { };
@@ -61,9 +66,9 @@
       commonPaths = with pkgs;
         [
         ]
-          ++ (./python.nix).paths
-          ++ (./r.nix).paths
-          ++ (./tools.nix).paths
+          ++ ((import ./tools.nix) {pkgs = pkgs; unstablepkgs = unstablepkgs;}).paths
+          ++ ((import ./python.nix) {pkgs = pkgs;}).paths
+          ++ ((import ./r.nix) {pkgs = pkgs;}).paths
       ;
 
       commonEnv = pkgs.buildEnv {
@@ -72,16 +77,13 @@
       };
     in
     {
-      homeConfigurations.tennyson =
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./home-manger.nix
-        ];
-      };
+      homeConfigurations =
+        (import ./home-manager.nix) {
+          nixpkgs = nixpkgs;
+          pkgs = pkgs;
+          system = system;
+          home-manager = home-manager;
+        };
 
       packages.${system}.default = pkgs.buildEnv {
         name = "home-packages";

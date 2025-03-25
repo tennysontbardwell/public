@@ -42,6 +42,21 @@
 
       # linux GUI system packages
       # dmenu or dmenu-rs
+      # dolphin
+      # gnome-screenshot
+      # i3
+      # rxvt-unicode
+      # synapse
+      # thunar
+      # xorg
+
+      # NixOS GUI system
+      # inconsolata-nerdfont
+      # fonts.packages = [ ... ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts)
+
+      # linux systems
+      # sysstat
+      # wifi-menu
 
       myRPackages = with pkgs.rPackages;
         [
@@ -94,6 +109,7 @@
           scikit-learn
           scikit-misc
           spyder-kernels
+          scipy
 
           ### AI
           openai
@@ -239,12 +255,17 @@
           gh # github
           ollama
 
+          # trying out
+          pls
+          # prettier?
+
           #### compression & data
           zstd
           xz
           brotli
           parquet-tools
           hdf5
+          zip
 
           #### software stacks
           # java
@@ -292,7 +313,12 @@
           # wimlib         = images
           # pdftk-java     = pdf lib
           # duti           = default app settings
-          # inotify-tools  = fs watch + cmd runner
+          # inotify-tools
+          # autojump
+          # entr           = filesystem watcher, example: `find . -name '*.py' | entr ./myfile.py`
+          # gitcheck-git   = multi git repo checker
+          # percol
+          # nnn            = file browser in cli
 
         ];
       commonEnv = pkgs.buildEnv {

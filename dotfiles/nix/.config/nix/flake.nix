@@ -58,32 +58,6 @@
       # sysstat
       # wifi-menu
 
-      myRPackages = with pkgs.rPackages;
-        [
-          dplyr
-          forcats
-          ggplot2
-          htmlwidgets
-          purrr
-          readr
-          stringr
-          tibble
-          tidyr
-          xts
-          ggridges
-          viridis
-          hrbrthemes
-          GGally
-        ];
-
-      myREnv = pkgs.rWrapper.override{
-        packages = myRPackages;
-      };
-
-      myRStudio = pkgs.rstudioWrapper.override{
-        packages = myRPackages;
-      };
-
       commonPaths = with pkgs;
         [
           #### general tools
@@ -257,6 +231,7 @@
           # nnn            = file browser in cli
         ]
           ++ (./python.nix).paths
+          ++ (./r.nix).paths
       ;
 
       commonEnv = pkgs.buildEnv {

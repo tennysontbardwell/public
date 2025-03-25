@@ -266,49 +266,27 @@ class TTLCache:
         expiry = time.time() + self.ttl
         self.cache[key] = (value, expiry)
 
-count = 0
-annex_cache = TTLCache(ttl=30)
-repos_cache = TTLCache(ttl=30)
-
-@ranger.api.register_linemode
-class GitAnnexMetadataLinemode(ranger.core.linemode.LinemodeBase):
-    name = 'git-annex-metadata'
+class AnnexCmdCacher(ranger.core.linemode.LinemodeBase):
+    cache = TTLCache(ttl=30)
+    subcmd = []
 
     def filetitle(self, file, metadata):
         return file.relative_path
 
-    def check_repo_cache(self, file):
-        walk = file.parent
-        while walk != Path('/'):
-            res = self.repos_cache.get(str(walk))
-            if res:
-                if res == 'repo-root':
-                    return walk
-                if res == 'no-repo':
-                    return None
-            walk = walk.parent
-        try:
-            repo = Path(subprocess.check_output(['git', 'rev-parse', '--show-toplevel']).decode().strip())
-            self.repos_cache.set(str(repo), 'repo-root')
-            return repo
-        except subprocess.CalledProcessError:
-            walk = file.parent
-            while walk != Path('/'):
-                self.repos_cache.set(str(walk), 'no-repo')
-                walk = walk.parent
+    def infostring(self, file, metadata):
+        return self.get(Path(file.path))
 
-    def check_annex_cache(self, file):
-        # repo = self.check_repo_cache(file)
-        # if not repo:
-        #     return '(no repo)'
-        #     raise NotImplementedError
+    def __init__(self):
+        pass
 
+    def jsonToStr(self, json):
+        return "n/a"
+
+    def get(self, file):
         res = '(not added)'
         def check_cache():
             nonlocal res
-            # rel_path = file.relative_to(repo)
-            meta = annex_cache.get(str(file))
-            # res = str(rel_path); return True
+            meta = self.cache.get(str(file))
             if meta:
                 res = meta
                 return True
@@ -321,50 +299,31 @@ class GitAnnexMetadataLinemode(ranger.core.linemode.LinemodeBase):
 
         paths = [x for x in file.parent.iterdir() if x.is_file() or x.is_symlink()]
         try:
-            with open("/Users/tennyson/Desktop/x.json", 'w') as f:
-                f.write('asdf\n')
-            o = subprocess.check_output(['git-annex', 'metadata', '--json'] + paths,
+            o = subprocess.check_output(
+                ['git-annex'] + self.subcmd + ['--json'] + paths,
                 stderr=subprocess.STDOUT)
-            for x in [json.loads(x) for x in o.decode().splitlines()]:
-                try:
-                    with open("/Users/tennyson/Desktop/x.json", 'a') as f:
-                        f.write(json.dumps(x) + '\n')
-                    info = sorted(x['fields']['tag'])
-                    annex_cache.set(str(file.parent / x['file']), " ".join(info))
-                    with open("/Users/tennyson/Desktop/x.json", 'a') as f:
-                        f.write(' '.join(info) + '\n')
-                except KeyError:
-                    try:
-                        with open("/Users/tennyson/Desktop/x.json", 'a') as f:
-                            f.write('n/a\n')
-                            f.write(str(file.parent / x['file']) + '\n')
-                        annex_cache.set(str(file.parent / x['file']), "n/a")
-                    except KeyError:
-                        pass
-            # with open("/Users/tennyson/Desktop/x.json", 'a') as f:
-            #     json.dump(paths, f)
-            with open("/Users/tennyson/Desktop/x.json", 'a') as f:
-                global count
-                count += 1
-                json.dump(len(annex_cache.cache), f)
-                keys = [str(x) for x in annex_cache.cache.keys()]
-                json.dump(keys, f)
-                json.dump(count, f)
         except subprocess.CalledProcessError:
-            # for p in paths:
-            #     self.annex_cache.set(p.relative_to(repo), 'error')
-            # return 'error'
             raise NotImplementedError
+        for x in [json.loads(x) for x in o.decode().splitlines()]:
+            filePath = str(file.parent / x['file'])
+            self.cache.set(filePath, self.jsonToStr(x))
 
         if check_cache():
             return res
         raise NotImplementedError
 
 
-    def infostring(self, file, metadata):
-        if not file.is_link:
-            raise NotImplementedError
-        return self.check_annex_cache(Path(file.path))
+
+@ranger.api.register_linemode
+class GitAnnexMetadataLinemode(AnnexCmdCacher):
+    name = 'git-annex-metadata'
+    subcmd = ['metadata']
+
+    def jsonToStr(self, json):
+        try:
+            return ' '.join(sorted(json['fields']['tag']))
+        except KeyError:
+            return "n/a"
 
 @ranger.api.register_linemode
 class GitAnnexWhereisLinemode(ranger.core.linemode.LinemodeBase):

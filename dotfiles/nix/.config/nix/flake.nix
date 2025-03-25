@@ -84,65 +84,6 @@
         packages = myRPackages;
       };
 
-      myPythonEnv = pkgs.python3.withPackages (ps: with ps; with pkgs.python312Packages;
-        [
-          ### misc/basic
-          requests
-          lxml
-          beautifulsoup4
-          pypdf
-          tqdm
-          pip
-          aiohttp
-          scrapy
-
-          ### Data
-          matplotlib
-          numpy
-          pandas
-          polars
-          fastparquet
-          parquet
-          jupyter
-          jupyterlab
-          plotnine
-          scikit-learn
-          scikit-misc
-          spyder-kernels
-          scipy
-
-          ### AI
-          openai
-          parquet
-          torch
-          transformers
-          torchvision
-          torchaudio
-          huggingface-hub
-          # vllm
-
-          ## misc from vllm debugging
-          aioprometheus
-          fastapi
-          lm-format-enforcer
-          outlines
-          psutil
-          py-cpuinfo
-          pyarrow
-          pydantic
-          pyzmq
-          ray
-          sentencepiece
-          tiktoken
-          uvicorn
-          xformers
-          # prometheus-fastapi-instrumentator
-
-          ## not FOSS / not mac
-          # accelerate
-          # bitsandbytes
-      ]);
-
       commonPaths = with pkgs;
         [
           #### general tools
@@ -274,11 +215,6 @@
           nodejs
           yarn
           php
-          # python
-          myPythonEnv
-          uv
-          jetbrains.pycharm-community
-          pipx
           # R
           myREnv
           myRStudio
@@ -319,8 +255,10 @@
           # gitcheck-git   = multi git repo checker
           # percol
           # nnn            = file browser in cli
+        ]
+          ++ (./python.nix).paths
+      ;
 
-        ];
       commonEnv = pkgs.buildEnv {
         name = "home-packages";
         paths = commonPaths;

@@ -1,5 +1,18 @@
 { pkgs, ... }:
 {
+  linux_paths = with pkgs; [
+    dmenu-rs
+    kdePackages.dolphin
+    gnome-screenshot
+    i3
+    rxvt-unicode
+    synapse
+    xfce.thunar
+    # wifi-menu
+    sysstat
+    xclip
+  ];
+
   paths = with pkgs; [
     #tmp
     pqiv

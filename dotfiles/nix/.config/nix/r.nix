@@ -15,6 +15,7 @@ let
     viridis
     hrbrthemes
     GGally
+    AER
   ];
 
   myREnv = pkgs.rWrapper.override{

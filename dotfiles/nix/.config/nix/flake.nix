@@ -14,7 +14,6 @@
   outputs = { self, nixpkgs, unstable, home-manager }:
     let
       system = "aarch64-darwin";
-
       stable-inputs = {
         rstudioWrapperFix = builtins.fetchurl {
           url = "https://raw.githubusercontent.com/NixOS/nixpkgs/63fb588d666ee4b795c6207d5c83c6d6d212a232/pkgs/development/r-modules/wrapper-rstudio.nix";
@@ -22,13 +21,9 @@
         };
       };
 
-      unstablepkgs = unstable.legacyPackages."${system}";
-
-      pkgs = import nixpkgs {
+      pkgs = system: import nixpkgs {
         inherit system;
         config.cudaSupport = false;
-
-        emacs30 = unstablepkgs.emacs30 { };
 
         overlays = [
           (final: prev: {
@@ -37,7 +32,7 @@
             gallery-dl = prev.callPackage ./overlay/gallery-dl.nix { };
             rstudioWrapper = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
               packages = [];
-              recommendedPackages = with pkgs.rPackages; [
+              recommendedPackages = with prev.rPackages; [
                 boot class cluster codetools foreign KernSmooth lattice MASS
                 Matrix mgcv nlme nnet rpart spatial survival
               ];
@@ -47,15 +42,6 @@
       };
 
       # linux GUI system packages
-      # dmenu or dmenu-rs
-      # dolphin
-      # gnome-screenshot
-      # i3
-      # rxvt-unicode
-      # synapse
-      # thunar
-      # xorg
-
       # NixOS GUI system
       # inconsolata-nerdfont
       # fonts.packages = [ ... ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts)
@@ -64,37 +50,79 @@
       # sysstat
       # wifi-menu
 
-      commonPaths = with pkgs;
+      unstablepkgs = unstable.legacyPackages."${system}";
+
+      linux = "x86_64-linux";
+
+      m1_system = "aarch64-darwin";
+
+      linux_pkgs = pkgs linux;
+
+      m1_pkgs = pkgs m1_system;
+
+      commonPaths.m1_system = with m1_pkgs;
         [
         ]
-          ++ ((import ./tools.nix) {pkgs = pkgs; unstablepkgs = unstablepkgs;}).paths
-          ++ ((import ./python.nix) {pkgs = pkgs;}).paths
-          ++ ((import ./r.nix) {pkgs = pkgs;}).paths
+          ++ ((import ./tools.nix)
+	    {pkgs = m1_pkgs; unstablepkgs = unstable.legacyPackages."${m1_system}";}).paths
+          ++ ((import ./python.nix) {pkgs = m1_pkgs;}).paths
+          ++ ((import ./r.nix) {pkgs = m1_pkgs;}).paths
       ;
 
-      commonEnv = pkgs.buildEnv {
-        name = "home-packages";
-        paths = commonPaths;
-      };
+      commonPaths.linux = with linux_pkgs;
+        [
+        ]
+          ++ ((import ./tools.nix)
+	    {pkgs = linux_pkgs; unstablepkgs = unstable.legacyPackages."${linux}";}).paths
+          ++ ((import ./tools.nix)
+	    {pkgs = linux_pkgs; unstablepkgs = unstable.legacyPackages."${linux}";}).linux_paths
+          ++ ((import ./python.nix) {pkgs = linux_pkgs;}).paths
+          ++ ((import ./r.nix) {pkgs = linux_pkgs;}).paths
+      ;
     in
     {
       homeConfigurations =
         (import ./home-manager.nix) {
           nixpkgs = nixpkgs;
-          pkgs = pkgs;
-          system = system;
+          pkgs = m1_pkgs;
+          system = m1_system;
           home-manager = home-manager;
         };
 
-      packages.${system}.default = pkgs.buildEnv {
+      packages."${m1_system}".default = m1_pkgs.buildEnv {
         name = "home-packages";
-        paths = commonPaths
-        ;
+        paths = commonPaths.m1_system;
       };
 
-      devShells.${system}.default = pkgs.mkShell {
-        buildInputs = commonPaths
-        ;
+      devShells."${m1_system}".default = m1_pkgs.mkShell {
+        buildInputs = commonPaths.m1_system;
+      };
+
+      nixosConfiguration.linux = nixpkgs.lib.nixosSystem {
+        system = linux;
+	nix.settings.experimental-features = [ "nix-command" "flake" ];
+        environment.systemPackages = commonPaths.linux;
+	fonts.packages = with pkgs; [
+	  inconslata-nerdfont
+          noto-fonts
+          noto-fonts-cjk-sans
+          noto-fonts-emoji
+          liberation_ttf
+          fira-code
+          fira-code-symbols
+          mplus-outline-fonts.githubRelease
+          dina-font
+          proggyfonts
+        ];
+      };
+
+      packages."${linux}".linux = linux_pkgs.buildEnv {
+        name = "home-packages";
+        paths = commonPaths.linux;
+      };
+
+      devShells."${linux}".linux = linux_pkgs.mkShell {
+        buildInputs = commonPaths.linux;
       };
     };
 }

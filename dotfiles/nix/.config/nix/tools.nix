@@ -46,6 +46,7 @@
 
     # data format transformers
     jq
+    xq-xml
 
     # utility functions
     pv

@@ -19,11 +19,15 @@
         src = nixpkgs;
         patches = [ ./r-with-cairo.patch ];
       };
+
+      pkgs = import (nixpkgs-patched) {
+        inherit system;
+      };
     in
     {
-      packages."${system}".default = nixpkgs-patched.buildEnv {
+      packages."${system}".default = pkgs.buildEnv {
         name = "home-packages";
-        paths = [ nixpkgs-patched.r ];
+        paths = [ pkgs.R ];
       };
     };
 }

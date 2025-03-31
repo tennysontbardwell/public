@@ -57,7 +57,7 @@
       # workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
 
       nixpkgs-patched = (import nixpkgs { inherit system; }).applyPatches {
-        name = "nixpkgs-patched-138186"; # TODO
+        name = "my-r-with-cario-patch";
         src = nixpkgs;
         patches = [ ./r-with-cairo.patch ];
       };

@@ -1,12 +1,26 @@
 diff --git a/pkgs/applications/science/math/R/default.nix b/pkgs/applications/science/math/R/default.nix
-index f915812a2..904918147 100644
+index f915812a22a2..633ab2b1fec6 100644
 --- a/pkgs/applications/science/math/R/default.nix
 +++ b/pkgs/applications/science/math/R/default.nix
-@@ -40,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -1,7 +1,8 @@
+ { lib, stdenv, fetchurl, bzip2, gfortran, libX11, libXmu, libXt, libjpeg, libpng
+ , libtiff, ncurses, pango, pcre2, perl, readline, tcl, texlive, texliveSmall, tk, xz, zlib
+ , less, texinfo, graphviz, icu, pkg-config, bison, imake, which, jdk, blas, lapack
+-, curl, Cocoa, Foundation, libobjc, libcxx, tzdata
++, curl, Cocoa, Foundation, libobjc, libcxx, tzdata, darwin
++, cairo, glibmm, cairomm, pangomm
+ , withRecommendedPackages ? true
+ , enableStrictBarrier ? false
+ , enableMemoryProfiling ? false
+@@ -40,7 +41,10 @@ stdenv.mkDerivation (finalAttrs: {
      bzip2 gfortran libX11 libXmu libXt libXt libjpeg libpng libtiff ncurses
      pango pcre2 readline (texliveSmall.withPackages (ps: with ps; [ inconsolata helvetic ps.texinfo fancyvrb cm-super rsfs ])) xz zlib less texinfo graphviz icu
      which blas lapack curl tcl tk jdk
-+  ] ++ [ cairo ]
-   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ Cocoa Foundation libobjc libcxx ];
+-  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ Cocoa Foundation libobjc libcxx ];
++  ] ++ [ cairo glibmm cairomm pangomm
++  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ Cocoa Foundation libobjc libcxx ]
++  # ++ lib.optionals stdenv.hostPlatform.isDarwin darwin.apple_sdk.frameworks.ApplicationServices
++  ;
    strictDeps = true;
  
+   patches = [

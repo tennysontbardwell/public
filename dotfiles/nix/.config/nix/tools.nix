@@ -104,6 +104,7 @@
 
     #### dependencies for tools
     git-remote-gcrypt
+    cairo
 
     #### my favorites tools
     ranger

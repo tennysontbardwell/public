@@ -1,6 +1,9 @@
-.PHONY: build default
+.PHONY: build default upgrade
 
-default: build
+default: upgrade
+
+upgrade:
+	nix profile upgrade dotfiles/nix/.config/nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'
 
 build:
-	nix profile upgrade dotfiles/nix/.config/nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'
+	nix build . --show-trace

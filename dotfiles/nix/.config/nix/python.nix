@@ -1,4 +1,10 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  pyproject-nix,
+  uv2nix,
+  pyproject-build-systems,
+  ...
+}:
 let
   myPythonEnv = pkgs.python3.withPackages (ps: with ps; with pkgs.python312Packages;
     [
@@ -26,6 +32,8 @@ let
       scikit-misc
       spyder-kernels
       scipy
+      # pyGAM
+      # econML
 
       ### AI
       openai

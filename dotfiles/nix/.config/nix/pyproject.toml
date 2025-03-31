@@ -1,0 +1,10 @@
+[project]
+name = "nix"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "~=3.9"
+dependencies = [
+    "econml>=0.15.1",
+    "pygam>=0.9.1",
+]

@@ -9,10 +9,43 @@
     unstable.url = "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    pyproject-nix = {
+      url = "github:pyproject-nix/pyproject.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    uv2nix = {
+      url = "github:pyproject-nix/uv2nix";
+      inputs.pyproject-nix.follows = "pyproject-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pyproject-build-systems = {
+      url = "github:pyproject-nix/build-system-pkgs";
+      inputs.pyproject-nix.follows = "pyproject-nix";
+      inputs.uv2nix.follows = "uv2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, unstable, home-manager }:
+  outputs = {
+      self,
+      nixpkgs,
+      unstable,
+      home-manager,
+      pyproject-nix,
+      uv2nix,
+      pyproject-build-systems
+  }:
     let
+      inherit (nixpkgs) lib;
+
+      # nixpkgs' = nixpkgs.applyPatches {
+      #   src = nixpkgs;
+      #   patches = [ ./r-with-cairo.patch ];
+      # };
+
       system = "aarch64-darwin";
       stable-inputs = {
         rstudioWrapperFix = builtins.fetchurl {
@@ -21,7 +54,17 @@
         };
       };
 
-      pkgs = system: import nixpkgs {
+      # workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
+
+      nixpkgs-patched = (import nixpkgs { inherit system; }).applyPatches {
+        name = "nixpkgs-patched-138186"; # TODO
+        src = nixpkgs;
+        patches = [ ./r-with-cairo.patch ];
+      };
+      # pkgs = import nixpkgs-patched { inherit system; };
+
+
+      pkgs = system: (import nixpkgs-patched {
         inherit system;
         config.cudaSupport = false;
 
@@ -37,9 +80,10 @@
                 Matrix mgcv nlme nnet rpart spatial survival
               ];
             };
+            # python3Packages.build = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
           })
         ];
-      };
+      });
 
       # linux GUI system packages
       # NixOS GUI system
@@ -60,23 +104,53 @@
 
       m1_pkgs = pkgs m1_system;
 
+      # python = m1_pkgs.python312;
+      # pyprojectOverrides = _final: _prev: {
+      #   # Implement build fixups here.
+      #   # Note that uv2nix is _not_ using Nixpkgs buildPythonPackage.
+      #   # It's using https://pyproject-nix.github.io/pyproject.nix/build.html
+      # };
+      # pythonSet =
+      #   # Use base package set from pyproject.nix builders
+      #   (m1_pkgs.callPackage pyproject-nix.build.packages {
+      #     inherit python;
+      #   }).overrideScope
+      #     (
+      #       lib.composeManyExtensions [
+      #         pyproject-build-systems.overlays.default
+      #         # overlay
+      #         pyprojectOverrides
+      #       ]
+      #     );
+
+
+
       commonPaths.m1_system = with m1_pkgs;
         [
         ]
           ++ ((import ./tools.nix)
-	    {pkgs = m1_pkgs; unstablepkgs = unstable.legacyPackages."${m1_system}";}).paths
-          ++ ((import ./python.nix) {pkgs = m1_pkgs;}).paths
+	           {pkgs = m1_pkgs; unstablepkgs = unstable.legacyPackages."${m1_system}";}).paths
+          ++ ((import ./python.nix) {
+            pkgs = m1_pkgs;
+            pyproject-nix = pyproject-nix;
+            uv2nix = uv2nix;
+            pyproject-build-systems = pyproject-build-systems;
+          }).paths
           ++ ((import ./r.nix) {pkgs = m1_pkgs;}).paths
+          # ++ builtins.attrValues (pythonSet.mkVirtualEnv "hello-world-env" workspace.deps.default)
       ;
 
       commonPaths.linux = with linux_pkgs;
         [
         ]
           ++ ((import ./tools.nix)
-	    {pkgs = linux_pkgs; unstablepkgs = unstable.legacyPackages."${linux}";}).paths
-          ++ ((import ./tools.nix)
-	    {pkgs = linux_pkgs; unstablepkgs = unstable.legacyPackages."${linux}";}).linux_paths
-          ++ ((import ./python.nix) {pkgs = linux_pkgs;}).paths
+	           {pkgs = linux_pkgs; unstablepkgs = unstable.legacyPackages."${linux}";}).paths
+          ++ ((import ./python.nix) {
+            pkgs = linux_pkgs;
+            pyproject-nix = pyproject-nix;
+            uv2nix = uv2nix;
+            pyproject-build-systems = pyproject-build-systems;
+          }).paths
           ++ ((import ./r.nix) {pkgs = linux_pkgs;}).paths
       ;
     in

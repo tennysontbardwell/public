@@ -56,7 +56,7 @@
 
       # workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
 
-      nixpkgs-patched = (import nixpkgs { inherit system; }).applyPatches {
+      nixpkgs-patched = {system}: (import nixpkgs { inherit system; }).applyPatches {
         name = "my-r-with-cario-patch";
         src = nixpkgs;
         patches = [ ./r-with-cairo.patch ];
@@ -64,7 +64,7 @@
       # pkgs = import nixpkgs-patched { inherit system; };
 
 
-      pkgs = system: (import nixpkgs-patched {
+      pkgs = system: (import (nixpkgs-patched {system = system;}) {
         inherit system;
         config.cudaSupport = false;
 

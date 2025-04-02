@@ -1,6 +1,7 @@
 {
   lib,
   nixpkgs,
+  unstable,
   pyproject-nix,
   uv2nix,
   pyproject-build-systems,
@@ -20,6 +21,12 @@ let
     patches = [ ./r-with-cairo.patch ];
   };
 
+  # nixpkgs' = nixpkgs.applyPatches {
+  #   src = nixpkgs;
+  #   patches = [ ./r-with-cairo.patch ];
+  # };
+
+  # unstablepkgs = unstable.legacyPackages."${system}";
 in
 {
   pkgs = system: (import (nixpkgs-patched {system = system;}) {
@@ -42,4 +49,19 @@ in
       })
     ];
   });
+
+  common_paths = { pkgs, system, ... }:
+    [
+    ]
+      ++ ((import ./tools.nix)
+          {pkgs = pkgs; unstablepkgs = unstable.legacyPackages."${system}";}).paths
+      ++ ((import ./python.nix) {
+        lib = lib;
+        pkgs = pkgs;
+        pyproject-nix = pyproject-nix;
+        uv2nix = uv2nix;
+        pyproject-build-systems = pyproject-build-systems;
+      }).paths
+      ++ ((import ./r.nix) {pkgs = pkgs;}).paths
+  ;
 }

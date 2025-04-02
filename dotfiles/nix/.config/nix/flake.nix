@@ -47,16 +47,16 @@
     let
       inherit (nixpkgs) lib;
 
-      # nixpkgs' = nixpkgs.applyPatches {
-      #   src = nixpkgs;
-      #   patches = [ ./r-with-cairo.patch ];
-      # };
+      packages = (import ./packages.nix {
+        lib = lib;
+        nixpkgs = nixpkgs;
+        unstable = unstable;
+        pyproject-nix = pyproject-nix;
+        uv2nix = uv2nix;
+        pyproject-build-systems = pyproject-build-systems;
+      });
 
-      # pkgs = import nixpkgs-patched { inherit system; };
-
-
-      # unstablepkgs = unstable.legacyPackages."${system}";
-      pkgs = (import ./packages.nix).pkgs;
+      pkgs = packages.pkgs;
 
       linux.system = "x86_64-linux";
       linux.pkgs = pkgs linux.system;
@@ -64,29 +64,14 @@
       m1.system = "aarch64-darwin";
       m1.pkgs = pkgs m1.system;
 
-      common_paths = { pkgs, system, ... }:
-        [
-        ]
-          ++ ((import ./tools.nix)
-	           {pkgs = pkgs; unstablepkgs = unstable.legacyPackages."${system}";}).paths
-          ++ ((import ./python.nix) {
-            lib = lib;
-            pkgs = pkgs;
-            pyproject-nix = pyproject-nix;
-            uv2nix = uv2nix;
-            pyproject-build-systems = pyproject-build-systems;
-          }).paths
-          ++ ((import ./r.nix) {pkgs = pkgs;}).paths
-      ;
-
-      m1.paths = common_paths m1;
-      linux.paths = (common_paths linux)
+      m1.paths = packages.common_paths m1;
+      linux.paths = (packages.common_paths linux)
         ++ [
           # sysstat
           # wifi-menu
         ];
 
-      packages = { pkgs, paths, ... }: pkgs.buildEnv {
+      mkPackages = { pkgs, paths, ... }: pkgs.buildEnv {
         name = "home-packages";
         paths = paths;
       };
@@ -104,13 +89,13 @@
           home-manager = home-manager;
         };
 
-      packages."${m1.system}".default = packages m1;
+      packages."${m1.system}".default = mkPackages m1;
       devShells."${m1.system}".default = devShells m1;
       # devShells."${m1.system}".uv = {
       #   buildInputs = paths;
       # }
 
-      packages."${linux.system}".default = packages linux;
+      packages."${linux.system}".default = mkPackages linux;
       devShells."${linux.system}".default = devShells linux;
 
 

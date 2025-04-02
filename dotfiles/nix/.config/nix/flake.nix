@@ -112,7 +112,7 @@
       ;
 
       m1.paths = common_paths m1;
-      linux.paths = common_paths linux
+      linux.paths = (common_paths linux)
         ++ [
           # sysstat
           # wifi-menu

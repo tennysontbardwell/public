@@ -122,7 +122,7 @@
 
         modules = [
           disko.nixosModules.disko
-          ( { modulesPath, lib, pkgs }:
+          ( { modulesPath, lib, pkgs, ... }:
             import ./pan.nix {
               modulesPath = modulesPath;
               lib = lib;

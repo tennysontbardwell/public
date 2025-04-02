@@ -166,6 +166,7 @@
 
       nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        environment.systemPackages = linux.paths;
 
         modules = [
           disko.nixosModules.disko

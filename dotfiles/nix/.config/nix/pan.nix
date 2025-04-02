@@ -131,7 +131,7 @@ in
     ranger
   ])
     ++ packages.common_paths {
-      pkgs = pkgs system;
+      pkgs = pkgs { system = system; };
       system = system;
     }
   ;

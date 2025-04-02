@@ -1,25 +1,12 @@
 {
   modulesPath,
   lib,
-  nixpkgs,
-  unstable,
-  pyproject-nix,
-  uv2nix,
-  pyproject-build-systems,
   pkgs,
+  packages,
   ...
 }:
 let
   system = "x86_64-linux";
-
-  packages = (import ./packages.nix {
-    lib = lib;
-    nixpkgs = nixpkgs;
-    unstable = unstable;
-    pyproject-nix = pyproject-nix;
-    uv2nix = uv2nix;
-    pyproject-build-systems = pyproject-build-systems;
-  });
 in
 {
   imports = [
@@ -144,7 +131,7 @@ in
     ranger
   ])
     ++ packages.common_paths {
-      pkgs = packages.pkgs system;
+      pkgs = pkgs system;
       system = system;
     }
   ;

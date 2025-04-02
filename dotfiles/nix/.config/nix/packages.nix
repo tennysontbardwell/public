@@ -15,11 +15,6 @@ let
     };
   };
 
-  nixpkgs-patched = {system}: (import nixpkgs { inherit system; }).applyPatches {
-    name = "my-r-with-cario-patch";
-    src = nixpkgs;
-    patches = [ ./r-with-cairo.patch ];
-  };
 
   # nixpkgs' = nixpkgs.applyPatches {
   #   src = nixpkgs;
@@ -29,7 +24,13 @@ let
   # unstablepkgs = unstable.legacyPackages."${system}";
 in
 {
-  pkgs = system: (import (nixpkgs-patched {system = system;}) {
+  nixpkgs-patched = {system}: (import nixpkgs { inherit system; }).applyPatches {
+    name = "my-r-with-cario-patch";
+    src = nixpkgs;
+    patches = [ ./r-with-cairo.patch ];
+  };
+
+  pkgs = { nixpkgs, system }: (import (nixpkgs {system = system;}) {
     inherit system;
     config.cudaSupport = false;
 

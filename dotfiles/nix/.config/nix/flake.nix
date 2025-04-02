@@ -56,13 +56,14 @@
         pyproject-build-systems = pyproject-build-systems;
       });
 
-      pkgs_ = packages.pkgs;
+      pkgs = packages.pkgs;
+      nixpkgs = packages.nixpkgs-patched;
 
       linux.system = "x86_64-linux";
-      linux.pkgs = pkgs_ linux.system;
+      linux.pkgs = pkgs linux.system;
 
       m1.system = "aarch64-darwin";
-      m1.pkgs = pkgs_ m1.system;
+      m1.pkgs = pkgs m1.system;
 
       m1.paths = packages.common_paths m1;
       linux.paths = (packages.common_paths linux)
@@ -103,7 +104,7 @@
         system = linux.system;
 	      nix.settings.experimental-features = [ "nix-command" "flake" ];
         environment.systemPackages = linux.paths;
-	      fonts.packages = with pkgs_; [
+	      fonts.packages = with pkgs; [
 	        inconslata-nerdfont
           noto-fonts
           noto-fonts-cjk-sans
@@ -122,10 +123,18 @@
 
         modules = [
           disko.nixosModules.disko
-          ./pan.nix
+          ( { modulesPath, lib, pkgs }:
+            import ./pan.nix {
+              modulesPath = modulesPath;
+              lib = lib;
+              pkgs = pkgs;
+              packages = packages;
+            })
           ./pan-disk-config.nix
           ./pan-hardware-configuration.nix
         ];
+
+        pkgs = pkgs linux;
       };
     };
 }

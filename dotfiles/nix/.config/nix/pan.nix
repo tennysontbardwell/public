@@ -130,10 +130,15 @@ in
     zsh
     ranger
   ])
-    ++ (packages.common_paths {
+    ++ packages.common_paths {
       pkgs = pkgs;
       system = system;
-    }))
+    }
+    ++ packages.linux_paths {
+      pkgs = pkgs;
+      system = system;
+    }
+  )
   ;
 
   programs.zsh.enable = true;

@@ -65,4 +65,11 @@ in
       }).paths
       ++ ((import ./r.nix) {pkgs = pkgs;}).paths
   ;
+
+  linux_paths = { pkgs, system, ... }:
+    [
+    ]
+      ++ ((import ./tools.nix)
+          {pkgs = pkgs; unstablepkgs = unstable.legacyPackages."${system}";}).linux_paths
+  ;
 }

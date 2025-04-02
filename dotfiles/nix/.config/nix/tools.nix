@@ -105,6 +105,8 @@
     #### dependencies for tools
     git-remote-gcrypt
     cairo
+    nixpkgs-fmt
+    nixfmt-rfc-style
 
     #### my favorites tools
     ranger

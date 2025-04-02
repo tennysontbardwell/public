@@ -17,6 +17,7 @@ let
       pip
       aiohttp
       scrapy
+      pipe
 
       ### Data
       matplotlib

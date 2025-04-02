@@ -16,6 +16,25 @@ let
     hrbrthemes
     GGally
     AER
+    r2d3
+    dygraphs
+    leaflet
+    plotly
+    # rbokeh
+    visNetwork
+    DT
+    threejs
+    networkD3
+    tidyAML
+    vvtableau
+    WeightedTreemaps
+    corrr
+    caret
+    lime
+    h2o
+    recipes
+    tidymodels
+    janitor
   ];
 
   myREnv = pkgs.rWrapper.override{
@@ -28,6 +47,26 @@ let
 
 in
 {
+  # environment.systemPackages = [
+  #   myREnv
+  #   myRStudio
+  # ];
+
+  # packages."aarch64-darwin".default = pkgs.buildEnv {
+  #   name = "home-packages";
+  #   paths = [
+  #     myREnv
+  #     myRStudio
+  #   ];
+  # };
+
+  # devShells."aarch64-darwin".default = pkgs.mkShell {
+  #   buildInputs = [
+  #     myREnv
+  #     myRStudio
+  #   ];
+  # };
+
   paths = [
     myREnv
     myRStudio

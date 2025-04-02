@@ -46,7 +46,8 @@
       #   patches = [ ./r-with-cairo.patch ];
       # };
 
-      system = "aarch64-darwin";
+      # system = "aarch64-darwin";
+
       stable-inputs = {
         rstudioWrapperFix = builtins.fetchurl {
           url = "https://raw.githubusercontent.com/NixOS/nixpkgs/63fb588d666ee4b795c6207d5c83c6d6d212a232/pkgs/development/r-modules/wrapper-rstudio.nix";
@@ -94,15 +95,13 @@
       # sysstat
       # wifi-menu
 
-      unstablepkgs = unstable.legacyPackages."${system}";
+      # unstablepkgs = unstable.legacyPackages."${system}";
 
-      linux = "x86_64-linux";
+      linux.system = "x86_64-linux";
+      linux.pkgs = pkgs linux.system;
 
-      m1_system = "aarch64-darwin";
-
-      linux_pkgs = pkgs linux;
-
-      m1_pkgs = pkgs m1_system;
+      m1.system = "aarch64-darwin";
+      m1.pkgs = pkgs m1.system;
 
       # python = m1_pkgs.python312;
       # pyprojectOverrides = _final: _prev: {
@@ -123,59 +122,51 @@
       #       ]
       #     );
 
-
-
-      commonPaths.m1_system = with m1_pkgs;
+      common_paths = { pkgs, system, ... }:
         [
         ]
           ++ ((import ./tools.nix)
-	           {pkgs = m1_pkgs; unstablepkgs = unstable.legacyPackages."${m1_system}";}).paths
+	           {pkgs = pkgs; unstablepkgs = unstable.legacyPackages."${system}";}).paths
           ++ ((import ./python.nix) {
-            pkgs = m1_pkgs;
+            pkgs = pkgs;
             pyproject-nix = pyproject-nix;
             uv2nix = uv2nix;
             pyproject-build-systems = pyproject-build-systems;
           }).paths
-          ++ ((import ./r.nix) {pkgs = m1_pkgs;}).paths
+          ++ ((import ./r.nix) {pkgs = pkgs;}).paths
           # ++ builtins.attrValues (pythonSet.mkVirtualEnv "hello-world-env" workspace.deps.default)
       ;
 
-      commonPaths.linux = with linux_pkgs;
-        [
-        ]
-          ++ ((import ./tools.nix)
-	           {pkgs = linux_pkgs; unstablepkgs = unstable.legacyPackages."${linux}";}).paths
-          ++ ((import ./python.nix) {
-            pkgs = linux_pkgs;
-            pyproject-nix = pyproject-nix;
-            uv2nix = uv2nix;
-            pyproject-build-systems = pyproject-build-systems;
-          }).paths
-          ++ ((import ./r.nix) {pkgs = linux_pkgs;}).paths
-      ;
+      m1.paths = common_paths m1;
+      linux.paths = common_paths linux;
+
+      # packages = { pkgs, paths }: pkgs.buildEnv {
+      #   name = "home-packages";
+      #   paths = paths;
+      # };
     in
     {
       homeConfigurations =
         (import ./home-manager.nix) {
           nixpkgs = nixpkgs;
-          pkgs = m1_pkgs;
-          system = m1_system;
+          pkgs = m1.pkgs;
+          system = m1.system;
           home-manager = home-manager;
         };
 
-      packages."${m1_system}".default = m1_pkgs.buildEnv {
+      packages."${m1.system}".default = m1.pkgs.buildEnv {
         name = "home-packages";
-        paths = commonPaths.m1_system;
+        paths = m1.paths;
       };
 
-      devShells."${m1_system}".default = m1_pkgs.mkShell {
-        buildInputs = commonPaths.m1_system;
+      devShells."${m1.system}".default = m1.pkgs.mkShell {
+        buildInputs = m1.paths;
       };
 
       nixosConfiguration.linux = nixpkgs.lib.nixosSystem {
-        system = linux;
+        system = linux.system;
 	nix.settings.experimental-features = [ "nix-command" "flake" ];
-        environment.systemPackages = commonPaths.linux;
+        environment.systemPackages = linux.paths;
 	fonts.packages = with pkgs; [
 	  inconslata-nerdfont
           noto-fonts
@@ -190,13 +181,17 @@
         ];
       };
 
-      packages."${linux}".linux = linux_pkgs.buildEnv {
+      packages."${linux.system}".linux = linux.pkgs.buildEnv {
         name = "home-packages";
-        paths = commonPaths.linux;
+        paths = linux.paths;
       };
 
-      devShells."${linux}".linux = linux_pkgs.mkShell {
-        buildInputs = commonPaths.linux;
+      devShells."${linux.system}".linux = linux.pkgs.mkShell {
+        buildInputs = linux.paths;
       };
+
+      modules = [
+        # ./r.nix
+      ];
     };
 }

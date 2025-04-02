@@ -1,9 +1,26 @@
 {
   modulesPath,
   lib,
+  nixpkgs,
+  unstable,
+  pyproject-nix,
+  uv2nix,
+  pyproject-build-systems,
   pkgs,
   ...
 }:
+let
+  system = "x86_64-linux";
+
+  packages = (import ./packages.nix {
+    lib = lib;
+    nixpkgs = nixpkgs;
+    unstable = unstable;
+    pyproject-nix = pyproject-nix;
+    uv2nix = uv2nix;
+    pyproject-build-systems = pyproject-build-systems;
+  });
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -79,8 +96,7 @@
     };
   };
 
-
-  environment.systemPackages = with pkgs; map lib.lowPrio [
+  environment.systemPackages = (with pkgs; map lib.lowPrio [
     curl
     gitMinimal
     vim
@@ -126,7 +142,12 @@
     stow
     zsh
     ranger
-  ];
+  ])
+    ++ packages.common_paths {
+      pkgs = packages.pkgs system;
+      system = system;
+    }
+  ;
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;

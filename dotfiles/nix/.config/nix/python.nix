@@ -67,6 +67,8 @@ let
       # accelerate
       # bitsandbytes
   ]);
+
+  # venv = builtins.attrValues (pythonSet.mkVirtualEnv "hello-world-env" workspace.deps.default);
 in
 {
   paths = with pkgs; [

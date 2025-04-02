@@ -134,16 +134,19 @@
             pyproject-build-systems = pyproject-build-systems;
           }).paths
           ++ ((import ./r.nix) {pkgs = pkgs;}).paths
-          # ++ builtins.attrValues (pythonSet.mkVirtualEnv "hello-world-env" workspace.deps.default)
       ;
 
       m1.paths = common_paths m1;
       linux.paths = common_paths linux;
 
-      # packages = { pkgs, paths }: pkgs.buildEnv {
-      #   name = "home-packages";
-      #   paths = paths;
-      # };
+      packages = { pkgs, paths, ... }: pkgs.buildEnv {
+        name = "home-packages";
+        paths = paths;
+      };
+
+      devShells = { pkgs, paths, ... }: pkgs.buildEnv {
+        buildInputs = paths;
+      };
     in
     {
       homeConfigurations =
@@ -154,21 +157,17 @@
           home-manager = home-manager;
         };
 
-      packages."${m1.system}".default = m1.pkgs.buildEnv {
-        name = "home-packages";
-        paths = m1.paths;
-      };
-
-      devShells."${m1.system}".default = m1.pkgs.mkShell {
-        buildInputs = m1.paths;
-      };
+      packages."${m1.system}".default = packages m1;
+      packages."${linux.system}".default = packages linux;
+      devShells."${m1.system}".default = devShells m1;
+      devShells."${linux.system}".default = devShells linux;
 
       nixosConfiguration.linux = nixpkgs.lib.nixosSystem {
         system = linux.system;
-	nix.settings.experimental-features = [ "nix-command" "flake" ];
+	      nix.settings.experimental-features = [ "nix-command" "flake" ];
         environment.systemPackages = linux.paths;
-	fonts.packages = with pkgs; [
-	  inconslata-nerdfont
+	      fonts.packages = with pkgs; [
+	        inconslata-nerdfont
           noto-fonts
           noto-fonts-cjk-sans
           noto-fonts-emoji
@@ -179,15 +178,6 @@
           dina-font
           proggyfonts
         ];
-      };
-
-      packages."${linux.system}".linux = linux.pkgs.buildEnv {
-        name = "home-packages";
-        paths = linux.paths;
-      };
-
-      devShells."${linux.system}".linux = linux.pkgs.mkShell {
-        buildInputs = linux.paths;
       };
 
       modules = [

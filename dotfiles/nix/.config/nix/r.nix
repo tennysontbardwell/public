@@ -47,26 +47,6 @@ let
 
 in
 {
-  # environment.systemPackages = [
-  #   myREnv
-  #   myRStudio
-  # ];
-
-  # packages."aarch64-darwin".default = pkgs.buildEnv {
-  #   name = "home-packages";
-  #   paths = [
-  #     myREnv
-  #     myRStudio
-  #   ];
-  # };
-
-  # devShells."aarch64-darwin".default = pkgs.mkShell {
-  #   buildInputs = [
-  #     myREnv
-  #     myRStudio
-  #   ];
-  # };
-
   paths = [
     myREnv
     myRStudio

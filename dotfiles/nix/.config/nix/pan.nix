@@ -8,7 +8,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
-    ./disk-config.nix
+    ./pan-disk-config.nix
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   boot = {

@@ -29,7 +29,7 @@ let
   # unstablepkgs = unstable.legacyPackages."${system}";
 in
 {
-  pkgs = { system }: (import (pkgs-patched {system = system;}) {
+  pkgs = system: (import (pkgs-patched {system = system;}) {
     inherit system;
     config.cudaSupport = false;
 

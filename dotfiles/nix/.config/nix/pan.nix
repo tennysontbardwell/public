@@ -83,7 +83,7 @@ in
     };
   };
 
-  environment.systemPackages = (with pkgs; map lib.lowPrio [
+  environment.systemPackages = map lib.lowPrio ((with pkgs;  [
     curl
     gitMinimal
     vim
@@ -133,7 +133,7 @@ in
     ++ (packages.common_paths {
       pkgs = pkgs;
       system = system;
-    })
+    }))
   ;
 
   programs.zsh.enable = true;

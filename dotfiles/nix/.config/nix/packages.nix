@@ -16,9 +16,10 @@ let
   };
 
   pkgs-patched = { system }: (import nixpkgs { inherit system; }).applyPatches {
-    name = "my-r-with-cario-patch";
+    name = "my-nixpkgs-patched";
     src = nixpkgs;
-    patches = [ ./r-with-cairo.patch ];
+    # patches = [ ./r-with-cairo.patch ];
+    patches = [ ];
   };
 
   # nixpkgs' = nixpkgs.applyPatches {

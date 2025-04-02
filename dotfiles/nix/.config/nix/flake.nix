@@ -57,7 +57,6 @@
       });
 
       pkgs = packages.pkgs;
-      nixpkgs = packages.nixpkgs-patched;
 
       linux.system = "x86_64-linux";
       linux.pkgs = pkgs linux.system;

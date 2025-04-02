@@ -46,8 +46,6 @@
       #   patches = [ ./r-with-cairo.patch ];
       # };
 
-      # system = "aarch64-darwin";
-
       stable-inputs = {
         rstudioWrapperFix = builtins.fetchurl {
           url = "https://raw.githubusercontent.com/NixOS/nixpkgs/63fb588d666ee4b795c6207d5c83c6d6d212a232/pkgs/development/r-modules/wrapper-rstudio.nix";
@@ -55,7 +53,6 @@
         };
       };
 
-      # workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
 
       nixpkgs-patched = {system}: (import nixpkgs { inherit system; }).applyPatches {
         name = "my-r-with-cario-patch";
@@ -86,15 +83,6 @@
         ];
       });
 
-      # linux GUI system packages
-      # NixOS GUI system
-      # inconsolata-nerdfont
-      # fonts.packages = [ ... ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts)
-
-      # linux systems
-      # sysstat
-      # wifi-menu
-
       # unstablepkgs = unstable.legacyPackages."${system}";
 
       linux.system = "x86_64-linux";
@@ -103,31 +91,13 @@
       m1.system = "aarch64-darwin";
       m1.pkgs = pkgs m1.system;
 
-      # python = m1_pkgs.python312;
-      # pyprojectOverrides = _final: _prev: {
-      #   # Implement build fixups here.
-      #   # Note that uv2nix is _not_ using Nixpkgs buildPythonPackage.
-      #   # It's using https://pyproject-nix.github.io/pyproject.nix/build.html
-      # };
-      # pythonSet =
-      #   # Use base package set from pyproject.nix builders
-      #   (m1_pkgs.callPackage pyproject-nix.build.packages {
-      #     inherit python;
-      #   }).overrideScope
-      #     (
-      #       lib.composeManyExtensions [
-      #         pyproject-build-systems.overlays.default
-      #         # overlay
-      #         pyprojectOverrides
-      #       ]
-      #     );
-
       common_paths = { pkgs, system, ... }:
         [
         ]
           ++ ((import ./tools.nix)
 	           {pkgs = pkgs; unstablepkgs = unstable.legacyPackages."${system}";}).paths
           ++ ((import ./python.nix) {
+            lib = lib;
             pkgs = pkgs;
             pyproject-nix = pyproject-nix;
             uv2nix = uv2nix;
@@ -137,7 +107,11 @@
       ;
 
       m1.paths = common_paths m1;
-      linux.paths = common_paths linux;
+      linux.paths = common_paths linux
+        ++ [
+          # sysstat
+          # wifi-menu
+        ];
 
       packages = { pkgs, paths, ... }: pkgs.buildEnv {
         name = "home-packages";
@@ -158,9 +132,14 @@
         };
 
       packages."${m1.system}".default = packages m1;
-      packages."${linux.system}".default = packages linux;
       devShells."${m1.system}".default = devShells m1;
+      # devShells."${m1.system}".uv = {
+      #   buildInputs = paths;
+      # }
+
+      packages."${linux.system}".default = packages linux;
       devShells."${linux.system}".default = devShells linux;
+
 
       nixosConfiguration.linux = nixpkgs.lib.nixosSystem {
         system = linux.system;

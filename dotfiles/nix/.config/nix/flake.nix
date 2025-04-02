@@ -59,10 +59,10 @@
       pkgs = packages.pkgs;
 
       linux.system = "x86_64-linux";
-      linux.pkgs = pkgs linux.system;
+      linux.pkgs = pkgs { system = linux.system; };
 
       m1.system = "aarch64-darwin";
-      m1.pkgs = pkgs m1.system;
+      m1.pkgs = pkgs { system = m1.system; };
 
       m1.paths = packages.common_paths m1;
       linux.paths = (packages.common_paths linux)

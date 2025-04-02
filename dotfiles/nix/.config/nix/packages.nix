@@ -15,7 +15,7 @@ let
     };
   };
 
-  pkgs-patched = {system}: (import nixpkgs { inherit system; }).applyPatches {
+  pkgs-patched = { system }: (import nixpkgs { inherit system; }).applyPatches {
     name = "my-r-with-cario-patch";
     src = nixpkgs;
     patches = [ ./r-with-cairo.patch ];
@@ -29,7 +29,7 @@ let
   # unstablepkgs = unstable.legacyPackages."${system}";
 in
 {
-  pkgs = system: (import (pkgs-patched {system = system;}) {
+  pkgs = { system }: (import (pkgs-patched {system = system;}) {
     inherit system;
     config.cudaSupport = false;
 

@@ -27,6 +27,11 @@
       inputs.uv2nix.follows = "uv2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -36,7 +41,8 @@
       home-manager,
       pyproject-nix,
       uv2nix,
-      pyproject-build-systems
+      pyproject-build-systems,
+      disko
   }:
     let
       inherit (nixpkgs) lib;
@@ -52,7 +58,6 @@
           sha256 = "sha256:0a6l6awdhzi7iyvql969qim29r9lj0iqz3j7kdn61rg8pgb0jhnc";
         };
       };
-
 
       nixpkgs-patched = {system}: (import nixpkgs { inherit system; }).applyPatches {
         name = "my-r-with-cario-patch";

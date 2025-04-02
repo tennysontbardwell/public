@@ -164,7 +164,7 @@
         ];
       };
 
-      nixosConfiguration.pan = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         modules = [

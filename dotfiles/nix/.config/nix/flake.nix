@@ -168,6 +168,7 @@
         system = "x86_64-linux";
 
         modules = [
+          disko.nixosModules.disko
           ./pan.nix
           ./pan-disk-config.nix
           ./pan-hardware-configuration.nix

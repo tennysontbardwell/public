@@ -159,8 +159,14 @@
         ];
       };
 
-      modules = [
-        # ./r.nix
-      ];
+      nixosConfiguration.pan = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          ./pan.nix
+          ./pan-disk-config.nix
+          ./pan-hardware-configuration.nix
+        ];
+      };
     };
 }

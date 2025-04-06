@@ -4,9 +4,10 @@
 
   inputs = {
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    # nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     # 4ed8d70fbe3bc90eb727378fa13abb1563d37b6e is master as of 2025-03-01
-    unstable.url = "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz";
+    unstable.url = "github:NixOS/nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable-pkgs, ... }:
 {
   linux_paths = with pkgs; [
     dmenu-rs
@@ -16,12 +16,14 @@
   paths = with pkgs; [
     #tmp
     pqiv
+    unstable-pkgs.firefox
 
     #### general tools
 
     # editors / top
     tmux
     neovim
+    # emacs
     vim
 
     # editors dependencies / assister-s

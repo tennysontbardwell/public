@@ -72,7 +72,7 @@ function appKey(key, name)
     if app then
       app:setFrontmost()
     else
-      hs.alert.show("not found")
+      hs.alert.show("not found", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
     end
   end)
 end
@@ -103,6 +103,14 @@ hs.loadSpoon("KSheet")
 defaultLeader("N", function() spoon.KSheet:toggle() end)
 
 -- defaultLeader("N", mouseHighlight)
+
+hs.hotkey.bind({"shift", "cmd"}, "c", function()
+  hs.timer.delayed.new(0.1, function()
+    hs.eventtap.keyStroke({"cmd"}, "c")
+    hs.execute("(pbpaste; echo '') >> /tmp/clipboard")
+    hs.alert.show("Copied to /tmp/clipboard", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.1)
+  end).start()
+end)
 
 --------------------------------------------------------------------------------
 --- Other Key Bindings
@@ -141,9 +149,10 @@ defaultLeader("N", function() spoon.KSheet:toggle() end)
 caffeine = hs.menubar.new()
 function setCaffeineDisplay(state)
     if state then
-        caffeine:setTitle("AWAKE")
+        caffeine:setTitle(utf8.char(0x274C) .. utf8.char(0x1F4A4))
     else
-        caffeine:setTitle("SLEEPY")
+        caffeine:setTitle(utf8.char(0x1F4A4))
+
     end
 end
 

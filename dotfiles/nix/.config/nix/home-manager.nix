@@ -13,8 +13,8 @@
         stateVersion = "25.05";
         packages = with pkgs; [
           # browser
-          firefox
-          librewolf
+          # firefox
+          # librewolf
 
           # academic
           zotero
@@ -32,7 +32,6 @@
 
           # util
           keepassxc
-          emacs30
           source-code-pro # not sure if this is working, maybe return to brew --cask for it
 
           # not on mac
@@ -56,17 +55,6 @@
           # textual
 
         ];
-      };
-      programs.librewolf = {
-        enable = true;
-        # Enable WebGL, cookies and history
-        settings = {
-          "webgl.disabled" = false;
-          "privacy.resistFingerprinting" = false;
-          "privacy.clearOnShutdown.history" = false;
-          "privacy.clearOnShutdown.cookies" = false;
-          "network.cookie.lifetimePolicy" = 0;
-        };
       };
     }];
   };

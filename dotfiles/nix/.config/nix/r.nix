@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable-pkgs, ... }:
 let
   myRPackages = with pkgs.rPackages; [
     dplyr
@@ -13,24 +13,24 @@ let
     xts
     ggridges
     viridis
-    hrbrthemes
-    GGally
-    AER
-    r2d3
+#    hrbrthemes
+#    GGally
+#    AER
+#    r2d3
     dygraphs
     leaflet
-    plotly
+#    plotly
     # rbokeh
     visNetwork
     DT
     threejs
     networkD3
     tidyAML
-    vvtableau
-    WeightedTreemaps
-    corrr
-    caret
-    lime
+#    vvtableau
+#    WeightedTreemaps
+#    corrr
+#    caret
+#    lime
     h2o
     recipes
     tidymodels
@@ -41,7 +41,7 @@ let
     packages = myRPackages;
   };
 
-  myRStudio = pkgs.rstudioWrapper.override{
+  myRStudio = unstable-pkgs.rstudioWrapper.override{
     packages = myRPackages;
   };
 
@@ -49,6 +49,6 @@ in
 {
   paths = [
     myREnv
-    myRStudio
+    # myRStudio
   ];
 }

@@ -1,4 +1,4 @@
-.PHONY: build default upgrade
+.PHONY: build default upgrade mac-bounce
 
 default: upgrade
 
@@ -11,3 +11,6 @@ build:
 repl:
 	echo run ':lf flake.nix'
 	nix repl --experimental-features 'flakes nix-command'
+
+mac-bounce:
+	sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.nix-daemon.plist

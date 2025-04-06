@@ -39,13 +39,13 @@ in
         pqiv = prev.callPackage ./overlay/pqiv.nix { };
         sioyek = prev.callPackage ./overlay/sioyek-unstable.nix { };
         gallery-dl = prev.callPackage ./overlay/gallery-dl.nix { };
-        rstudioWrapper = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
-          packages = [];
-          recommendedPackages = with prev.rPackages; [
-            boot class cluster codetools foreign KernSmooth lattice MASS
-            Matrix mgcv nlme nnet rpart spatial survival
-          ];
-        };
+        #rstudioWrapper = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
+          #packages = [];
+          #recommendedPackages = with prev.rPackages; [
+            #boot class cluster codetools foreign KernSmooth lattice MASS
+            #Matrix mgcv nlme nnet rpart spatial survival
+          #];
+        #};
         # python3Packages.build = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
       })
     ];
@@ -55,7 +55,7 @@ in
     [
     ]
       ++ ((import ./tools.nix)
-          {pkgs = pkgs; unstablepkgs = unstable.legacyPackages."${system}";}).paths
+          {pkgs = pkgs; unstable-pkgs = unstable.legacyPackages."${system}";}).paths
       ++ ((import ./python.nix) {
         lib = lib;
         pkgs = pkgs;
@@ -63,13 +63,14 @@ in
         uv2nix = uv2nix;
         pyproject-build-systems = pyproject-build-systems;
       }).paths
-      ++ ((import ./r.nix) {pkgs = pkgs;}).paths
+      ++ ((import ./r.nix)
+          {pkgs = pkgs; unstable-pkgs = unstable.legacyPackages."${system}";}).paths
   ;
 
   linux_paths = { pkgs, system, ... }:
     [
     ]
       ++ ((import ./tools.nix)
-          {pkgs = pkgs; unstablepkgs = unstable.legacyPackages."${system}";}).linux_paths
+          {pkgs = pkgs; unstable-pkgs = unstable.legacyPackages."${system}";}).linux_paths
   ;
 }

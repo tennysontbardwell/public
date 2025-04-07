@@ -13,28 +13,34 @@ let
     xts
     ggridges
     viridis
-#    hrbrthemes
-#    GGally
-#    AER
-#    r2d3
+    GGally
+    AER
+    r2d3
     dygraphs
     leaflet
-#    plotly
-    # rbokeh
     visNetwork
     DT
     threejs
     networkD3
     tidyAML
-#    vvtableau
-#    WeightedTreemaps
-#    corrr
-#    caret
-#    lime
+    WeightedTreemaps
+    corrr
+    caret
+    lime
     h2o
     recipes
     tidymodels
     janitor
+
+    # broken curl
+    curl
+    # unstable-pkgs.rPackages.curl
+#    hrbrthemes
+#    plotly
+#    vvtableau
+
+    # broken
+    # rbokeh
   ];
 
   myREnv = pkgs.rWrapper.override{
@@ -49,6 +55,6 @@ in
 {
   paths = [
     myREnv
-    # myRStudio
+    myRStudio
   ];
 }

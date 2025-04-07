@@ -48,6 +48,11 @@ in
         #};
         # python3Packages.build = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
       })
+      (final: prev: {
+        rPackages = prev.rPackages // {
+          curl = unstable.legacyPackages."${system}".rPackages.curl;
+        };
+      })
     ];
   });
 

@@ -14,9 +14,10 @@
   ];
 
   paths = with pkgs; [
+
     #tmp
     pqiv
-    unstable-pkgs.firefox
+    firefox
 
     #### general tools
 

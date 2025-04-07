@@ -2,42 +2,39 @@
 let
   myRPackages = with pkgs.rPackages; [
     dplyr
-#    forcats
-#    ggplot2
-#    htmlwidgets
-#    purrr
-#    readr
-#    stringr
-#    tibble
-#    tidyr
-#    xts
-#    ggridges
-#    viridis
-#    GGally
-#    AER
-#    r2d3
-#    dygraphs
-#    leaflet
-#    visNetwork
-#    DT
-#    threejs
-#    networkD3
-#    tidyAML
-#    WeightedTreemaps
-#    corrr
-#    caret
-#    lime
-#    h2o
-#    recipes
-#    tidymodels
-#    janitor
-
-    # broken curl
-    #curl
-    # unstable-pkgs.rPackages.curl
-#    hrbrthemes
-#    plotly
-#    vvtableau
+    forcats
+    ggplot2
+    htmlwidgets
+    purrr
+    readr
+    stringr
+    tibble
+    tidyr
+    xts
+    ggridges
+    viridis
+    GGally
+    AER
+    r2d3
+    dygraphs
+    leaflet
+    visNetwork
+    DT
+    threejs
+    networkD3
+    tidyAML
+    WeightedTreemaps
+    corrr
+    caret
+    lime
+    h2o
+    recipes
+    tidymodels
+    janitor
+    rjson
+    hrbrthemes
+    plotly
+    vvtableau
 
     # broken
     # rbokeh

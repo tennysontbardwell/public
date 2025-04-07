@@ -15,9 +15,15 @@ let
     };
   };
 
-  pkgs-patched = { system }: (import nixpkgs { inherit system; }).applyPatches {
-    name = "my-nixpkgs-patched";
-    src = nixpkgs;
+  # pkgs-patched = { system }: (import nixpkgs { inherit system; }).applyPatches {
+  #   name = "my-nixpkgs-patched";
+  #   src = nixpkgs;
+  #   # patches = [ ./r-with-cairo.patch ];
+  #   patches = [ ];
+  # };
+  pkgs-patched = { system }: (import unstable { inherit system; }).applyPatches {
+    name = "my-unstable-patched";
+    src = unstable;
     # patches = [ ./r-with-cairo.patch ];
     patches = [ ];
   };
@@ -36,22 +42,7 @@ in
 
     overlays = [
       (final: prev: {
-        pqiv = prev.callPackage ./overlay/pqiv.nix { };
         sioyek = prev.callPackage ./overlay/sioyek-unstable.nix { };
-        gallery-dl = prev.callPackage ./overlay/gallery-dl.nix { };
-        #rstudioWrapper = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
-          #packages = [];
-          #recommendedPackages = with prev.rPackages; [
-            #boot class cluster codetools foreign KernSmooth lattice MASS
-            #Matrix mgcv nlme nnet rpart spatial survival
-          #];
-        #};
-        # python3Packages.build = prev.callPackage (import stable-inputs.rstudioWrapperFix) {
-      })
-      (final: prev: {
-        rPackages = prev.rPackages // {
-          curl = unstable.legacyPackages."${system}".rPackages.curl;
-        };
       })
     ];
   });

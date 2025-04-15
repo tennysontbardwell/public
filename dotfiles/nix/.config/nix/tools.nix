@@ -46,6 +46,8 @@
     wget
     socat
     curl
+    tshark
+    termshark
 
     # data format transformers
     jq

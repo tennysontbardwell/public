@@ -35,6 +35,7 @@ let
     hrbrthemes
     plotly
     vvtableau
+    ggraph
 
     # broken
     # rbokeh

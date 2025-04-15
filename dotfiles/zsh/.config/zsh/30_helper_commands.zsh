@@ -111,8 +111,8 @@ function eff {
 }
 
 function tt {
-    declare -r nodepath="$HOME/projects/tbardwell.ts/build"
-    NODE_PATH="$nodepath" node "$nodepath"/src/index.js
+    declare -r nodepath="$HOME/repos/tennysontbardwell/tennyson.ts/build"
+    NODE_PATH="$nodepath" node "$nodepath"/src/index.js "$@"
 }
 
 function ff {

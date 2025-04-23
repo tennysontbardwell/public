@@ -36,6 +36,7 @@ let
       scipy
       # pyGAM
       # econML
+      # parqv
 
       ### AI
       openai

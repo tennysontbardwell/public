@@ -20,6 +20,8 @@ let
     leaflet
     visNetwork
     DT
+    ascii
+    hexbin
     threejs
     networkD3
     tidyAML
@@ -36,6 +38,9 @@ let
     plotly
     vvtableau
     ggraph
+    brms
+    lavaan
+    systemfit
 
     # broken
     # rbokeh

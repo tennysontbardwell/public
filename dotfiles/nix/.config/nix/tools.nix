@@ -155,6 +155,7 @@
     nodejs
     yarn
     php
+    go
 
     #### fun random things
 

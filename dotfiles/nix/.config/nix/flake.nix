@@ -41,6 +41,8 @@
       self,
       nixpkgs,
       unstable,
+      mac-nixpkgs,
+      mac-unstable,
       home-manager,
       pyproject-nix,
       uv2nix,

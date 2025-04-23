@@ -28,7 +28,7 @@ in
           enable = true;
           port = 22;
           authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaLrS6oh5HgcBveCV6xVQb/oco4lJOzpG3erGkaSW7r tennyson@artemis" ];
-          hostKeys = [ "/tmp/secrets/id_ed25519" ];
+          hostKeys = [ "/etc/initrd/id_ed25519" ];
         };
       };
     };

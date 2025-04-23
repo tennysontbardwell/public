@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable-pkgs, ... }:
 {
   linux_paths = with pkgs; [
     dmenu-rs
@@ -14,14 +14,17 @@
   ];
 
   paths = with pkgs; [
+
     #tmp
     pqiv
+    firefox
 
     #### general tools
 
     # editors / top
     tmux
     neovim
+    # emacs
     vim
 
     # editors dependencies / assister-s
@@ -43,6 +46,8 @@
     wget
     socat
     curl
+    tshark
+    termshark
 
     # data format transformers
     jq

@@ -48,20 +48,20 @@ let
       # vllm
 
       ## misc from vllm debugging
-      aioprometheus
-      fastapi
-      lm-format-enforcer
-      outlines
-      psutil
-      py-cpuinfo
-      pyarrow
-      pydantic
-      pyzmq
-      ray
-      sentencepiece
-      tiktoken
-      uvicorn
-      xformers
+#      aioprometheus
+#      fastapi
+#      lm-format-enforcer
+#      outlines
+#      psutil
+#      py-cpuinfo
+#      pyarrow
+#      pydantic
+#      pyzmq
+#      ray
+#      sentencepiece
+#      tiktoken
+#      uvicorn
+#      xformers
       # prometheus-fastapi-instrumentator
 
       ## not FOSS / not mac

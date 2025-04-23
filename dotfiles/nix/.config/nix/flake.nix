@@ -3,13 +3,15 @@
   description = "tennyson-nix";
 
   inputs = {
-    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    # nixpkgs.url = "github:NixOS/nixpkgs";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs";
     # 4ed8d70fbe3bc90eb727378fa13abb1563d37b6e is master as of 2025-03-01
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    unstable.url = "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz";
+
+    mac-nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    mac-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
 
     pyproject-nix = {
       url = "github:pyproject-nix/pyproject.nix";
@@ -56,16 +58,25 @@
         uv2nix = uv2nix;
         pyproject-build-systems = pyproject-build-systems;
       });
+      m1-packages = (import ./packages.nix {
+        lib = lib;
+        nixpkgs = mac-nixpkgs;
+        unstable = mac-unstable;
+        pyproject-nix = pyproject-nix;
+        uv2nix = uv2nix;
+        pyproject-build-systems = pyproject-build-systems;
+      });
 
       pkgs = packages.pkgs;
+      m1-pkgs = m1-packages.pkgs;
 
       linux.system = "x86_64-linux";
       linux.pkgs = pkgs linux.system;
 
       m1.system = "aarch64-darwin";
-      m1.pkgs = pkgs m1.system;
+      m1.pkgs = m1-pkgs m1.system;
 
-      m1.paths = packages.common_paths m1;
+      m1.paths = m1-packages.common_paths m1;
       linux.paths = (packages.common_paths linux)
         ++ [
           # sysstat

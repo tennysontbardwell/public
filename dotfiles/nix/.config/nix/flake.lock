@@ -137,6 +137,8 @@
       "inputs": {
         "disko": "disko",
         "home-manager": "home-manager",
+        "mac-nixpkgs": "mac-nixpkgs",
+        "mac-unstable": "mac-unstable",
         "nixpkgs": "nixpkgs",
         "pyproject-build-systems": "pyproject-build-systems",
         "pyproject-nix": "pyproject-nix",

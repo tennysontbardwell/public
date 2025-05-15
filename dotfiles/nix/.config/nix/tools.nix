@@ -109,6 +109,7 @@
 
     #### dependencies for tools
     git-remote-gcrypt
+    inkscape
     cairo
     nixpkgs-fmt
     nixfmt-rfc-style

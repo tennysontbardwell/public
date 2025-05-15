@@ -48,6 +48,10 @@ let
       huggingface-hub
       # vllm
 
+      ### Misc
+      yfinance
+      jsonpickle
+
       ## misc from vllm debugging
 #      aioprometheus
 #      fastapi

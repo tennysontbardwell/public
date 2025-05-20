@@ -51,6 +51,7 @@ let
       ### Misc
       yfinance
       jsonpickle
+      simple-term-menu
 
       ## misc from vllm debugging
 #      aioprometheus

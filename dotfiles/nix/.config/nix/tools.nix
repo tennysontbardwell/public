@@ -24,7 +24,7 @@
     # editors / top
     tmux
     neovim
-    # emacs
+    emacs
     vim
 
     # editors dependencies / assister-s

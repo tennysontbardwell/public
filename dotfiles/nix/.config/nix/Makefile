@@ -5,6 +5,9 @@ default: upgrade
 upgrade:
 	nix profile upgrade dotfiles/nix/.config/nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'
 
+update-mac-inputs:
+	nix flake update mac-nixpkgs mac-unstable home-manager
+
 build:
 	nix build . --show-trace --keep-failed
 

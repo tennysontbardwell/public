@@ -152,7 +152,6 @@ function setCaffeineDisplay(state)
         caffeine:setTitle(utf8.char(0x274C) .. utf8.char(0x1F4A4))
     else
         caffeine:setTitle(utf8.char(0x1F4A4))
-
     end
 end
 
@@ -167,6 +166,22 @@ end
 
 hs.loadSpoon("ZeroOffset")
 spoon.ZeroOffset:start()
+
+
+function menuInfo(f)
+  menuitem = hs.menubar.new()
+  local function updateInfo()
+    menuitem:setTitle(f())
+    menuitem:setTooltip("Current Wattage")
+  end
+  hs.timer.doEvery(1, updateInfo)
+  updateInfo()
+end
+
+menuInfo(function ()
+  return hs.execute("system_profiler SPPowerDataType | grep Wattage | tr -d '\\n' | tail -c 3") .. "W"
+end)
+
 
 --------------------------------------------------------------------------------
 --- End Matter

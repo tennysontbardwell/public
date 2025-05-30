@@ -179,8 +179,13 @@ hrs() {
     done
 }
 
-function ts () { 
+function ts () {
     ( cd ~/repos/tennysontbardwell/tennyson.ts > /dev/null;
+      yarn run run "$@")
+}
+
+function tsp () {
+    ( cd ~/repos/tennysontbardwell/misc-projects/personal.ts > /dev/null;
       yarn run run "$@")
 }
 

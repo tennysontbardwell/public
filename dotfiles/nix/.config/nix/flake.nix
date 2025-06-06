@@ -98,6 +98,7 @@
       };
 
       onyx_config = { pkgs, ... }: {
+        # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps
         nix = {
           enable = false;
           settings.experimental-features = "nix-command flakes";
@@ -108,7 +109,7 @@
             home = "/Users/tennyson";
         };
         programs.zsh.enable = true;
-        environment.systemPackages = with pkgs; [ libfaketime emacs mas neovim R stow iterm2 fzf tmux ];
+        environment.systemPackages = with pkgs; [ libfaketime emacs mas neovim R stow iterm2 fzf tmux nodejs yarn ranger ];
         networking.computerName = "onyx";
         security.pam.enableSudoTouchIdAuth = true;
         system = {
@@ -130,6 +131,10 @@
               Bluetooth = true;
             };
             dock.autohide-delay = 1.0;
+            menuExtraClock = {
+              ShowSeconds = true;
+              Show24Hour = true;
+            };
           };
           keyboard.enableKeyMapping = true;
           keyboard.remapCapsLockToControl = true;

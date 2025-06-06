@@ -112,7 +112,7 @@ function eff {
 
 function tt {
     declare -r nodepath="$HOME/repos/tennysontbardwell/tennyson.ts/build"
-    NODE_PATH="$nodepath" node "$nodepath"/src/index.js "$@"
+    NODE_PATH="$nodepath" node "$nodepath"/tennyson/index.js "$@"
 }
 
 function ff {
@@ -191,7 +191,7 @@ function tsp () {
 
 function tp() {
     export BASH_EVAL_FILE="$(mktemp)"
-    (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./src/app/scripts/hometty.js < /dev/tty)
+    (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./tennyson/app/scripts/hometty.js < /dev/tty)
     [ ! 0 -eq "$(wc  -c "$BASH_EVAL_FILE" | sed -e 's/^ *\([0-9]\+\) .*/\1/' | tr -d '\n')" ] \
         && eval "$(cat "$BASH_EVAL_FILE")"
     rm "$BASH_EVAL_FILE"
@@ -207,7 +207,7 @@ function loop_tp() {
 
 function tp_widget() {
     export BASH_EVAL_FILE="$(mktemp)"
-    (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./src/app/scripts/hometty.js < /dev/tty)
+    (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./tennyson/app/scripts/hometty.js < /dev/tty)
     [ ! 0 -eq "$(wc -c "$BASH_EVAL_FILE" | sed -e 's/^ *\([0-9]\+\) .*/\1/' | tr -d '\n')" ] \
         && eval "$(cat "$BASH_EVAL_FILE")"
     rm "$BASH_EVAL_FILE"

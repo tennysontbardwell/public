@@ -5,6 +5,9 @@ default: upgrade
 upgrade:
 	nix profile upgrade dotfiles/nix/.config/nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'
 
+nix-darwin-switch-first-time:
+	sudo nix run nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch
+
 update-mac-inputs:
 	nix flake update mac-nixpkgs mac-unstable home-manager
 

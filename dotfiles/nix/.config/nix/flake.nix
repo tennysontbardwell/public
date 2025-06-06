@@ -3,14 +3,16 @@
   description = "tennyson-nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/";
     # 4ed8d70fbe3bc90eb727378fa13abb1563d37b6e is master as of 2025-03-01
     unstable.url = "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz";
 
-    mac-nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     mac-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+    nix-darwin.inputs.nixpkgs.follows = "mac-nixpkgs";
 
 
     pyproject-nix = {
@@ -44,6 +46,7 @@
       mac-nixpkgs,
       mac-unstable,
       home-manager,
+      nix-darwin,
       pyproject-nix,
       uv2nix,
       pyproject-build-systems,
@@ -93,18 +96,84 @@
       devShells = { pkgs, paths, ... }: pkgs.buildEnv {
         buildInputs = paths;
       };
+
+      onyx_config = { pkgs, ... }: {
+        nix = {
+          enable = false;
+          settings.experimental-features = "nix-command flakes";
+        };
+        nixpkgs.hostPlatform = "aarch64-darwin";
+        users.users.tennyson = {
+            name = "tennyson";
+            home = "/Users/tennyson";
+        };
+        programs.zsh.enable = true;
+        environment.systemPackages = with pkgs; [ libfaketime emacs mas neovim R stow iterm2 fzf tmux ];
+        networking.computerName = "onyx";
+        security.pam.enableSudoTouchIdAuth = true;
+        system = {
+          activationScripts.postActivation.text = ''
+              echo "Running my custom activation script..."
+              cd /Users/tennyson/repos/tennysontbardwell/public/dotfiles
+              sudo -u tennyson stow -t /Users/tennyson sioyek vim zsh tmux ranger hammerspoon aws bash visidata
+          '';
+          configurationRevision = self.rev or self.dirtyRev or null;
+          defaults = {
+            NSGlobalDomain = {
+              "com.apple.trackpad.scaling" = 1.0;
+              AppleShowAllExtensions = true;
+              InitialKeyRepeat = 15;
+            };
+            controlcenter = {
+              AirDrop = true;
+              BatteryShowPercentage = true;
+              Bluetooth = true;
+            };
+            dock.autohide-delay = 1.0;
+          };
+          keyboard.enableKeyMapping = true;
+          keyboard.remapCapsLockToControl = true;
+          stateVersion = 4;
+        };
+        homebrew = {
+            enable = true;
+            # onActivation.cleanup = "uninstall";
+        
+            masApps = {
+              # Xcode = 497799835;
+              "1Password 7 - Password Manager" = 1333542190;
+            };
+            taps = [];
+            brews = [ ];
+            casks = [
+              "firefox"
+              "1password-cli"
+              "alfred"
+              "hammerspoon"
+            ];
+        };
+      };
     in
     {
-      homeConfigurations =
-        (import ./home-manager.nix) {
-          nixpkgs = nixpkgs;
-          pkgs = m1.pkgs;
-          system = m1.system;
-          home-manager = home-manager;
-        };
+      darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          onyx_config
+        ];
+      };
 
-      packages."${m1.system}".default = mkPackages m1;
-      devShells."${m1.system}".default = devShells m1;
+      # packages."${m1.system}".onyx = self.darwinConfigurations.onyx.system;
+
+      # homeConfigurations =
+      #   (import ./home-manager.nix) {
+      #     nixpkgs = nixpkgs;
+      #     pkgs = m1.pkgs;
+      #     system = m1.system;
+      #     home-manager = home-manager;
+      #   };
+
+      # packages."${m1.system}".default = mkPackages m1;
+      # devShells."${m1.system}".default = devShells m1;
       # devShells."${m1.system}".uv = {
       #   buildInputs = paths;
       # }

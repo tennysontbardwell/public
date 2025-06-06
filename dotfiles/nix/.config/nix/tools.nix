@@ -157,6 +157,7 @@
     yarn
     php
     go
+    typescript
 
     #### fun random things
 

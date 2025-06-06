@@ -109,7 +109,8 @@
             home = "/Users/tennyson";
         };
         programs.zsh.enable = true;
-        environment.systemPackages = with pkgs; [ libfaketime emacs mas neovim R stow iterm2 fzf tmux nodejs yarn ranger ];
+        # environment.systemPackages = with pkgs; [ libfaketime emacs mas neovim R stow iterm2 fzf tmux nodejs yarn ranger ];
+        environment.systemPackages = m1-packages.pkgs;
         networking.computerName = "onyx";
         security.pam.enableSudoTouchIdAuth = true;
         system = {
@@ -117,6 +118,8 @@
               echo "Running my custom activation script..."
               cd /Users/tennyson/repos/tennysontbardwell/public/dotfiles
               sudo -u tennyson stow -t /Users/tennyson sioyek vim zsh tmux ranger hammerspoon aws bash visidata
+              cd /Users/tennyson/repos/tennysontbardwell/dotfiles
+              sudo -u tennyson stow -t /Users/tennyson aspell borg emacs git misc pass pgp scripts secrets tennyson.py zsh
           '';
           configurationRevision = self.rev or self.dirtyRev or null;
           defaults = {
@@ -192,7 +195,7 @@
 	      nix.settings.experimental-features = [ "nix-command" "flake" ];
         environment.systemPackages = linux.paths;
 	      fonts.packages = with pkgs; [
-	        inconslata-nerdfont
+          inconslata-nerdfont
           noto-fonts
           noto-fonts-cjk-sans
           noto-fonts-emoji

@@ -49,7 +49,7 @@ let
     htmlwidgets
     r2d3
     shiny
-    shinyr
+    # shinyr # TODO BROKEN
     shinyWidgets
     shinymodels
     shinypivottabler

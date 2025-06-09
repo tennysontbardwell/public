@@ -40,8 +40,10 @@
     # system info
     ncdu
     htop
+    btop
 
     # network tools
+    tailscale
     rsync
     wget
     socat
@@ -69,6 +71,7 @@
 
     # misc
     nixos-anywhere
+    tty-share
 
     #### VM stacks
     qemu
@@ -128,7 +131,6 @@
     awscli
     visidata
     rclone
-    btop
     yt-dlp
     gallery-dl
     jless

@@ -26,6 +26,8 @@
     neovim
     emacs
     vim
+    zsh
+    pure-prompt
 
     # editors dependencies / assister-s
     pandoc

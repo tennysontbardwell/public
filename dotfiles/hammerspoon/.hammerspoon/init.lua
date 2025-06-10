@@ -172,15 +172,14 @@ function menuInfo(f)
   menuitem = hs.menubar.new()
   local function updateInfo()
     menuitem:setTitle(f())
-    menuitem:setTooltip("Current Wattage")
   end
   hs.timer.doEvery(1, updateInfo)
   updateInfo()
 end
 
-menuInfo(function ()
-  return hs.execute("system_profiler SPPowerDataType | grep Wattage | tr -d '\\n' | tail -c 3") .. "W"
-end)
+-- menuInfo(function ()
+--   return hs.execute("system_profiler SPPowerDataType | grep Wattage | tr -d '\\n' | tail -c 3") .. "W"
+-- end)
 
 
 --------------------------------------------------------------------------------

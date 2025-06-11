@@ -70,6 +70,7 @@
     ffmpeg
     imagemagick
     graphviz
+    mpv
 
     # misc
     nixos-anywhere

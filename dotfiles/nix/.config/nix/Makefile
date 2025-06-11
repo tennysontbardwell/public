@@ -2,6 +2,9 @@
 
 default: upgrade
 
+onyx:
+	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- switch --flake '.#onyx'
+
 upgrade:
 	nix profile upgrade dotfiles/nix/.config/nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'
 

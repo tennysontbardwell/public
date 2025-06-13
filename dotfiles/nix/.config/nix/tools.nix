@@ -74,6 +74,7 @@
 
     # misc
     nixos-anywhere
+    irssi
     tty-share
 
     #### VM stacks

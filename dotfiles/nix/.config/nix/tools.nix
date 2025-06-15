@@ -18,6 +18,7 @@
     #tmp
     pqiv
     firefox
+    web-ext
 
     #### general tools
 
@@ -76,6 +77,7 @@
     nixos-anywhere
     irssi
     tty-share
+    sioyek
 
     #### VM stacks
     qemu

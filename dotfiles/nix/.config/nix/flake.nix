@@ -172,7 +172,7 @@
             # onActivation.cleanup = "uninstall";
 
             masApps = {
-              # Xcode = 497799835;
+              Xcode = 497799835;
               "1Password 7 - Password Manager" = 1333542190;
             };
             taps = [];

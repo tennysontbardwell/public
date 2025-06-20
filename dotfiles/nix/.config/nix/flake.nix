@@ -152,7 +152,7 @@
               NSAutomaticSpellingCorrectionEnabled = false;
             };
             controlcenter = {
-              AirDrop = true;
+              AirDrop = false;
               BatteryShowPercentage = true;
               Bluetooth = true;
             };

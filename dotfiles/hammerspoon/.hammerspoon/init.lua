@@ -164,8 +164,8 @@ if caffeine then
     setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
 end
 
-hs.loadSpoon("ZeroOffset")
-spoon.ZeroOffset:start()
+-- hs.loadSpoon("ZeroOffset")
+-- spoon.ZeroOffset:start()
 
 
 function menuInfo(f)

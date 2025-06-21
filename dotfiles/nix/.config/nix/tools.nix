@@ -159,6 +159,8 @@
 
     #### software stacks
     # java
+    zulu
+    zulu17
     maven
     # web
     nodejs

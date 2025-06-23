@@ -699,7 +699,7 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (defun tennyson/load-funcs ()
     (interactive)
-    (dolist (x (file-expand-wildcards "~/.config/emacs/**/*.el"))
+    (dolist (x (file-expand-wildcards "~/.config/emacs/*.el"))
       (load-file x)))
   (tennyson/load-funcs)
   )

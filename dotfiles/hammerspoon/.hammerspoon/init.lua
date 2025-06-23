@@ -40,6 +40,10 @@ function defaultLeader(key, f)
   hs.hotkey.bind({"cmd", "ctrl"}, key, f)
 end
 
+function shiftDefaultLeader(key, f)
+  hs.hotkey.bind({"shift", "cmd", "ctrl"}, key, f)
+end
+
 function windowPercent(key, xSize, ySize, xOff, yOff)
   local xOff = xOff or 0
   local yOff = yOff or 0
@@ -111,6 +115,31 @@ hs.hotkey.bind({"shift", "cmd"}, "c", function()
     hs.alert.show("Copied to /tmp/clipboard", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.1)
   end).start()
 end)
+
+
+savedApps = {}
+function createAppMacro(key)
+    shiftDefaultLeader(key, function()
+        savedApps[key] = hs.application.frontmostApplication()
+        hs.alert.show("Saved to " .. key .. ": " .. savedApps[key]:name(), hs.alert.defaultStyle, hs.screen.mainScreen(), 1)
+    end)
+    defaultLeader(key, function()
+        local app = savedApps[key]
+        if app and app:isRunning() then
+            app:setFrontmost()
+        elseif app then
+          hs.alert.show("Saved app " .. key .. " \"" .. savedApps[key]:name() .. "\" is no longer running", hs.alert.defaultStyle, hs.screen.mainScreen(), 1)
+        else
+            hs.alert.show("No app saved to " .. key, hs.alert.defaultStyle, hs.screen.mainScreen(), 1)
+        end
+    end)
+end
+
+createAppMacro("1")
+createAppMacro("2")
+createAppMacro("3")
+createAppMacro("4")
+createAppMacro("5")
 
 --------------------------------------------------------------------------------
 --- Other Key Bindings

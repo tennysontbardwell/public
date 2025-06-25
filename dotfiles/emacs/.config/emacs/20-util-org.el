@@ -87,6 +87,46 @@
       (when (eq (alist-get 'highlighted tab) t)
         (insert (tennyson/firefox-format-tab tab t))))))
 
+;; https://kagi.com/assistant/3d73d96a-238c-4797-bf4a-4d84c757e4eb
+(defun tennyson/firefox-close-tabs (tab-ids)
+  "Close tabs by their IDs via Firefox extension API."
+  (require 'json)
+  (let* ((url-request-method "POST")
+         (url-request-data (json-encode `((command . "close_tabs") (tab_ids . ,tab-ids))))
+         (response (url-retrieve-synchronously "http://localhost:9001")))
+    (when response (kill-buffer response))))
+
+(defun tennyson/firefox-insert-frontmost-link-and-close ()
+  "Insert frontmost tab as org link and close it."
+  (interactive)
+  (when-let ((tabs (tennyson/firefox-get-tabs))
+             (active-tab (cl-find-if (lambda (obj) (eq (alist-get 'active obj) t)) tabs)))
+    (insert (tennyson/firefox-format-tab active-tab))
+    (tennyson/firefox-close-tabs (list (alist-get 'id active-tab)))))
+
+(defun tennyson/firefox-ivy-select-and-close-tabs ()
+  "Select multiple tabs via ivy, insert as org links and close them."
+  (interactive)
+  (when-let ((tabs (tennyson/firefox-get-tabs)))
+    (let ((candidates
+           (mapcar (lambda (tab)
+                     (cons (format "%s - %s"
+                                   (alist-get 'title tab)
+                                   (alist-get 'url tab))
+                           tab))
+                   tabs)
+           ))
+      (ivy-read "Select tabs:"
+                candidates
+                :action (lambda (x)
+                          (progn
+                            (insert (tennyson/firefox-format-tab x t))
+                            (tennyson/firefox-close-tabs (list (alist-get 'id x)))
+                            (message "Added: %s" (alist-get 'title (cdr x)))
+                            (tennyson/firefox-ivy-select-and-close-tabs)))))))
+
+
+
 ;; In mac.c, removed in Emacs 23.
 (declare-function org-mac-link-do-applescript "org-mac-message" (script))
 (unless (fboundp 'org-mac-link-do-applescript)

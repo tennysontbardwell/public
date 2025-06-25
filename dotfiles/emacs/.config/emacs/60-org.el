@@ -18,7 +18,6 @@
 
 ;; Performance ;;
 (setq org-element-use-cache nil)
-(spacemacs|disable-company org-mode)
 
 
 ;; Babel ;;
@@ -65,19 +64,38 @@
   (evil-append-line())
   (org-insert-heading()))
 
+(defun ozer/new-org-heading (default-enter)
+  (if (org-at-heading-p)
+      (evil-with-single-undo
+        ;; Enter once will make new heading, twice will clear
+        (if (eq (org-entry-get nil "ITEM") "")
+            (evil-change (line-beginning-position) (line-end-position) 'block ?_)
+          ;; Insert a new TODO if we're on a TODO
+          (if (org-get-todo-state)
+              (org-insert-todo-heading-respect-content)
+            (org-insert-heading-respect-content))
+          (evil-append 1)))
+    ;; Do whatever enter normally does
+    (funcall default-enter)))
+(evil-define-key 'insert org-mode-map
+  (kbd "RET") (lambda (&rest e) (interactive) (ozer/new-org-heading (lambda () (interactive) (evil-org-return e)))))
+(evil-define-key 'normal org-mode-map
+  (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-open-at-point)))
+
 
 ;; Unsorted ;;
 (defun my-org-mode-setup ()
   (progn)
-  ;; (evil-define-key 'normal org-mode-map (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-return)))
+  (evil-define-key 'normal org-mode-map (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-return)))
   ;; This doesn't seem to be applied automatically
   (local-set-key (kbd "C-c a") 'org-agenda)
   (setq org-priority-faces '((?A . (:foreground "red" :weight 'bold))
                              (?B . (:foreground "yellow"))
                              (?C . (:foreground "green"))))
-  ;; (company-mode 0)
-  ;; (spacemacs/toggle-auto-completion-off)
+  (company-mode 0)
+  (visual-line-mode 1)
   (high-priority-keys))
+
 
 (add-hook 'org-mode-hook 'my-org-mode-setup)
 
@@ -90,23 +108,3 @@
 ;; (setq org-appear-autolinks nil)
 ;; (advice-add 'org-transclusion-propertize-source :override #'tennyson/nop)
 ;; (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
-
-;; (defun ozer/new-org-heading (default-enter)
-;;   (if (org-at-heading-p
-;;        )
-;;       ;; Enter once will make new heading, twice will clear
-;;       (if (eq (org-entry-get nil "ITEM") "")
-;;           (evil-change (line-beginning-position) (line-end-position))
-;;         ;; Insert a new TODO if we're on a TODO
-;;         (if (org-get-todo-state)
-;;             (org-insert-todo-heading-respect-content)
-;;           (org-insert-heading-respect-content)
-;;           )
-;;         (evil-append 1)
-;;         )
-;;     ;; Do whatever enter normally does
-;;     (funcall default-enter)))
-;; (evil-define-key 'insert org-mode-map
-;;   (kbd "RET") (lambda (&rest e) (interactive) (ozer/new-org-heading (lambda () (interactive) (evil-org-return e)))))
-;; (evil-define-key 'normal org-mode-map
-;;   (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-open-at-point)))

@@ -6,7 +6,7 @@
                         ("C-p" . comint-previous-input)
                         ("C-n" . comint-next-input)
                         ("C-k" . kill-line)
-                        ("C-d" . delete-char)
+                        ;; ("C-d" . delete-char)
                         ("C-c" . comint-interrupt-subjob)
                         ("C-l" . recenter-top-bottom)
                         ("C-r" . comint-history-isearch-backward))))

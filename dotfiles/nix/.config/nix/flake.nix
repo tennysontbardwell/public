@@ -144,6 +144,7 @@
           '';
           configurationRevision = self.rev or self.dirtyRev or null;
           defaults = {
+            screensaver.askForPasswordDelay = 5;
             loginwindow.GuestEnabled = true;
             NSGlobalDomain = {
               "com.apple.trackpad.scaling" = 1.0;
@@ -185,8 +186,16 @@
               "1password-cli"
               "alfred"
               "hammerspoon"
+              "visual-studio-code"
             ];
         };
+	      fonts.packages = with pkgs; [
+          nerd-fonts.noto
+          nerd-fonts."m+"
+          nerd-fonts.hack
+          nerd-fonts.tinos
+          nerd-fonts.monoid
+        ];
       };
     in
     {
@@ -222,6 +231,7 @@
 	      nix.settings.experimental-features = [ "nix-command" "flake" ];
         environment.systemPackages = linux.paths;
 	      fonts.packages = with pkgs; [
+          # nerd-fonts.m+
           inconslata-nerdfont
           noto-fonts
           noto-fonts-cjk-sans

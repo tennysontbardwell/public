@@ -54,8 +54,22 @@
 
 ;; Web ;;
 (setq-default web-mode-code-indent-offset 2)
-(add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
+;; (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
 
+;; https://github.com/orzechowskid/tsx-mode.el/issues/39
+(add-to-list 'lsp--formatting-indent-alist '(tsx-mode . tsi-typescript-indent-offset))
+
+(add-hook
+ 'typescript-tsx-mode-hook
+ (lambda ()
+   ;; https://github.com/orzechowskid/tsi.el/issues/40
+   (setq standard-indent 2)
+   (setq js-indent-level 2)
+   (setq js-jsx-indent-level 2)
+   (setq typescript-indent-level 2)
+   (setq web-mode-code-indent-offset 2)
+   (setq web-mode-markup-indent-offset 2)
+   ))
 
 ;; VC ;;
 (setq vc-follow-symlinks t) ; Follow Symlinks w/o prompt

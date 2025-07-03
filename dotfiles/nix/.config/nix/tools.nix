@@ -56,6 +56,7 @@
 
     # data format transformers
     jq
+    yq-go
     xq-xml
 
     # utility functions
@@ -110,6 +111,9 @@
     fpp # file selector
     sox # audio
     websocat
+    yazi
+    lf
+    imgcat
 
     #### mac specific CLI tool overrides
     gnused

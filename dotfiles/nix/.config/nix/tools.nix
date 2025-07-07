@@ -58,6 +58,8 @@
     jq
     yq-go
     xq-xml
+    xan
+    qsv
 
     # utility functions
     pv

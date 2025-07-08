@@ -1,3 +1,5 @@
+(setq ess-indent-level 2)
+
 ;; https://kagi.com/assistant/503d0002-e0fe-4637-a239-a3bbc7d67655
 (defun tennyson/setup-terminal-keys ()
   "Set up terminal-like keybindings in comint modes, overriding evil."

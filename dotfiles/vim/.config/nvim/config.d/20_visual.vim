@@ -7,8 +7,17 @@ set cursorline
 hi CursorLine cterm=NONE ctermbg=234
 hi CursorColumn cterm=NONE ctermbg=234
 
-set background=dark
-colorscheme PaperColor
+autocmd VimEnter * call SetupColorscheme()
+
+function! SetupColorscheme()
+    let theme = system('defaults read -g AppleInterfaceStyle 2>/dev/null')
+    if theme =~ 'Dark'
+        set background=dark
+    else
+        set background=light
+    endif
+    colorscheme PaperColor
+endfunction
 
 function SetColLimit(lim)
     highlight ColorColumn ctermbg=234 guibg=#242520

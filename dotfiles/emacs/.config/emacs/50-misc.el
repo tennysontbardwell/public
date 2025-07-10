@@ -1,6 +1,6 @@
 ;; GC ;;
 (setq garbage-collection-messages t)
-(setq gc-cons-threshold 20000000)
+(setq gc-cons-threshold 402653184)
 
 ;; Undo ;;
 (setq undo-tree-auto-save-history nil)

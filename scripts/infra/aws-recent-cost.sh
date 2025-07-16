@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # (.Keys[0]):
-JQ_QUERY=$(cat <<EOF )
+JQ_QUERY=$(cat <<EOF
 .ResultsByTime
   | map(
     (
@@ -16,6 +16,7 @@ JQ_QUERY=$(cat <<EOF )
     | add
   )
 EOF
+)
 
 aws ce get-cost-and-usage \
   --time-period Start=$(date +%Y-%m-%d -d "- 6 days"),End=$(date +%Y-%m-%d -d "+ 1 day") \

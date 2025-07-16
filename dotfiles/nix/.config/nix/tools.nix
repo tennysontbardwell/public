@@ -60,6 +60,8 @@
     xq-xml
     xan
     qsv
+    html-tidy
+    xidel
 
     # utility functions
     pv
@@ -150,6 +152,7 @@
     graphviz
     gh # github
     ollama
+    tenv
 
     # trying out
     pls

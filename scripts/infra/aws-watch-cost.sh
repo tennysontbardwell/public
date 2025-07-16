@@ -2,6 +2,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+
+echo "BROKEN IF there are different costs on different days"
+
 # See https://stackoverflow.com/a/246128/3561275
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink

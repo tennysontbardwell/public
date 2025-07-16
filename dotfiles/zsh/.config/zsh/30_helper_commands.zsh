@@ -180,8 +180,16 @@ hrs() {
 }
 
 function ts () {
-    ( cd ~/repos/tennysontbardwell/tennyson.ts > /dev/null;
-      yarn run run "$@")
+    declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
+    export NODE_PATH="$PROJECT/build"
+    node --enable-source-maps "$PROJECT/build/tennyson/index.js" "$@"
+}
+
+function tsf () {
+    declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
+    export NODE_PATH="$PROJECT/build"
+    echo node "$PROJECT/build/tennyson/index.js" "$@"
+    node "$PROJECT/build/tennyson/index.js" "$@"
 }
 
 function tsp () {

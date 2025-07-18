@@ -10,6 +10,36 @@
                       :background (face-attribute 'default :background)))
 (add-hook 'spacemacs-post-theme-change-hook #'tennyson/fix-org-hide-on-theme-change)
 
+(defun tennyson/org-pandoc-export-to-clipboard ()
+  "Export the current region as markdown using org-pandoc and copy to clipboard."
+  (interactive)
+  (let ((original-buffer (current-buffer))
+        (original-buffers (buffer-list))
+        (org-pandoc-options-for-markdown '((standalone . nil))))
+    (save-excursion
+      (save-restriction
+        (org-pandoc-export-as-markdown)
+        (let ((new-buffers (cl-set-difference (buffer-list) original-buffers)))
+          (when new-buffers
+            (let ((export-buffer (car new-buffers)))
+              (let ((proc (get-buffer-process export-buffer)))
+                (if proc
+                    ;; Set a process sentinel to handle completion
+                    (set-process-sentinel proc
+                                          (lambda (process event)
+                                            (when (string= event "finished\n")
+                                              (let ((buf (process-buffer process)))
+                                                (when (buffer-live-p buf)
+                                                  (with-current-buffer buf
+                                                    (kill-new (buffer-string))
+                                                    (message "Exported to clipboard as markdown"))
+                                                  (kill-buffer buf))))))
+                  ;; No process, handle immediately
+                  (progn
+                    (with-current-buffer export-buffer
+                      (kill-new (buffer-string))
+                      (message "Exported to clipboard as markdown"))
+                    (kill-buffer export-buffer)))))))))))
 
 ;; Anesthetics ;;
 (setq org-startup-indented t)
@@ -23,16 +53,17 @@
 ;; Babel ;;
 (setq org-babel-python-command "python3")
 (setq org-confirm-babel-evaluate nil)
+(setq org-plantuml-exec-mode 'plantuml)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
    (ledger . t)
    (julia . t)
+   (plantuml . t)
    (shell . t)
    (dot . t)
    (R . t)
    (python . t)))
-
 
 ;; Export ;;
 (setq org-export-with-smart-quotes t)

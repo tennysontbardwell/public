@@ -11,7 +11,7 @@
 (spacemacs/declare-prefix "oj" "javascript")
 (spacemacs/declare-prefix "ot" "toggle")
 (spacemacs/declare-prefix "ox" "execute")
-(spacemacs/set-leader-keys "ocm" 'org-pandoc-export-as-markdown)
+(spacemacs/set-leader-keys "ocm" 'tennyson/org-pandoc-export-to-clipboard)
 (spacemacs/set-leader-keys "ocp" 'tennyson-paste-to-clipboard)
 (spacemacs/set-leader-keys "ocy" 'tennyson-copy-to-clipboard)
 (spacemacs/set-leader-keys "of" 'tennyson/favorite-files)

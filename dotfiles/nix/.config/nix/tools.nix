@@ -83,6 +83,8 @@
     irssi
     tty-share
     sioyek
+    plantuml
+    graph-easy
 
     #### VM stacks
     qemu

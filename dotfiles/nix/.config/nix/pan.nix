@@ -27,7 +27,10 @@ in
         ssh = {
           enable = true;
           port = 22;
-          authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaLrS6oh5HgcBveCV6xVQb/oco4lJOzpG3erGkaSW7r tennyson@artemis" ];
+          authorizedKeys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaLrS6oh5HgcBveCV6xVQb/oco4lJOzpG3erGkaSW7r tennyson@artemis"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1eGzYWoZ1o2BjBeo96HU800aE2pFbtvHSwdxiXI5Z/ tennyson@onyx"
+          ];
           hostKeys = [ "/etc/initrd/id_ed25519" ];
         };
       };
@@ -129,6 +132,7 @@ in
     stow
     zsh
     ranger
+    h2o
   ])
     ++ packages.common_paths {
       pkgs = pkgs;
@@ -154,6 +158,8 @@ in
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaLrS6oh5HgcBveCV6xVQb/oco4lJOzpG3erGkaSW7r tennyson@artemis"
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCsSXx/NVXjDzzzwLHHk6HQrYqDUAWJ3rv3FOuImjx1ZlaHAyBXIrpxeLhaojOqlCH8Kc56dPjPdyFcZZ/0BLKnWSv0FTaeEeJPPnqi6MBBLa9ENorec1feffuNZe7eWBBfv/si9gWwTgtzQtxpaVoEtcYAfTGIJwRNtDk6llF/i7StZZjjbd3t8GadGIIqHS/bTJrkhALc/dMMuOhjpn+SSWhxPvyTHhdcVo/1NtjX4XdmR0ynDIGhDG70XI6CYqmCorvwlVwXfpyoh4tmg6ghUow4zjmwuC4vQk6uaNYupTArS6gPSoLp1mRjz66PUZ0UTfvWLmfY/vVbn7TnvWhxSOFv2893pe4YKmC9af9/aze5PBXqMY+WMmtimKHuvLta+IB1qH2CH470RN3wEH1ikXqFlwus4wLDH+VDSlClVl8LI/sp2ewRZLbxYe/tRA7dIguv/jPunERo0+8f1GcO+ua1LwkLyPYDj0X7PHTMQh/gfKI5YPu6vosyGXr4Dm1F2MVXxr14SOV98VhDnjcylcseEgnDEX+P0p9zATG8sFxY5gDxE80YQVioRN1SC7jY8Sze6X2wgft8hJ55FAs5yxjplCAm4Q/eEJWwkDjCHiXFEiPD3bf3t6SM3BJC9ItoD0jSOPULfUSNFdtS4BJUzlqyIjtQ8hEuNjNAZdvpRw== root@hades"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1eGzYWoZ1o2BjBeo96HU800aE2pFbtvHSwdxiXI5Z/ tennyson@onyx"
   ];
 
   system.stateVersion = "24.05";

@@ -58,7 +58,6 @@
       packages = (import ./packages.nix {
         lib = lib;
         nixpkgs = nixpkgs;
-        unstable = unstable;
         pyproject-nix = pyproject-nix;
         uv2nix = uv2nix;
         pyproject-build-systems = pyproject-build-systems;
@@ -66,7 +65,6 @@
       m1-packages = (import ./packages.nix {
         lib = lib;
         nixpkgs = mac-nixpkgs;
-        unstable = mac-unstable; # TODO
         pyproject-nix = pyproject-nix;
         uv2nix = uv2nix;
         pyproject-build-systems = pyproject-build-systems;

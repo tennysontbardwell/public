@@ -1,3 +1,7 @@
+[ -f /Users/tennyson/repos/Aloxaf/fzf-tab/fzf-tab.plugin.zsh ] \
+    && source /Users/tennyson/repos/Aloxaf/fzf-tab/fzf-tab.plugin.zsh
+
+
 # source misc repos ##########################################################
 function tbardwell__add_fpath {
     if [ -d "$1" ]; then

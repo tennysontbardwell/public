@@ -1,4 +1,11 @@
 { pkgs, unstable-pkgs, ... }:
+let
+  tt = pkgs.writeScriptBin "tt" ''
+    #!/usr/bin/env sh
+    declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
+    "$PROJECT/bin/index.cjs" "$@"
+    '';
+in
 {
   linux_paths = with pkgs; [
     dmenu-rs
@@ -216,5 +223,8 @@
     # gitcheck-git   = multi git repo checker
     # percol
     # nnn            = file browser in cli
+
+    # custom
+    tt
   ];
 }

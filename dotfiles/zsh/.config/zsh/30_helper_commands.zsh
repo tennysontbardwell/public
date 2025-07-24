@@ -110,11 +110,6 @@ function eff {
     fi
 }
 
-function tt {
-    declare -r nodepath="$HOME/repos/tennysontbardwell/tennyson.ts/build"
-    NODE_PATH="$nodepath" node "$nodepath"/tennyson/index.js "$@"
-}
-
 function ff {
     dir="$(cat ~/.config/tennyson/bookmarks.txt | fzf)"
     dir="$(eval echo -e "$dir")"
@@ -179,11 +174,32 @@ hrs() {
     done
 }
 
-function ts () {
-    declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
-    export NODE_PATH="$PROJECT/build"
-    node --enable-source-maps "$PROJECT/build/tennyson/index.js" "$@"
+alias ts=tt
+# function ts () {
+#     declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
+#     node --enable-source-maps "$PROJECT/bin/index.cjs" "$@"
+# }
+
+#compdef tt
+###-begin-tt-completions-###
+#
+# yargs command completion script
+#
+# Installation: tt completion >> ~/.zshrc
+#    or tt completion >> ~/.zprofile on OSX.
+#
+_tt_yargs_completions()
+{
+    local reply
+    local si=$IFS
+    IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" tt --get-yargs-completions "${words[@]}"))
+    IFS=$si
+    _describe 'values' reply
 }
+compdef _tt_yargs_completions tt
+###-end-index.cjs-completions-###
+
 
 function tsf () {
     declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
@@ -193,29 +209,29 @@ function tsf () {
 }
 
 function tsp () {
-    ( cd ~/repos/tennysontbardwell/misc-projects/personal.ts > /dev/null;
-      yarn run run "$@")
+    declare -r PROJECT="$HOME/repos/tennysontbardwell/misc-projects/personal.ts"
+    node --enable-source-maps "$PROJECT/bin/index.js" "$@"
 }
 
-function tp() {
-    export BASH_EVAL_FILE="$(mktemp)"
-    (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./tennyson/app/scripts/hometty.js < /dev/tty)
-    [ ! 0 -eq "$(wc  -c "$BASH_EVAL_FILE" | sed -e 's/^ *\([0-9]\+\) .*/\1/' | tr -d '\n')" ] \
-        && eval "$(cat "$BASH_EVAL_FILE")"
-    rm "$BASH_EVAL_FILE"
-}
+# function tp() {
+#     export BASH_EVAL_FILE="$(mktemp)"
+#     (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./tennyson/app/scripts/hometty.js < /dev/tty)
+#     [ ! 0 -eq "$(wc  -c "$BASH_EVAL_FILE" | sed -e 's/^ *\([0-9]\+\) .*/\1/' | tr -d '\n')" ] \
+#         && eval "$(cat "$BASH_EVAL_FILE")"
+#     rm "$BASH_EVAL_FILE"
+# }
 
-function loop_tp() {
-    while :
-    do
-        tp
-        osascript -e 'tell application "Finder"' -e 'set visible of process "iTerm2" to false' -e 'end tell'
-    done
-}
+# function loop_tp() {
+#     while :
+#     do
+#         tp
+#         osascript -e 'tell application "Finder"' -e 'set visible of process "iTerm2" to false' -e 'end tell'
+#     done
+# }
 
 function tp_widget() {
     export BASH_EVAL_FILE="$(mktemp)"
-    (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./tennyson/app/scripts/hometty.js < /dev/tty)
+    tt hometty < /dev/tty
     [ ! 0 -eq "$(wc -c "$BASH_EVAL_FILE" | sed -e 's/^ *\([0-9]\+\) .*/\1/' | tr -d '\n')" ] \
         && eval "$(cat "$BASH_EVAL_FILE")"
     rm "$BASH_EVAL_FILE"
@@ -226,3 +242,7 @@ zle     -N            tp_widget
 bindkey -M emacs '^Y' tp_widget
 bindkey -M vicmd '^Y' tp_widget
 bindkey -M viins '^Y' tp_widget
+
+if command -v aws >/dev/null 2>&1 && command -v aws_completer >/dev/null 2>&1; then
+    complete -C "$(command -v aws_completer)" aws
+fi

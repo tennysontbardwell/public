@@ -15,10 +15,15 @@
   (interactive)
   (let ((original-buffer (current-buffer))
         (original-buffers (buffer-list))
-        (org-pandoc-options-for-markdown '((standalone . nil))))
+        (org-pandoc-options-for-markdown
+         '(
+           (standalone . nil)
+           (to . "markdown+raw_html")
+           (wrap . none)
+           )))
     (save-excursion
       (save-restriction
-        (org-pandoc-export-as-markdown)
+        (org-pandoc-export-as-commonmark)
         (let ((new-buffers (cl-set-difference (buffer-list) original-buffers)))
           (when new-buffers
             (let ((export-buffer (car new-buffers)))

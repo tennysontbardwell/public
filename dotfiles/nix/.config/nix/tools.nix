@@ -18,14 +18,17 @@
     #tmp
     pqiv
     firefox
+    web-ext
 
     #### general tools
 
     # editors / top
     tmux
     neovim
-    # emacs
+    # emacs # TODO
     vim
+    zsh
+    pure-prompt
 
     # editors dependencies / assister-s
     pandoc
@@ -40,8 +43,10 @@
     # system info
     ncdu
     htop
+    btop
 
     # network tools
+    tailscale
     rsync
     wget
     socat
@@ -51,7 +56,12 @@
 
     # data format transformers
     jq
+    yq-go
     xq-xml
+    xan
+    qsv
+    html-tidy
+    xidel
 
     # utility functions
     pv
@@ -66,9 +76,15 @@
     ffmpeg
     imagemagick
     graphviz
+    mpv
 
     # misc
     nixos-anywhere
+    irssi
+    tty-share
+    sioyek
+    plantuml
+    graph-easy
 
     #### VM stacks
     qemu
@@ -102,6 +118,9 @@
     fpp # file selector
     sox # audio
     websocat
+    yazi
+    lf
+    imgcat
 
     #### mac specific CLI tool overrides
     gnused
@@ -110,6 +129,7 @@
 
     #### dependencies for tools
     git-remote-gcrypt
+    inkscape
     cairo
     nixpkgs-fmt
     nixfmt-rfc-style
@@ -128,7 +148,6 @@
     awscli
     visidata
     rclone
-    btop
     yt-dlp
     gallery-dl
     jless
@@ -136,6 +155,7 @@
     graphviz
     gh # github
     ollama
+    tenv
 
     # trying out
     pls
@@ -151,12 +171,15 @@
 
     #### software stacks
     # java
+    zulu
+    zulu17
     maven
     # web
     nodejs
     yarn
     php
     go
+    typescript
 
     #### fun random things
 

@@ -2,8 +2,23 @@
 
 default: upgrade
 
+onyx:
+	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- switch --flake '.#onyx'
+
 upgrade:
 	nix profile upgrade dotfiles/nix/.config/nix --show-trace && nix run '.#homeConfigurations.tennyson.activationPackage'
+
+nix-darwin-switch-first-time:
+	sudo nix run nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch
+
+pan:
+	nixos-rebuild switch --flake /root/projects/public/dotfiles/nix/.config/nix'#pan' --show-trace
+
+pan-build:
+	nixos-rebuild build --flake /root/projects/public/dotfiles/nix/.config/nix'#pan' --show-trace
+
+update-mac-inputs:
+	nix flake update mac-nixpkgs mac-unstable home-manager
 
 build:
 	nix build . --show-trace --keep-failed

@@ -3,14 +3,16 @@
   description = "tennyson-nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/";
     # 4ed8d70fbe3bc90eb727378fa13abb1563d37b6e is master as of 2025-03-01
     unstable.url = "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz";
 
-    mac-nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     mac-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+    nix-darwin.inputs.nixpkgs.follows = "mac-nixpkgs";
 
 
     pyproject-nix = {
@@ -44,6 +46,7 @@
       mac-nixpkgs,
       mac-unstable,
       home-manager,
+      nix-darwin,
       pyproject-nix,
       uv2nix,
       pyproject-build-systems,
@@ -63,7 +66,7 @@
       m1-packages = (import ./packages.nix {
         lib = lib;
         nixpkgs = mac-nixpkgs;
-        unstable = mac-unstable;
+        unstable = mac-unstable; # TODO
         pyproject-nix = pyproject-nix;
         uv2nix = uv2nix;
         pyproject-build-systems = pyproject-build-systems;
@@ -93,18 +96,128 @@
       devShells = { pkgs, paths, ... }: pkgs.buildEnv {
         buildInputs = paths;
       };
+
+      onyx_config = { pkgs, ... }:
+      let
+        m1.paths = m1-packages.common_paths {
+          pkgs = pkgs;
+          system = "aarch64-darwin";
+        };
+      in
+      {
+        # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps
+        nix = {
+          enable = false;
+          settings.experimental-features = "nix-command flakes";
+        };
+        nixpkgs.hostPlatform = "aarch64-darwin";
+        users.users.tennyson = {
+            name = "tennyson";
+            home = "/Users/tennyson";
+        };
+        programs.zsh.enable = true;
+        # environment.systemPackages = with pkgs; [ libfaketime emacs mas neovim R stow iterm2 fzf tmux nodejs yarn ranger ripgrep ];
+        # environment.systemPackages = m1-packages.common_paths {
+        #   pkgs = m1.pkgs;
+        #   system = m1.system;
+        # };
+        environment.systemPackages = m1.paths ++ [pkgs.pam-reattach];
+        # [[https://write.rog.gr/writing/using-touchid-with-tmux/#what-files-manages-this][Roger Steve Ruiz | Using TouchID with Tmux]]
+        environment.etc."pam.d/sudo_local".text = ''
+          # Managed by Nix Darwin
+          auth       optional       ${pkgs.pam-reattach}/lib/pam/pam_reattach.so ignore_ssh
+          auth       sufficient     pam_tid.so
+        '';
+
+
+        # environment.systemPackages = m1-packages.pkgs;
+        networking.computerName = "onyx";
+        security.pam.services.sudo_local.touchIdAuth = true;
+        system = {
+          primaryUser = "tennyson";
+          activationScripts.postActivation.text = ''
+              echo "Running my custom activation script..."
+              cd /Users/tennyson/repos/tennysontbardwell/public/dotfiles
+              # sudo -u tennyson stow -t /Users/tennyson sioyek vim zsh tmux ranger hammerspoon aws bash visidata
+              cd /Users/tennyson/repos/tennysontbardwell/dotfiles
+              # sudo -u tennyson stow -t /Users/tennyson aspell borg emacs git misc pass pgp scripts secrets tennyson.py zsh
+          '';
+          configurationRevision = self.rev or self.dirtyRev or null;
+          defaults = {
+            screensaver.askForPasswordDelay = 5;
+            loginwindow.GuestEnabled = true;
+            NSGlobalDomain = {
+              "com.apple.trackpad.scaling" = 1.0;
+              AppleShowAllExtensions = true;
+              InitialKeyRepeat = 15;
+              NSAutomaticSpellingCorrectionEnabled = false;
+            };
+            controlcenter = {
+              AirDrop = false;
+              BatteryShowPercentage = true;
+              Bluetooth = true;
+            };
+            dock.autohide-delay = 0.2;
+            dock.wvous-br-corner = 4;
+            menuExtraClock = {
+              ShowSeconds = true;
+              Show24Hour = true;
+            };
+          };
+          keyboard.enableKeyMapping = true;
+          keyboard.remapCapsLockToControl = true;
+          stateVersion = 4;
+        };
+        homebrew = {
+            enable = true;
+            # onActivation.cleanup = "uninstall";
+
+            masApps = {
+              Xcode = 497799835;
+              "1Password 7 - Password Manager" = 1333542190;
+            };
+            taps = [];
+            brews = [ ];
+            casks = [
+              "firefox"
+              "tailscale"
+              "thunderbird"
+              "activitywatch"
+              "1password-cli"
+              "alfred"
+              "hammerspoon"
+              "visual-studio-code"
+            ];
+        };
+	      fonts.packages = with pkgs; [
+          nerd-fonts.noto
+          nerd-fonts."m+"
+          nerd-fonts.hack
+          nerd-fonts.tinos
+          nerd-fonts.monoid
+        ];
+      };
     in
     {
-      homeConfigurations =
-        (import ./home-manager.nix) {
-          nixpkgs = nixpkgs;
-          pkgs = m1.pkgs;
-          system = m1.system;
-          home-manager = home-manager;
-        };
+      darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          onyx_config
+        ];
+      };
 
-      packages."${m1.system}".default = mkPackages m1;
-      devShells."${m1.system}".default = devShells m1;
+      # packages."${m1.system}".onyx = self.darwinConfigurations.onyx.system;
+
+      # homeConfigurations =
+      #   (import ./home-manager.nix) {
+      #     nixpkgs = nixpkgs;
+      #     pkgs = m1.pkgs;
+      #     system = m1.system;
+      #     home-manager = home-manager;
+      #   };
+
+      # packages."${m1.system}".default = mkPackages m1;
+      # devShells."${m1.system}".default = devShells m1;
       # devShells."${m1.system}".uv = {
       #   buildInputs = paths;
       # }
@@ -118,7 +231,8 @@
 	      nix.settings.experimental-features = [ "nix-command" "flake" ];
         environment.systemPackages = linux.paths;
 	      fonts.packages = with pkgs; [
-	        inconslata-nerdfont
+          # nerd-fonts.m+
+          inconslata-nerdfont
           noto-fonts
           noto-fonts-cjk-sans
           noto-fonts-emoji

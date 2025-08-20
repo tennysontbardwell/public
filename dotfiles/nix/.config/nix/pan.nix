@@ -91,7 +91,7 @@ in
     registries = ['docker.io']
   '';
 
-  environmnet.etc."containers/policy.json".text = ''
+  environment.etc."containers/policy.json".text = ''
     {
         "default": [
             {
@@ -104,7 +104,7 @@ in
                     {
                         "type": "insecureAcceptAnything"
                     }
-                ],
+                ]
             }
         }
     }

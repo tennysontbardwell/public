@@ -113,6 +113,7 @@ in
     findutils
     gnugrep
     gnupg
+    gnumake
     cmake
     automake
     autoconf

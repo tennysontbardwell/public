@@ -4,11 +4,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/";
-    # 4ed8d70fbe3bc90eb727378fa13abb1563d37b6e is master as of 2025-03-01
-    unstable.url = "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz";
 
     mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
-    mac-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
@@ -42,9 +39,7 @@
   outputs = {
       self,
       nixpkgs,
-      unstable,
       mac-nixpkgs,
-      mac-unstable,
       home-manager,
       nix-darwin,
       pyproject-nix,

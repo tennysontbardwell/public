@@ -57,22 +57,6 @@
         "type": "github"
       }
     },
-    "mac-unstable": {
-      "locked": {
-        "lastModified": 1753250450,
-        "narHash": "sha256-i+CQV2rPmP8wHxj0aq4siYyohHwVlsh40kV89f3nw1s=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "fc02ee70efb805d3b2865908a13ddd4474557ecf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -160,25 +144,11 @@
         "disko": "disko",
         "home-manager": "home-manager",
         "mac-nixpkgs": "mac-nixpkgs",
-        "mac-unstable": "mac-unstable",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "pyproject-build-systems": "pyproject-build-systems",
         "pyproject-nix": "pyproject-nix",
-        "unstable": "unstable",
         "uv2nix": "uv2nix"
-      }
-    },
-    "unstable": {
-      "locked": {
-        "lastModified": 1740875610,
-        "narHash": "sha256-FFTfPVxmuVNSLoSUsfKwOSqJaXlJrhQCZEKOMjd/ipk=",
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/4ed8d70fbe3bc90eb727378fa13abb1563d37b6e.tar.gz"
       }
     },
     "uv2nix": {

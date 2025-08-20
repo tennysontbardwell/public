@@ -91,6 +91,25 @@ in
     registries = ['docker.io']
   '';
 
+  environmnet.etc."containers/policy.json".text = ''
+    {
+        "default": [
+            {
+                "type": "reject"
+            }
+        ],
+        "transports": {
+            "docker": {
+                "docker.io": [
+                    {
+                        "type": "insecureAcceptAnything"
+                    }
+                ],
+            }
+        }
+    }
+  '';
+
   environment.systemPackages = map lib.lowPrio ((with pkgs;  [
     curl
     gitMinimal

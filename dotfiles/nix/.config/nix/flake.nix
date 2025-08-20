@@ -39,9 +39,7 @@
   outputs = {
       self,
       nixpkgs,
-      unstable,
       mac-nixpkgs,
-      mac-unstable,
       home-manager,
       nix-darwin,
       pyproject-nix,

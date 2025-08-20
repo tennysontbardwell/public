@@ -177,13 +177,15 @@
             taps = [];
             brews = [ ];
             casks = [
+              "1password-cli"
+              "activitywatch"
+              "alfred"
               "firefox"
+              "hammerspoon"
+              "readest"
               "tailscale"
               "thunderbird"
-              "activitywatch"
-              "1password-cli"
-              "alfred"
-              "hammerspoon"
+              "tor-browser"
               "visual-studio-code"
             ];
         };

@@ -61,3 +61,9 @@ Display the results in a new buffer."
   (tennyson/run-ai-on-region-with-instructions
    "Proof read this and suggest minor corrections"
    "o4-mini"))
+
+(defun tennyson/ai-coderewrite ()
+  (interactive)
+  (tennyson/run-ai-on-region-with-instructions
+   "Read the following code snippet and make the requested changes. Be terse and reduce redundant code. Output only the replacement code that should overwrite the input segment. Include excess information as terse comments."
+   "o3"))

@@ -86,6 +86,11 @@ in
     };
   };
 
+  environment.etc."containers/registries.conf".text = ''
+    [registries.search]
+    registries = ['docker.io']
+  '';
+
   environment.systemPackages = map lib.lowPrio ((with pkgs;  [
     curl
     gitMinimal
@@ -133,6 +138,8 @@ in
     zsh
     ranger
     h2o
+
+    kubernetes
   ])
     ++ packages.common_paths {
       pkgs = pkgs;

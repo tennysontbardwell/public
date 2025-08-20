@@ -45,11 +45,14 @@
 ;; Ivy ;;
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
 (ivy-posframe-mode 1)
+(setq ivy-height 30)
 
 
 ;; GUI ;;
 (setq spaceline-window-numbers-unicode nil)
 (setq spaceline-workspace-numbers-unicode nil)
+;; (setq max-mini-window-height 0.25)
+(setq max-mini-window-height 1)
 
 
 ;; Web ;;
@@ -59,17 +62,23 @@
 ;; https://github.com/orzechowskid/tsx-mode.el/issues/39
 ;; (add-to-list 'lsp--formatting-indent-alist '(tsx-mode . tsi-typescript-indent-offset))
 
-(add-hook
- 'typescript-tsx-mode-hook
- (lambda ()
-   ;; https://github.com/orzechowskid/tsi.el/issues/40
-   (setq standard-indent 2)
-   (setq js-indent-level 2)
-   (setq js-jsx-indent-level 2)
-   (setq typescript-indent-level 2)
-   (setq web-mode-code-indent-offset 2)
-   (setq web-mode-markup-indent-offset 2)
-   ))
+(defun tennyson/web-mode-setup ()
+  (setq standard-indent 2)
+  (setq js-indent-level 2)
+  (setq js-jsx-indent-level 2)
+  (setq typescript-indent-level 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  )
+
+(defun tennyson/ts-mode-setup ()
+  (tennyson/web-mode-setup)
+  (display-fill-column-indicator--turn-on)
+  )
+
+(add-hook 'js-mode-hook 'tennyson/web-mode-setup)
+(add-hook 'typescript-mode-hook 'tennyson/ts-mode-setup)
+(add-hook 'typescript-tsx-mode-hook 'tennyson/ts-mode-setup)
 
 ;; VC ;;
 (setq vc-follow-symlinks t) ; Follow Symlinks w/o prompt

@@ -61,11 +61,11 @@ This function should only modify configuration layer settings."
       typescript-backend 'lsp
       typescript-indent-level 2
       typescript-fmt-tool 'prettier
-                                        ; typescript-fmt-on-save nil
-                                        ; typescript-lsp-linter nil
-                                        ; typescript-linter nil
-                                        ; company-tooltip-idle-delay nil
-                                        ; company-idle-delay nil
+      ;; typescript-fmt-on-save nil
+      ;; typescript-lsp-linter nil
+      ;; typescript-linter nil
+      ;; company-tooltip-idle-delay nil
+      ;; company-idle-delay nil
       )
      (json
       :variables
@@ -74,16 +74,16 @@ This function should only modify configuration layer settings."
       json-backend 'lsp)
      (lsp
       :variables
-      company-idle-delay nil
-      company-tooltip-idle-delay nil
+      company-idle-delay 0.5
+      company-tooltip-idle-delay 0.5
       lsp-headerline-breadcrumb-enable nil
       lsp-idle-delay nil
       lsp-modeline-code-actions-enable nil
       lsp-modeline-diagnostics-enable nil
-      lsp-ui-sideline-delay nil
-      lsp-use-lsp-ui nil
-                                        ; lsp-ui-doc-enable nill
-      lsp-ui-sideline-enable nil
+      lsp-ui-sideline-delay 0.5
+      ;; lsp-use-lsp-ui nil
+      ;; lsp-ui-doc-enable nil
+      ;; lsp-ui-sideline-enable nil
       )
 
      ;; functionality
@@ -140,8 +140,8 @@ This function should only modify configuration layer settings."
      (version-control
       :variables
       version-control-diff-tool 'diff-hl)
-     (treemacs :variables
-               treemacs-use-scope-type 'Perspectives)
+     ;; (treemacs :variables
+     ;;           treemacs-use-scope-type 'Perspectives)
 
      ;; new
      llm-client

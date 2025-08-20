@@ -15,10 +15,9 @@
   (interactive)
   (let ((original-buffer (current-buffer))
         (original-buffers (buffer-list))
-        (org-pandoc-options-for-markdown
+        (org-pandoc-options-for-commonmark
          '(
            (standalone . nil)
-           (to . "markdown+raw_html")
            (wrap . none)
            )))
     (save-excursion
@@ -30,15 +29,21 @@
               (let ((proc (get-buffer-process export-buffer)))
                 (if proc
                     ;; Set a process sentinel to handle completion
-                    (set-process-sentinel proc
-                                          (lambda (process event)
-                                            (when (string= event "finished\n")
-                                              (let ((buf (process-buffer process)))
-                                                (when (buffer-live-p buf)
-                                                  (with-current-buffer buf
-                                                    (kill-new (buffer-string))
-                                                    (message "Exported to clipboard as markdown"))
-                                                  (kill-buffer buf))))))
+                    (set-process-sentinel
+                     proc
+                     (lambda (process event)
+                       (when (string= event "finished\n")
+                         (let ((buf (process-buffer process)))
+                           (when (buffer-live-p buf)
+                             (with-current-buffer buf
+                               (kill-new (buffer-string))
+                               (message "Exported to clipboard as markdown"))
+                             (kill-buffer buf)))
+                         ;; Clean up temp files (from org-pandoc-sentinel logic)
+                         (dolist (file (process-get process 'files))
+                           (when (and file (file-exists-p file))
+                             (delete-file file)))
+                         )))
                   ;; No process, handle immediately
                   (progn
                     (with-current-buffer export-buffer

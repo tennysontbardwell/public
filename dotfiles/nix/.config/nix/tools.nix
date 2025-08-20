@@ -1,9 +1,12 @@
 { pkgs, unstable-pkgs, ... }:
 let
+  ttp = pkgs.writeScriptBin "ttp" ''
+    #!/usr/bin/env sh
+    "$HOME/repos/tennysontbardwell/tennyson.ts/bin/index.cjs" "$@"
+    '';
   tt = pkgs.writeScriptBin "tt" ''
     #!/usr/bin/env sh
-    declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
-    "$PROJECT/bin/index.cjs" "$@"
+    "$HOME/repos/tennysontbardwell/misc-projects/personal.ts/bin/index.js" "$@"
     '';
 in
 {
@@ -18,6 +21,7 @@ in
     # wifi-menu
     sysstat
     xclip
+    kubernetes
   ];
 
   paths = with pkgs; [
@@ -26,6 +30,8 @@ in
     pqiv
     firefox
     web-ext
+    sops
+    age
 
     #### general tools
 
@@ -98,6 +104,7 @@ in
     minikube
     kubectl
     podman
+    podman-tui
     kubernetes-helm
 
 
@@ -153,6 +160,7 @@ in
     borgmatic
     awscli
     visidata
+    lnav
     rclone
     yt-dlp
     gallery-dl
@@ -226,5 +234,6 @@ in
 
     # custom
     tt
+    ttp
   ];
 }

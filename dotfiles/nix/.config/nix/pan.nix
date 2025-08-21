@@ -86,29 +86,54 @@ in
     };
   };
 
-  environment.etc."containers/registries.conf".text = ''
-    [registries.search]
-    registries = ['docker.io']
-  '';
+#  environment.etc."containers/registries.conf".text = ''
+#    [registries.search]
+#    registries = ['docker.io']
+#  '';
 
-  environment.etc."containers/policy.json".text = ''
-    {
-        "default": [
-            {
-                "type": "reject"
-            }
-        ],
-        "transports": {
-            "docker": {
-                "docker.io": [
-                    {
-                        "type": "insecureAcceptAnything"
-                    }
-                ]
-            }
-        }
-    }
-  '';
+#  environment.etc."containers/policy.json".text = ''
+#    {
+#        "default": [
+#            {
+#                "type": "insecureAcceptAnything"
+#            }
+#        ]
+#    }
+#  '';
+
+
+  services.kubernetes = {
+    roles = ["master" "node"];
+    masterAddress = "pan.tennysontbardwell.com";
+    apiserverAddress = "https://pan.tennysontbardwell.com:6443";
+    kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
+    # easyCerts = true;
+    apiserver = {
+      securePort = 6443;
+      advertiseAddress = "95.217.85.40";
+    };
+
+    # use coredns
+    addons.dns.enable = true;
+
+    # needed if you use swap
+    # kubelet.extraOpts = "--fail-swap-on=false";
+  };
+
+  virtualisation.podman = {
+    enable = true;
+    dockerSocket.enable = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+  virtualisation.containerd = {
+    enable = true;
+    settings = {
+      plugins."io.containerd.grpc.v1.cri".containerd.snapshotter = "overlayfs";
+    };
+  };
+  systemd.services.podman = {
+    enable = true;
+  };
 
   environment.systemPackages = map lib.lowPrio ((with pkgs;  [
     curl
@@ -159,6 +184,7 @@ in
     h2o
 
     kubernetes
+    cri-tools
   ])
     ++ packages.common_paths {
       pkgs = pkgs;

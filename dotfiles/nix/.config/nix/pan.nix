@@ -107,9 +107,12 @@ in
 
   services.kubernetes = {
     roles = ["master" "node"];
-    masterAddress = "pan.tennysontbardwell.com";
-    apiserverAddress = "https://pan.tennysontbardwell.com:6443";
-    kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
+    # masterAddress = "pan.tennysontbardwell.com";
+    masterAddress = "pan";
+    # apiserverAddress = "https://pan.tennysontbardwell.com:6443";
+    apiserverAddress = "https://pan:6443";
+    # kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
+    kubelet.kubeconfig.server = "https://pan:6443";
     # easyCerts = true;
     apiserver = {
       securePort = 6443;
@@ -172,6 +175,7 @@ in
     imagemagick
     graphviz
     nixos-anywhere
+    openssl
 
     jellyfin
     tailscale
@@ -186,7 +190,6 @@ in
     ranger
     h2o
 
-    kubernetes
     cri-tools
   ])
     ++ packages.common_paths {

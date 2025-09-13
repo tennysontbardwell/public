@@ -3,42 +3,43 @@
   (save-restriction
     (save-excursion
       (org-narrow-to-subtree)
-      (let* ((tree (org-element-map
-                       (org-element-parse-buffer)
-                       'headline
-                     (lambda (el)
-                       (if (eq (org-element-property
-                                :level el)
-                               4)
-                           (list
-                            (org-element-property
-                             :raw-value el)
-                            (org-element-property
-                             :raw-value (nth 0 (org-element-property
-                                                :title el)))
-                            (unwind-protect
-                                (substring
-                                 (org-element-property
-                                  :raw-value el)
-                                 23
-                                 nil)
-                              ""))
-                         nil))))
-             (tree (seq-filter
-                    (lambda (x) (not (eq x nil)))
-                    tree))
-             (table-rows (mapconcat
-                          (lambda (x)
-                            (format
-                             "| %s | | | %s |"
-                             (nth 1 x)
-                             (nth 2 x)))
-                          tree
-                          "\n"))
-             (table (format
-                     "%s\n%s"
-                     table-rows
-                     "#+TBLFM: @>$2=0::$2=(date(<@+1$1>)-date(<$1>))*24*60;%.0f::$3='(orgtbl-ascii-draw $2 0 600 30)")))
+      (let*
+          ((tree (org-element-map
+                     (org-element-parse-buffer)
+                     'headline
+                   (lambda (el)
+                     (if (eq (org-element-property
+                              :level el)
+                             4)
+                         (list
+                          (org-element-property
+                           :raw-value el)
+                          (org-element-property
+                           :raw-value (nth 0 (org-element-property
+                                              :title el)))
+                          (unwind-protect
+                              (substring
+                               (org-element-property
+                                :raw-value el)
+                               23
+                               nil)
+                            ""))
+                       nil))))
+           (tree (seq-filter
+                  (lambda (x) (not (eq x nil)))
+                  tree))
+           (table-rows (mapconcat
+                        (lambda (x)
+                          (format
+                           "| %s | | | %s |"
+                           (nth 1 x)
+                           (nth 2 x)))
+                        tree
+                        "\n"))
+           (table (format
+                   "%s\n%s"
+                   table-rows
+                   "#+TBLFM: @>$2=0::$2=(date(<@+1$1>)-date(<$1>))*24*60;%.0f::$3='(orgtbl-ascii-draw $2 0 600 30)")))
         (kill-new table)))))
 
 

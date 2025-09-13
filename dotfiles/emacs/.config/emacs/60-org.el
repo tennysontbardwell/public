@@ -130,9 +130,11 @@
   (evil-define-key 'normal org-mode-map (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-return)))
   ;; This doesn't seem to be applied automatically
   (local-set-key (kbd "C-c a") 'org-agenda)
-  (setq org-priority-faces '((?A . (:foreground "red" :weight 'bold))
-                             (?B . (:foreground "yellow"))
-                             (?C . (:foreground "green"))))
+  (setq org-priority-faces
+        `((?A . (:foreground ,(face-attribute 'ansi-color-red :background)))
+          (?B . (:foreground ,(face-attribute 'ansi-color-yellow :background)))
+          (?C . (:foreground ,(face-attribute 'ansi-color-blue :background)))
+          ))
   (company-mode 0)
   (visual-line-mode 1)
   (high-priority-keys))

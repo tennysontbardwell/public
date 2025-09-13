@@ -101,6 +101,9 @@ in
 #    }
 #  '';
 
+  systemd.tmpfiles.rules = [
+    "d /var/lib/kubernetes-storage 0755 root root -"
+  ];
 
   services.kubernetes = {
     roles = ["master" "node"];

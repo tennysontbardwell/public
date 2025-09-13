@@ -718,7 +718,8 @@ This function is called at the very end of Spacemacs initialization."
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(custom-safe-themes
-     '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf"
+     '("9af2b1c0728d278281d87dc91ead7f5d9f2287b1ed66ec8941e97ab7a6ab73c0"
+       "7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf"
        "7964b513f8a2bb14803e717e0ac0123f100fb92160dcf4a467f530868ebaae3e" default))
    '(package-selected-packages
      '(ace-link activity-watch-mode afternoon-theme aggressive-indent ahk-mode

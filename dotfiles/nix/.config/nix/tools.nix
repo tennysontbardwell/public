@@ -106,6 +106,8 @@ in
     podman
     podman-tui
     kubernetes-helm
+    k9s
+    cloudlens
 
 
     #### GNU
@@ -191,6 +193,8 @@ in
     maven
     # web
     nodejs
+    nodePackages.prettier
+    bun
     yarn
     php
     go

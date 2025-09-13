@@ -167,12 +167,13 @@
 
             masApps = {
               Xcode = 497799835;
-              "1Password 7 - Password Manager" = 1333542190;
+              # "1Password 7 - Password Manager" = 1333542190;
             };
             taps = [];
             brews = [ ];
             casks = [
               "1password-cli"
+              "1password"
               "activitywatch"
               "alfred"
               "firefox"

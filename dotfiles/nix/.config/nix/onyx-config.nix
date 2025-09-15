@@ -7,13 +7,12 @@ let
     uv2nix = uv2nix;
     pyproject-build-systems = pyproject-build-systems;
   });
-  m1-pkgs = m1-packages.pkgs;
   m1.paths = m1-packages.common_paths {
     pkgs = pkgs;
     system = "aarch64-darwin";
   };
-  m1.pkgs = m1-pkgs m1.system;
   m1.system = "aarch64-darwin";
+  m1.pkgs = (import ./patch.nix) { nixpkgs = mac-nixpkgs; } m1.system;
 in
 {
   # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps

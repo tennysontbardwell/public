@@ -47,29 +47,21 @@
       pyproject-build-systems,
       disko
   }:
-    let
-      inherit (nixpkgs) lib;
-    in
     {
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           ./onyx-config.nix
-          ./r.nix
         ];
       };
 
-      nixosConfigurations.pan =
-        let
+      nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit system;
 
           modules = [
             disko.nixosModules.disko
             # ./pan.nix
-            ( { modulesPath, lib, pkgs, ... }:
+            ( { modulesPath, uv2nix, lib, pkgs, ... }:
               import ./pan.nix {
                 modulesPath = modulesPath;
                 nixpkgs = nixpkgs;
@@ -79,7 +71,6 @@
               })
             ./pan-disk-config.nix
             ./pan-hardware-configuration.nix
-            ./r.nix
           ];
 
         # pkgs = pkgs linux.system;

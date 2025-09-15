@@ -18,7 +18,7 @@ let
     pyproject-build-systems = pyproject-build-systems;
   });
 
-  pkgs = packages.pkgs system;
+  pkgs = (import ./patch.nix) { inherit nixpkgs; } system;
 in
 {
   imports = [

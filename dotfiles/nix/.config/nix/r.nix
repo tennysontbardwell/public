@@ -139,7 +139,7 @@ let
 
 in
 {
-  environment.systemPackages = [
+  paths = [
     myREnv
     myRStudio
   ];

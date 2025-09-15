@@ -6,7 +6,7 @@ let
   packages = (import ./packages.nix {
     inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems;
   });
-  paths = packages.common_paths { inherit system pkgs; };
+  common_paths = packages.common_paths { inherit system pkgs; };
 in
 {
   # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps
@@ -20,7 +20,9 @@ in
       home = "/Users/tennyson";
   };
   programs.zsh.enable = true;
-  environment.systemPackages = paths ++ [pkgs.pam-reattach];
+  environment.systemPackages = with pkgs; [
+    pam-reattach
+  ] ++ common_paths;
 
   # [[https://write.rog.gr/writing/using-touchid-with-tmux/#what-files-manages-this][Roger Steve Ruiz | Using TouchID with Tmux]]
   environment.etc."pam.d/sudo_local".text = ''

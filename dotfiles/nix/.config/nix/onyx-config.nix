@@ -1,9 +1,7 @@
-{ pkgs, lib, pyproject-nix, uv2nix, pyproject-build-systems, ... }:
+{ pkgs, lib, ... }:
 let
   system = "aarch64-darwin";
-  packages = (import ./packages.nix {
-    inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems;
-  });
+  packages = (import ./packages.nix { inherit lib pkgs; });
   common_paths = packages.common_paths { inherit system pkgs; };
 in
 {

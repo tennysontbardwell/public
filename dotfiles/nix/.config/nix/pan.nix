@@ -1,21 +1,9 @@
-{
-  modulesPath,
-  lib,
-  pkgs,
-  pyproject-nix,
-  uv2nix,
-  pyproject-build-systems,
-  ...
-}:
+{ modulesPath, lib, pkgs, ... }:
 let
   system = "x86_64-linux";
   inherit lib;
 
-  packages = import ./packages.nix
-    { inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems; };
-
-  # pkgs = nixpkgs system;
-  # pkgs = (import ./patch.nix) { inherit nixpkgs; } system;
+  packages = import ./packages.nix { inherit lib pkgs; };
 in
 {
   imports = [

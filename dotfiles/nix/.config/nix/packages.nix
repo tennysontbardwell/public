@@ -1,18 +1,11 @@
-{
-  lib,
-  pkgs,
-  pyproject-nix,
-  uv2nix,
-  pyproject-build-systems,
-  ...
-}:
+{ lib, pkgs, ... }:
 {
   common_paths = { pkgs, system, ... }:
     let
       tools  = import ./tools.nix { pkgs = pkgs; };
       r      = import ./r.nix     { pkgs = pkgs; };
       python = import ./python.nix
-        { inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems; };
+        { inherit lib pkgs; };
     in
     []
       ++ tools.paths
@@ -21,8 +14,10 @@
   ;
 
   linux_paths = { pkgs, system, ... }:
+    let
+      tools  = import ./tools.nix { pkgs = pkgs; };
+    in
     []
-      ++ ((import ./tools.nix)
-          {pkgs = pkgs; unstable-pkgs = pkgs;}).linux_paths
+      ++ tools.linux_paths
   ;
 }

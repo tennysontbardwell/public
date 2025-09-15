@@ -1,6 +1,7 @@
 {
   modulesPath,
-  nixpkgs,
+  lib,
+  pkgs,
   pyproject-nix,
   uv2nix,
   pyproject-build-systems,
@@ -8,12 +9,13 @@
 }:
 let
   system = "x86_64-linux";
-  inherit (nixpkgs) lib;
+  inherit lib;
 
   packages = import ./packages.nix
     { inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems; };
 
-  pkgs = (import ./patch.nix) { inherit nixpkgs; } system;
+  # pkgs = nixpkgs system;
+  # pkgs = (import ./patch.nix) { inherit nixpkgs; } system;
 in
 {
   imports = [
@@ -148,6 +150,7 @@ in
     enable = true;
   };
 
+  nixpkgs.config.cudaSupport = false;
   environment.systemPackages = map lib.lowPrio ((with pkgs;  [
     curl
     gitMinimal

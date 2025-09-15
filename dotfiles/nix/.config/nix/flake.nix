@@ -63,8 +63,8 @@
             # ./pan.nix
             ( { modulesPath, uv2nix, lib, pkgs, ... }:
               import ./pan.nix {
+                pkgs = pkgs;
                 modulesPath = modulesPath;
-                nixpkgs = nixpkgs;
                 pyproject-nix = pyproject-nix;
                 uv2nix = uv2nix;
                 pyproject-build-systems = pyproject-build-systems;

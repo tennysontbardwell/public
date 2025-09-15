@@ -10,13 +10,8 @@ let
   system = "x86_64-linux";
   inherit (nixpkgs) lib;
 
-  packages = (import ./packages.nix {
-    lib = nixpkgs.lib;
-    nixpkgs = nixpkgs;
-    pyproject-nix = pyproject-nix;
-    uv2nix = uv2nix;
-    pyproject-build-systems = pyproject-build-systems;
-  });
+  packages = import ./packages.nix
+    { inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems; };
 
   pkgs = (import ./patch.nix) { inherit nixpkgs; } system;
 in

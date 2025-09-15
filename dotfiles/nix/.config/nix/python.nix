@@ -19,7 +19,7 @@ let
       pandas
       polars
       fastparquet
-      parquet
+      # parquet TODO wait for fix
       jupyter
       jupyterlab
       plotnine
@@ -33,7 +33,6 @@ let
 
       ### AI
       openai
-      parquet
       torch
       transformers
       torchvision

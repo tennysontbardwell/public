@@ -11,6 +11,27 @@ in
     (modulesPath + "/profiles/qemu-guest.nix")
     ./pan-disk-config.nix
   ];
+# nixpkgs.overlays = [
+#   (final: prev: {
+#     python3Packages = prev.python3Packages.overrideScope (python-final: python-prev: {
+#       thriftpy2 = python-prev.thriftpy2.overridePythonAttrs (old: {
+#         dependencies = (old.dependencies or []) ++ [
+#           python-final.toml
+#         ];
+#       });
+#     });
+#   })
+# ];
+# nixpkgs.overlays = [
+#     (final: prev: {
+#       pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [ (pyfinal: pyprev: {
+#         thriftpy2 = pyprev.thriftpy2.overridePythonAttrs (oldAttrs: {
+#           dependencies = oldAttrs.dependencies ++ [ pkgs.python313Packages.toml ];
+#         });
+#       })];
+#     })
+#   ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   boot = {
     supportedFilesystems = [ "zfs" ];

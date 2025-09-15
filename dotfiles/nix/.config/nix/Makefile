@@ -2,6 +2,9 @@
 
 default: upgrade
 
+check:
+	nix flake check --no-build --show-trace
+
 pan:
 	nixos-rebuild switch --flake /root/projects/public/dotfiles/nix/.config/nix'#pan' --show-trace
 

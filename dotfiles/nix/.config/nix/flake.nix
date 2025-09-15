@@ -59,8 +59,6 @@
       });
 
       pkgs = packages.pkgs;
-
-      linux.system = "x86_64-linux";
     in
     {
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
@@ -71,17 +69,27 @@
         ];
       };
 
-      nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
-        inherit (linux) system;
-        inherit lib packages pkgs;
+      nixosConfigurations.pan =
+        let
+          system = "x86_64-linux";
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          pkgs = pkgs system;
 
-        modules = [
-          disko.nixosModules.disko
-          ./pan.nix
-          ./pan-disk-config.nix
-          ./pan-hardware-configuration.nix
-          ./r.nix
-        ];
+          modules = [
+            disko.nixosModules.disko
+            ( { modulesPath, lib, pkgs, ... }:
+              import ./pan.nix {
+                modulesPath = modulesPath;
+                lib = lib;
+                pkgs = pkgs;
+                packages = packages;
+              })
+            ./pan-disk-config.nix
+            ./pan-hardware-configuration.nix
+            ./r.nix
+          ];
 
         # pkgs = pkgs linux.system;
       };

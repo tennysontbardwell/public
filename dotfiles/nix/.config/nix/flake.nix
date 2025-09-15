@@ -72,7 +72,7 @@
       };
 
       nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
-        inherit (linux) "x86_64-linux";
+        inherit (linux) system;
 
         modules = [
           disko.nixosModules.disko

@@ -60,12 +60,7 @@
 
           modules = [
             disko.nixosModules.disko
-            # ./pan.nix
-            ( { modulesPath, uv2nix, lib, pkgs, ... }:
-              import ./pan.nix {
-                inherit pkgs modulesPath lib nixpkgs;
-                inherit pyproject-nix uv2nix pyproject-build-systems;
-              })
+            ./pan.nix
             ./pan-disk-config.nix
             ./pan-hardware-configuration.nix
           ];

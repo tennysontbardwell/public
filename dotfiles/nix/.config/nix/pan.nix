@@ -152,55 +152,21 @@ in
 
   nixpkgs.config.cudaSupport = false;
   environment.systemPackages = map lib.lowPrio ((with pkgs;  [
-    curl
-    gitMinimal
-    vim
-    mosh
-    tmux
+    # to make this box function (should be duplicates)
+    git
     cryptsetup
     zfs
     zstd
-
-    ripgrep
-    jq
-    wget
-    tmux
-    pandoc
-    fzf
-    socat
-    rsync
-    neovim
-    vim
-    ncdu
-    htop
-    git-lfs
-    pv
-    texlive.combined.scheme-full
-    pipx
-    parallel
-    git
-    findutils
-    curl
-    ffmpeg
-    imagemagick
-    graphviz
     nixos-anywhere
-    openssl
-
-    jellyfin
-    tailscale
-    python3
-    git-annex
-    pass
-    coreutils-full
-    #gnupg
-    pinentry-all
-    stow
     zsh
-    ranger
+    tailscale
+
+    # apps only on this box
+    jellyfin
     h2o
 
-    cri-tools
+    # todo remove
+    pinentry-all
   ])
     ++ packages.common_paths {
       pkgs = pkgs;

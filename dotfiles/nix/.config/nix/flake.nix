@@ -63,6 +63,8 @@
       linux.system = "x86_64-linux";
     in
     {
+      inherit lib packages pkgs;
+
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [

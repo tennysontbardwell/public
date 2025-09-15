@@ -7,7 +7,7 @@
   ...
 }:
 {
-  pkgs = ./patch nixpkgs;
+  pkgs = (import ./patch.nix) nixpkgs;
 
   common_paths = { pkgs, system, ... }:
     [

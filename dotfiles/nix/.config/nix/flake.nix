@@ -51,11 +51,7 @@
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-            ( { uv2nix, lib, pkgs, ... }:
-              import ./onyx-config.nix {
-                inherit pkgs lib mac-nixpkgs pyproject-nix uv2nix;
-                inherit pyproject-build-systems;
-              })
+            ./onyx-config.nix
         ];
       };
 
@@ -67,12 +63,8 @@
             # ./pan.nix
             ( { modulesPath, uv2nix, lib, pkgs, ... }:
               import ./pan.nix {
-                pkgs = pkgs;
-                modulesPath = modulesPath;
-                nixpkgs = nixpkgs;
-                pyproject-nix = pyproject-nix;
-                uv2nix = uv2nix;
-                pyproject-build-systems = pyproject-build-systems;
+                inherit pkgs modulesPath lib nixpkgs;
+                inherit pyproject-nix uv2nix pyproject-build-systems;
               })
             ./pan-disk-config.nix
             ./pan-hardware-configuration.nix

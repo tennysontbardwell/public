@@ -103,7 +103,7 @@ This function should only modify configuration layer settings."
      better-defaults
      bm
      emacs-lisp
-     git
+     (git :variables git-enable-magit-delta-plugin t)
      finance
      (elfeed :variables rmh-elfeed-org-files (list "~/.emacs.d/private/elfeed.org"))
      gnus

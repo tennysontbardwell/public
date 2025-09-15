@@ -1,8 +1,6 @@
-{ pkgs, lib, mac-nixpkgs, pyproject-nix, uv2nix, pyproject-build-systems, ... }:
+{ pkgs, lib, pyproject-nix, uv2nix, pyproject-build-systems, ... }:
 let
   system = "aarch64-darwin";
-  # patch is currently disabled on onyx
-  # pkgs = (import ./patch.nix) { nixpkgs = mac-nixpkgs; } system;
   packages = (import ./packages.nix {
     inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems;
   });

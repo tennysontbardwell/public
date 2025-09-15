@@ -107,6 +107,7 @@ in
     podman
     podman-tui
     kubernetes-helm
+    cri-tools
     k9s
     cloudlens
 

@@ -7,7 +7,7 @@
 
     mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "mac-nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "mac-nixpkgs";
 

@@ -29,7 +29,7 @@ in
     [
     ]
       ++ ((import ./tools.nix)
-          {pkgs = pkgs; unstable-pkgs = pkgs;}).paths
+          {pkgs = pkgs;}).paths
       ++ ((import ./python.nix) {
         lib = lib;
         pkgs = pkgs;
@@ -37,8 +37,8 @@ in
         uv2nix = uv2nix;
         pyproject-build-systems = pyproject-build-systems;
       }).paths
-      ++ ((import ./r.nix)
-          {pkgs = pkgs; unstable-pkgs = pkgs;}).paths
+      # ++ ((import ./r.nix)
+      #     {pkgs = pkgs; unstable-pkgs = pkgs;}).paths
   ;
 
   linux_paths = { pkgs, system, ... }:

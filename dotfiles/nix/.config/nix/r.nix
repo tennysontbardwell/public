@@ -1,4 +1,4 @@
-{ pkgs, unstable-pkgs, ... }:
+{ pkgs, ... }:
 let
   # d3scatter = pkgs.rPackages.buildRPackage {
   #   name = "d3scatter";
@@ -133,13 +133,13 @@ let
     packages = myRPackages;
   };
 
-  myRStudio = unstable-pkgs.rstudioWrapper.override{
+  myRStudio = pkgs.rstudioWrapper.override{
     packages = myRPackages;
   };
 
 in
 {
-  paths = [
+  environment.systemPackages = [
     myREnv
     myRStudio
   ];

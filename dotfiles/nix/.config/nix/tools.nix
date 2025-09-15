@@ -1,4 +1,4 @@
-{ pkgs, unstable-pkgs, ... }:
+{ pkgs, ... }:
 let
   ttp = pkgs.writeScriptBin "ttp" ''
     #!/usr/bin/env sh

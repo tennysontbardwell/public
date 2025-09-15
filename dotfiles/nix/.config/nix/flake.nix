@@ -61,55 +61,18 @@
       pkgs = packages.pkgs;
 
       linux.system = "x86_64-linux";
-      linux.pkgs = pkgs linux.system;
-
-      m1.system = "aarch64-darwin";
-
-      linux.paths = (packages.common_paths linux)
-        ++ [
-          # sysstat
-          # wifi-menu
-        ];
-
-      mkPackages = { pkgs, paths, ... }: pkgs.buildEnv {
-        name = "home-packages";
-        paths = paths;
-      };
-
-      devShells = { pkgs, paths, ... }: pkgs.buildEnv {
-        buildInputs = paths;
-      };
-
     in
     {
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           ./onyx-config.nix
+          ./r.nix
         ];
       };
 
-      # packages."${m1.system}".onyx = self.darwinConfigurations.onyx.system;
-
-      # homeConfigurations =
-      #   (import ./home-manager.nix) {
-      #     nixpkgs = nixpkgs;
-      #     pkgs = m1.pkgs;
-      #     system = m1.system;
-      #     home-manager = home-manager;
-      #   };
-
-      # packages."${m1.system}".default = mkPackages m1;
-      # devShells."${m1.system}".default = devShells m1;
-      # devShells."${m1.system}".uv = {
-      #   buildInputs = paths;
-      # }
-
-      packages."${linux.system}".default = mkPackages linux;
-      devShells."${linux.system}".default = devShells linux;
-
       nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit (linux) "x86_64-linux";
 
         modules = [
           disko.nixosModules.disko
@@ -122,6 +85,7 @@
             })
           ./pan-disk-config.nix
           ./pan-hardware-configuration.nix
+          ./r.nix
         ];
 
         pkgs = pkgs linux.system;

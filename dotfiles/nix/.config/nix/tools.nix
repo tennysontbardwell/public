@@ -11,7 +11,8 @@ let
 in
 {
   linux_paths = with pkgs; [
-    dmenu-rs
+    # build issue on 2025-09-15
+    # dmenu-rs
     kdePackages.dolphin
     gnome-screenshot
     i3

@@ -1,18 +1,11 @@
 { pkgs, lib, mac-nixpkgs, pyproject-nix, uv2nix, pyproject-build-systems, ... }:
 let
-  m1-packages = (import ./packages.nix {
-    lib = lib;
-    nixpkgs = mac-nixpkgs;
-    pyproject-nix = pyproject-nix;
-    uv2nix = uv2nix;
-    pyproject-build-systems = pyproject-build-systems;
+  system = "aarch64-darwin";
+  pkgs = (import ./patch.nix) { nixpkgs = mac-nixpkgs; } system;
+  packages = (import ./packages.nix {
+    inherit lib pkgs pyproject-nix uv2nix pyproject-build-systems;
   });
-  m1.paths = m1-packages.common_paths {
-    pkgs = pkgs;
-    system = "aarch64-darwin";
-  };
-  m1.system = "aarch64-darwin";
-  m1.pkgs = (import ./patch.nix) { nixpkgs = mac-nixpkgs; } m1.system;
+  paths = packages.common_paths { inherit system pkgs; };
 in
 {
   # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps
@@ -20,18 +13,14 @@ in
     enable = false;
     settings.experimental-features = "nix-command flakes";
   };
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = system;
   users.users.tennyson = {
       name = "tennyson";
       home = "/Users/tennyson";
   };
   programs.zsh.enable = true;
-  # environment.systemPackages = with pkgs; [ libfaketime emacs mas neovim R stow iterm2 fzf tmux nodejs yarn ranger ripgrep ];
-  # environment.systemPackages = m1-packages.common_paths {
-  #   pkgs = m1.pkgs;
-  #   system = m1.system;
-  # };
-  environment.systemPackages = m1.paths ++ [pkgs.pam-reattach];
+  environment.systemPackages = paths ++ [pkgs.pam-reattach];
+
   # [[https://write.rog.gr/writing/using-touchid-with-tmux/#what-files-manages-this][Roger Steve Ruiz | Using TouchID with Tmux]]
   environment.etc."pam.d/sudo_local".text = ''
     # Managed by Nix Darwin
@@ -40,7 +29,6 @@ in
   '';
 
 
-  # environment.systemPackages = m1-packages.pkgs;
   networking.computerName = "onyx";
   security.pam.services.sudo_local.touchIdAuth = true;
   system = {

@@ -51,7 +51,11 @@
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./onyx-config.nix
+            ( { uv2nix, lib, pkgs, ... }:
+              import ./onyx-config.nix {
+                inherit pkgs lib mac-nixpkgs pyproject-nix uv2nix;
+                inherit pyproject-build-systems;
+              })
         ];
       };
 

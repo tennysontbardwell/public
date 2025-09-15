@@ -6,24 +6,8 @@
   pyproject-build-systems,
   ...
 }:
-let
-  pkgsFor = system:
-    import nixpkgs {
-      inherit system;
-
-      config = {
-        cudaSupport = false;
-      };
-
-      overlays = [
-        (final: prev: {
-          sioyek = prev.callPackage ./overlay/sioyek-unstable.nix { };
-        })
-      ];
-    };
-in
 {
-  pkgs = pkgsFor;
+  pkgs = ./patch nixpkgs;
 
   common_paths = { pkgs, system, ... }:
     [

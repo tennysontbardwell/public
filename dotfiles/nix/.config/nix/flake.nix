@@ -76,13 +76,7 @@
 
         modules = [
           disko.nixosModules.disko
-          ( { modulesPath, lib, pkgs, ... }:
-            import ./pan.nix {
-              modulesPath = modulesPath;
-              lib = lib;
-              pkgs = pkgs;
-              packages = packages;
-            })
+          ./pan.nix
           ./pan-disk-config.nix
           ./pan-hardware-configuration.nix
           ./r.nix

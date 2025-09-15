@@ -177,6 +177,7 @@
               "activitywatch"
               "alfred"
               "firefox"
+              "firefox@developer-edition"
               "hammerspoon"
               "readest"
               "tailscale"

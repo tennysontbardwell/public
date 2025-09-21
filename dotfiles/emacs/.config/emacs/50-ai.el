@@ -26,7 +26,7 @@ Display the results in a new buffer."
 
     ;; Start the async process
     (let ((process (start-process process-name output-buffer-name
-                                  "tt" "ai" instructions "-f" temp-file)))
+                                  "tt" "ai" "-p" instructions "-f" temp-file)))
 
       ;; Set up process sentinel to handle completion and cleanup
       (set-process-sentinel

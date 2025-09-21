@@ -22,7 +22,7 @@
 
 
 ;; Misc ;;
-(setq dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep"))
+(setq dotspacemacs-search-tools '("rg" "ag" "ack" "grep"))
 (setq calendar-week-start-day 1)
 (global-activity-watch-mode 1)
 (pulsar-global-mode)

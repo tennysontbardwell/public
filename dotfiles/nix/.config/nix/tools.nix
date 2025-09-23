@@ -23,6 +23,7 @@ in
     sysstat
     xclip
     kubernetes
+    bubblewrap
   ];
 
   paths = with pkgs; [

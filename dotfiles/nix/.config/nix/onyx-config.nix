@@ -83,6 +83,7 @@ in
         "alfred"
         "firefox"
         "firefox@developer-edition"
+        "ghostty"
         "hammerspoon"
         "readest"
         "tailscale"

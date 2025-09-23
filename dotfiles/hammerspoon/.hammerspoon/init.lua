@@ -86,7 +86,7 @@ end
 --------------------------------------------------------------------------------
 
 appKey("F", "firefox")
-appKey("T", "iterm2")
+appKey("T", "ghostty")
 appKey("D", "emacs")
 appKey("R", "rstudio")
 appKey("S", "sioyek")

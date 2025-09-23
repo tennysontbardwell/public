@@ -27,6 +27,7 @@ let
       scikit-misc
       spyder-kernels
       scipy
+      pyecharts
       # pyGAM
       # econML
       # parqv

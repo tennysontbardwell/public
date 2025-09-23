@@ -18,8 +18,11 @@ pan-upgrade:
 onyx:
 	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- switch --flake '.#onyx'
 
+onyx-build:
+	nix build '.#onyx'
+
 onyx-upgrade:
-	nix flake update mac-nixpkgs mac-unstable home-manager nix-darwin
+	nix flake update mac-nixpkgs nix-darwin
 	make onyx
 
 onyx-bounce:

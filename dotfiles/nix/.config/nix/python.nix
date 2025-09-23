@@ -1,7 +1,14 @@
 { lib, pkgs, ... }:
 let
-  myPythonEnv = pkgs.python3.withPackages (ps: with ps;
-    [
+  python3 = pkgs.python3.override {
+    self = python3;
+    packageOverrides = pyfinal: pyprev: {
+      snapshot-pyppeteer = pyfinal.callPackage ./snapshot-pyppeteer.nix { };
+    };
+  };
+
+  myPythonEnv = python3.withPackages (
+    ps: with ps; [
       ### misc/basic
       requests
       lxml
@@ -49,7 +56,8 @@ let
       ## not FOSS / not mac
       # accelerate
       # bitsandbytes
-  ]);
+    ]
+  );
 in
 {
   paths = with pkgs; [

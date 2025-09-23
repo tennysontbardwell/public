@@ -2,11 +2,13 @@
 let
   ttp = pkgs.writeScriptBin "ttp" ''
     #!/usr/bin/env sh
-    "$HOME/repos/tennysontbardwell/tennyson.ts/bin/index.cjs" "$@"
+    bun run "$HOME/repos/tennysontbardwell/tennyson.ts/tennyson/index.ts" -- "$@"
+    # "$HOME/repos/tennysontbardwell/tennyson.ts/bin/index.cjs" "$@"
     '';
   tt = pkgs.writeScriptBin "tt" ''
     #!/usr/bin/env sh
-    "$HOME/repos/tennysontbardwell/misc-projects/personal.ts/bin/index.js" "$@"
+    bun run "$HOME/repos/tennysontbardwell/misc-projects/personal.ts/tennyson-personal/bin/tt.ts" -- "$@"
+    # "$HOME/repos/tennysontbardwell/misc-projects/personal.ts/bin/index.js" "$@"
     '';
 in
 {
@@ -126,6 +128,7 @@ in
     pwgen
 
     #### EMACs?
+    delta
     # zotero-translation-server
 
     # maybe keep?
@@ -140,6 +143,7 @@ in
     yazi
     lf
     imgcat
+    mc
 
     #### mac specific CLI tool overrides
     gnused

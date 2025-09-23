@@ -1,32 +1,30 @@
-(defun tennyson/cmd-in-iterm (cmd)
-  "Open the current directory in iTerm by creating a new tmux window in session 'main'."
+(defun tennyson/cmd-in-term (&optional cmd dir terminal)
+  "Open directory in terminal with optional command.
+CMD: Command to run (if nil, opens interactive shell)
+DIR: Directory to open (if nil, defaults to current buffer's directory or default-directory)
+TERMINAL: Terminal application to use ('ghostty or 'iterm, defaults to 'ghostty)"
   (interactive)
-  (let ((dir (if (buffer-file-name)
-                 (file-name-directory (buffer-file-name))
-               default-directory)))
+  (let* ((target-dir (or dir
+                         (if (buffer-file-name)
+                             (file-name-directory (buffer-file-name))
+                           (expand-file-name default-directory))))
+         (terminal-app (or terminal 'ghostty))
+         (app-name (if (eq terminal-app 'iterm) "iTerm" "Ghostty"))
+         (tmux-cmd (if cmd
+                       (format "tmux new-session -A -s main; tmux new-window -c %s -t main %s"
+                               (shell-quote-argument target-dir)
+                               (shell-quote-argument cmd))
+                     (format "tmux new-session -A -s main; tmux new-window -c %s -t main"
+                             (shell-quote-argument target-dir))))
+         (full-cmd (format "%s; osascript -e 'tell application \"%s\" to activate'"
+                           tmux-cmd app-name)))
     (start-process-shell-command
-     "open-iterm"
+     "open-terminal"
      nil
-     (format "tmux new-session -A -s main; tmux new-window -c %s -t main %s; osascript -e 'tell application \"iTerm\" to activate'"
-             (shell-quote-argument dir)
-             (shell-quote-argument cmd)
-             ))))
-
-
-(defun tennyson/open-dir-in-iterm ()
-  "Open the current directory in iTerm by creating a new tmux window in session 'main'."
-  (interactive)
-  (let ((dir (if (buffer-file-name)
-                 (file-name-directory (buffer-file-name))
-               (expand-file-name default-directory))))
-    (start-process-shell-command
-     "open-iterm"
-     nil
-     (format "tmux new-session -A -s main; tmux new-window -c %s -t main; osascript -e 'tell application \"iTerm\" to activate'"
-             (shell-quote-argument dir)))))
-
+     full-cmd)))
 
 ;; ==== Copying to System Clipboard
+
 (defun tennyson-copy-to-clipboard ()
   (interactive)
   (if (eq system-type 'gnu/linux)

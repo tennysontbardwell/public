@@ -19,7 +19,7 @@ onyx:
 	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- switch --flake '.#onyx'
 
 onyx-build:
-	nix build '.#onyx'
+	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- build --flake '.#onyx'
 
 onyx-upgrade:
 	nix flake update mac-nixpkgs nix-darwin

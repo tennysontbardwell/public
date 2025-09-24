@@ -4,11 +4,14 @@ let
     self = python3;
     packageOverrides = pyfinal: pyprev: {
       snapshot-pyppeteer = pyfinal.callPackage ./snapshot-pyppeteer.nix { };
+      tennyson = pyfinal.callPackage ./tennyson.nix { };
     };
   };
 
   myPythonEnv = python3.withPackages (
     ps: with ps; [
+      tennyson
+
       ### misc/basic
       requests
       lxml
@@ -35,9 +38,14 @@ let
       spyder-kernels
       scipy
       pyecharts
+      snapshot-pyppeteer
       # pyGAM
       # econML
       # parqv
+
+      # LSP
+      python-lsp-server
+      yapf
 
       ### AI
       openai

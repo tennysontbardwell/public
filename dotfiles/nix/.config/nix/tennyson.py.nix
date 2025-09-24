@@ -16,10 +16,10 @@ buildPythonPackage rec {
   version = "0.0.4";
 
   src = fetchFromGitHub {
-    owner = "tennyson";
+    owner = "tennysontbardwell";
     repo = "tennyson.py";
-    rev = "938d603"; # v0.0.4
-    sha256 = "";
+    rev = "45289fa69aa9c81f56ad95fd5abf6758f95f8a0a"; # v0.0.4
+    sha256 = "sha256-OHScP5Xq+dNY9541Hb9l+zg/1hU28Q0uooCQxpLO9bw=";
   };
 
   doCheck = true;

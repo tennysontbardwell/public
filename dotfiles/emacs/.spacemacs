@@ -48,7 +48,11 @@ This function should only modify configuration layer settings."
      latex
      markdown
      pdf
-     (python :variables python-backend 'lsp)
+     (python
+      :variables
+      python-backend 'lsp
+      python-formatter 'yapf
+      )
      terraform
      vimscript
      ipython-notebook

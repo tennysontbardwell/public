@@ -12,13 +12,16 @@ in
   };
   nixpkgs.hostPlatform = system;
   users.users.tennyson = {
-      name = "tennyson";
-      home = "/Users/tennyson";
+    name = "tennyson";
+    home = "/Users/tennyson";
   };
   programs.zsh.enable = true;
-  environment.systemPackages = with pkgs; [
-    pam-reattach
-  ] ++ common_paths;
+  environment.systemPackages =
+    with pkgs;
+    [
+      pam-reattach
+    ]
+    ++ common_paths;
 
   # [[https://write.rog.gr/writing/using-touchid-with-tmux/#what-files-manages-this][Roger Steve Ruiz | Using TouchID with Tmux]]
   environment.etc."pam.d/sudo_local".text = ''
@@ -27,17 +30,16 @@ in
     auth       sufficient     pam_tid.so
   '';
 
-
   networking.computerName = "onyx";
   security.pam.services.sudo_local.touchIdAuth = true;
   system = {
     primaryUser = "tennyson";
     activationScripts.postActivation.text = ''
-        echo "Running my custom activation script..."
-        cd /Users/tennyson/repos/tennysontbardwell/public/dotfiles
-        # sudo -u tennyson stow -t /Users/tennyson sioyek vim zsh tmux ranger hammerspoon aws bash visidata
-        cd /Users/tennyson/repos/tennysontbardwell/dotfiles
-        # sudo -u tennyson stow -t /Users/tennyson aspell borg emacs git misc pass pgp scripts secrets tennyson.py zsh
+      echo "Running my custom activation script..."
+      cd /Users/tennyson/repos/tennysontbardwell/public/dotfiles
+      # sudo -u tennyson stow -t /Users/tennyson sioyek vim zsh tmux ranger hammerspoon aws bash visidata
+      cd /Users/tennyson/repos/tennysontbardwell/dotfiles
+      # sudo -u tennyson stow -t /Users/tennyson aspell borg emacs git misc pass pgp scripts secrets tennyson.py zsh
     '';
     # TODO
     # configurationRevision = self.rev or self.dirtyRev or null;
@@ -67,30 +69,30 @@ in
     stateVersion = 4;
   };
   homebrew = {
-      enable = true;
-      # onActivation.cleanup = "uninstall";
+    enable = true;
+    # onActivation.cleanup = "uninstall";
 
-      masApps = {
-        Xcode = 497799835;
-        # "1Password 7 - Password Manager" = 1333542190;
-      };
-      taps = [];
-      brews = [ ];
-      casks = [
-        "1password-cli"
-        "1password"
-        "activitywatch"
-        "alfred"
-        "firefox"
-        "firefox@developer-edition"
-        "ghostty"
-        "hammerspoon"
-        "readest"
-        "tailscale"
-        "thunderbird"
-        "tor-browser"
-        "visual-studio-code"
-      ];
+    masApps = {
+      Xcode = 497799835;
+      # "1Password 7 - Password Manager" = 1333542190;
+    };
+    taps = [ ];
+    brews = [ ];
+    casks = [
+      "1password-cli"
+      "1password"
+      "activitywatch"
+      "alfred"
+      "firefox"
+      "firefox@developer-edition"
+      "ghostty"
+      "hammerspoon"
+      "readest"
+      "tailscale-app"
+      "thunderbird"
+      "tor-browser"
+      "visual-studio-code"
+    ];
   };
   fonts.packages = with pkgs; [
     nerd-fonts.noto

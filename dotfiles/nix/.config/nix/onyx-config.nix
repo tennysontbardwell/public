@@ -79,8 +79,8 @@ in
     taps = [ ];
     brews = [ ];
     casks = [
-      "1password-cli"
       "1password"
+      "1password-cli"
       "activitywatch"
       "alfred"
       "firefox"
@@ -91,6 +91,7 @@ in
       "tailscale-app"
       "thunderbird"
       "tor-browser"
+      "ungoogled-chromium"
       "visual-studio-code"
     ];
   };

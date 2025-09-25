@@ -23,21 +23,27 @@ let
       scrapy
       pipe
 
-      ### Data
-      matplotlib
+      ### Data frames & io
       numpy
       pandas
       polars
       fastparquet
       # parquet TODO wait for fix
+
+      ### ML
       jupyter
       jupyterlab
-      plotnine
       scikit-learn
       scikit-misc
       spyder-kernels
       scipy
+
+      ### plotting
+      matplotlib
+      plotnine
+      altair
       pyecharts
+      seaborn
       snapshot-pyppeteer
       # pyGAM
       # econML

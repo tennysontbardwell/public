@@ -84,12 +84,11 @@ let
   myPythonEnvWithQt = pkgs.symlinkJoin {
     name = "python-env-with-qt";
     paths = [ myPythonEnv ];
-    buildInputs = [ pkgs.makeWrapper ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       # Wrap python to include Qt environment variables
       wrapProgram $out/bin/python \
         --prefix QT_PLUGIN_PATH : "${pkgs.qt5.qtbase.bin}/${pkgs.qt5.qtbase.qtPluginPrefix}" \
-        --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [ pkgs.qt5.qtbase ]}"
     '';
   };
 in

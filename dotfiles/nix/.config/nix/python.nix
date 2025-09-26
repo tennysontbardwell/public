@@ -5,7 +5,11 @@ let
     packageOverrides = pyfinal: pyprev: {
       snapshot-pyppeteer = pyfinal.callPackage ./snapshot-pyppeteer.nix { };
       tennyson = pyfinal.callPackage ./tennyson.py.nix { };
+      matplotlib = pyprev.matplotlib.overrideAttrs (attrs: {
+        enableQt = true;
+      });
     };
+
   };
 
   myPythonEnv = python3.withPackages (
@@ -79,10 +83,22 @@ let
       # bitsandbytes
     ]
   );
+
+  myPythonEnvWithQt = pkgs.symlinkJoin {
+    name = "python-env-with-qt";
+    paths = [ myPythonEnv ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      # Wrap python to include Qt environment variables
+      wrapProgram $out/bin/python \
+        --prefix QT_PLUGIN_PATH : "${pkgs.qt5.qtbase.bin}/${pkgs.qt5.qtbase.qtPluginPrefix}" \
+        --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [ pkgs.qt5.qtbase ]}"
+    '';
+  };
 in
 {
   paths = with pkgs; [
-    myPythonEnv
+    myPythonEnvWithQt
     uv
     jetbrains.pycharm-community
     pipx

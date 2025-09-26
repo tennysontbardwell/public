@@ -5,9 +5,6 @@ let
     packageOverrides = pyfinal: pyprev: {
       snapshot-pyppeteer = pyfinal.callPackage ./snapshot-pyppeteer.nix { };
       tennyson = pyfinal.callPackage ./tennyson.py.nix { };
-      matplotlib = pyprev.matplotlib.overrideAttrs (attrs: {
-        enableQt = true;
-      });
     };
 
   };

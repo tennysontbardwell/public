@@ -20,6 +20,10 @@ in
     with pkgs;
     [
       pam-reattach
+      (pkgs.writeScriptBin "firefox-devedition" ''
+        #!/usr/bin/env bash
+        open -a "Firefox Developer Edition" "$@"
+      '')
     ]
     ++ common_paths;
 

@@ -33,6 +33,7 @@ in
     #tmp
     pqiv
     firefox
+    firefox-devedition
     web-ext
     sops
     age

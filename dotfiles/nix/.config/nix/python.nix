@@ -28,6 +28,7 @@ let
       pandas
       polars
       fastparquet
+      pyarrow
       # parquet TODO wait for fix
 
       ### ML
@@ -40,8 +41,14 @@ let
 
       ### plotting
       matplotlib
+      bokeh
+      tkinter
+      pyqt5
+      pyqt6
+      opencv-python-headless
       plotnine
       altair
+      vega_datasets
       pyecharts
       seaborn
       snapshot-pyppeteer

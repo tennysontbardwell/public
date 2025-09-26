@@ -86,9 +86,8 @@ let
     paths = [ myPythonEnv ];
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
-      # Wrap python to include Qt environment variables
       wrapProgram $out/bin/python \
-        --prefix QT_PLUGIN_PATH : "${pkgs.qt5.qtbase.bin}/${pkgs.qt5.qtbase.qtPluginPrefix}" \
+        --prefix QT_PLUGIN_PATH : "${pkgs.qt5.qtbase.bin}/${pkgs.qt5.qtbase.qtPluginPrefix}"
     '';
   };
 in

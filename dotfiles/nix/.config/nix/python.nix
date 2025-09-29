@@ -83,6 +83,9 @@ let
       ## not FOSS / not mac
       # accelerate
       # bitsandbytes
+
+      ### python build system
+      conda
     ]
   );
 

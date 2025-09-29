@@ -34,21 +34,14 @@ in
     ttp
 
     # tmp / misc ##############################################################
-    #### seems important but not sure why
-    pkg-config
-    ##### dependencies for tools
-    cairo
-    #### ranger alt
-    yazi
-    lf
-    #### to del
-    imgcat
-    vdirsyncer
-    mc
-    # prettier?
+    #### dependencies
+    pkg-config # not sure why I need this
+    cairo # dependency for some tool
     #### to disable then del
-    hr
-    #### my favorites tools
+    # hr
+    #### ranger alt
+    # lf
+    #### unsorted for now
     lnav
     ledger
     ollama
@@ -74,10 +67,12 @@ in
     # shells ##################################################################
     zsh
     tmux
+    #### shell packages
     pure-prompt
     # zplug
     #### files / dir
     ranger
+    yazi
     pls
     tree
     #### command modifiers / utility functions

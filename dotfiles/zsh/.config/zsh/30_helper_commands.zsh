@@ -3,7 +3,8 @@ alias vnice=tbardwell__vnice
 alias ggwip='gst && (gwip || :) && ggpnp'
 alias new='bbg terminator --working-dir=$PWD' # new terminal same dir
 alias priv='HISTFILE_BK=HISTFILE && unset HISTFILE' # History management
-alias r="ranger-cd"
+# alias r="ranger-cd"
+alias r="yazi-cd"
 alias tree1="tree -L 1"
 alias tree2="tree -L 2"
 alias tree3="tree -L 3"
@@ -61,8 +62,20 @@ function ranger-cd {
         fi
     rm -f -- "$tempfile"
 }
+
+function yazi-cd {
+    tempfile="$(mktemp -t tmp.XXXXXX)"
+    yazi --cwd-file="$tempfile" "${@:-$(pwd)}" < $TTY
+    test -f "$tempfile" &&
+        if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+            cd -- "$(cat "$tempfile")"
+        fi
+    rm -f -- "$tempfile"
+}
+
 function ranger-widget {
-    ranger-cd
+    # ranger-cd
+    yazi-cd
     zle reset-prompt
 }
 

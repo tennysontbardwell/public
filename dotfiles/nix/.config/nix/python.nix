@@ -5,6 +5,7 @@ let
     packageOverrides = pyfinal: pyprev: {
       snapshot-pyppeteer = pyfinal.callPackage ./snapshot-pyppeteer.nix { };
       tennyson = pyfinal.callPackage ./tennyson.py.nix { };
+      rectified-flow = pyfinal.callPackage ./rectified-flow.py.nix { };
     };
 
   };
@@ -12,6 +13,7 @@ let
   myPythonEnv = python3.withPackages (
     ps: with ps; [
       tennyson
+      rectified-flow
 
       ### misc/basic
       requests

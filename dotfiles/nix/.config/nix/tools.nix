@@ -34,20 +34,20 @@ in
     ttp
 
     # tmp / misc ##############################################################
-    hr
-    fpp # file selector
-    # prettier?
     #### seems important but not sure why
     pkg-config
     ##### dependencies for tools
     cairo
     #### ranger alt
     yazi
-    mc
     lf
     #### to del
     imgcat
     vdirsyncer
+    mc
+    # prettier?
+    #### to disable then del
+    hr
     #### my favorites tools
     lnav
     ledger
@@ -84,10 +84,10 @@ in
     watch
     pv
     parallel
-
-    # searching / navigating ##################################################
+    #### searching / navigating
     ripgrep
     fzf
+    fpp # file selector
 
     # system info #############################################################
     ncdu
@@ -155,12 +155,6 @@ in
     irssi
     tty-share
 
-    # NixOS ###################################################################
-    ### nixos
-    nixos-anywhere
-    nixpkgs-fmt
-    nixfmt-rfc-style
-
     # devops ##################################################################
     #### ssh
     mosh
@@ -182,6 +176,10 @@ in
     awscli
     #### tf
     tenv
+    #### nixos
+    nixos-anywhere
+    nixpkgs-fmt
+    nixfmt-rfc-style
     #### secrets
     sops
     age

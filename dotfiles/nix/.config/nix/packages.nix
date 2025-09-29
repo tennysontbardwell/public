@@ -4,7 +4,7 @@
     let
       tools  = import ./tools.nix { pkgs = pkgs; };
       r      = import ./r.nix     { pkgs = pkgs; };
-      python = import ./python.nix
+      python = import ./python/python.nix
         { inherit lib pkgs; };
     in
     []

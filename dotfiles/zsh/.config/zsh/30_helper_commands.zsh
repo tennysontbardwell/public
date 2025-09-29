@@ -1,16 +1,9 @@
 # aliases #####################################################################
 alias vnice=tbardwell__vnice
-alias cd\.\.='tennyson_cd_up'
-alias cl="cls -l"
-alias cls="colorls -A"
-# alias do_not_disturb="kill -SIGUSR1 $(pidof dunst)"
-# alias do_not_disturb_off="kill -SIGUSR2 $(pidof dunst)"
-alias ggcheck='gitcheck --maxdepth=2 --quiet --dir=$HOME -a -u' # list dirty git dir
 alias ggwip='gst && (gwip || :) && ggpnp'
 alias new='bbg terminator --working-dir=$PWD' # new terminal same dir
 alias priv='HISTFILE_BK=HISTFILE && unset HISTFILE' # History management
 alias r="ranger-cd"
-alias skvir="source /usr/bin/virtualenvwrapper.sh" # loading python virtualenvwrapper
 alias tree1="tree -L 1"
 alias tree2="tree -L 2"
 alias tree3="tree -L 3"
@@ -27,18 +20,35 @@ alias unpushed='git log --branches --not --remotes --no-walk --decorate --onelin
 
 # small functions #############################################################
 
-function gist() { pbpaste | gh gist create | pbcopy; }
 archive() { _archive_loc=$(dirname $1)/archive  && mkdir -p $_archive_loc && mv -i $1 $_archive_loc }
-bbg() { nohup "$@" &> /dev/null & } # runs something in bg, also hides output
+bbg() { nohup "$@" &>/dev/null & } # runs something in bg, also hides output
 dockerkill() {for a in $(docker ps | cut -f 1 -d ' ' | tail -n +2); do docker update --restart=no $a; done}
+fork () { nohup "$@" > /dev/null 2>&1 &; disown } # and disown
+gist() { pbpaste | gh gist create | pbcopy; }
 hhead() { head -$(expr $(tput lines) - 2) } # head which fits window size
-# jjq() { jq $2 $1 } # jq but a prompt
-# Return to last directory, see rebind commands, chpwd function
-rcd() {cd "$(cat /tmp/.tennyson_zsh_last_dir_visited)"}
 take() { mkdir -p $@ && cd ${@:$#} }
-tennyson_cd_up() { cd $(printf "%0.0s../" $(seq 1 $1)); } # moving up directories
 
 # big functions ###############################################################
+
+function ff {
+    dir="$(cat ~/.config/tennyson/bookmarks.txt | fzf)"
+    dir="$(eval echo -e "$dir")"
+    if [ -f "$dir" ]
+    then
+       vim "$dir"
+    else
+       ranger-cd "$dir"
+    fi
+}
+
+function ddocker() {
+    declare image="${1:-}"
+    if [ -z "$image" ]; then
+        image="$(docker images | sed '1d' | cut -d ' ' -f 1 | sort -u | fzf)"
+    fi
+    [ -z "$image" ] && return 1
+    docker run -it --rm "$image" bash
+}
 
 # widgets ###############################################################
 # https://github.com/ranger/ranger/blob/master/examples/bash_automatic_cd.sh#L10
@@ -55,15 +65,14 @@ function ranger-widget {
     ranger-cd
     zle reset-prompt
 }
-# key commands ################################################################
 
 # This binds Ctrl-O to ranger-cd:
 zle -N ranger-widget ranger-widget
 bindkey "\C-o" ranger-widget
 bindkey -r "^Os" # prevent delay in opening
 
-# fixes ctrl-q to pushline
-unsetopt flow_control
+# key commands ################################################################
+unsetopt flow_control # fixes ctrl-q to pushline
 
 # platform specific ###########################################################
 
@@ -90,56 +99,7 @@ if [[ $(uname) == 'Linux' ]]; then
     }
 fi
 
-# new or temp #################################################################
-
-function fork () {
-    nohup "$@" > /dev/null 2>&1 &
-    disown
-}
-
-function rmtmp {
-    dir="$(echo $PWD | sed -ne "s|^\\($HOME/tmp/[^/]\\+\\).*|\\1|p")"
-    [[ $dir = *[![:space:]]* ]] && cd $HOME && echo rm -rf $dir && rm -rf $dir
-}
-
-function eff {
-    dir="$(cat ~/.config/tennyson/bookmarks.txt | fzf)"
-    if [ ! -z "$dir" ]; then
-       dir="$(eval echo -e "$dir")"
-        emc "$dir"
-    fi
-}
-
-function ff {
-    dir="$(cat ~/.config/tennyson/bookmarks.txt | fzf)"
-    dir="$(eval echo -e "$dir")"
-    if [ -f "$dir" ]
-    then
-       vim "$dir"
-    else
-       ranger-cd "$dir"
-    fi
-}
-
-function tbardwell__ls_full_path() {
-    find $PWD -maxdepth 1
-}
-
-function jjq() {
-    declare file="$1" query="$2"
-    printf "%'d / %'d\n" "$(cat "$file" | jq "$query" | wc -l)" "$(cat "$file" | jq "." | wc -l)"
-    cat "$file" | jq -C "$query" | head -n 20
-}
-
-function ddocker() {
-    declare image="${1:-}"
-    if [ -z "$image" ]; then
-        image="$(docker images | sed '1d' | cut -d ' ' -f 1 | sort -u | fzf)"
-    fi
-    [ -z "$image" ] && return 1
-    docker run -it --rm "$image" bash
-}
-
+# hr ##########################################################################
 hr() {
     local COLS="$(tput cols)"
     if (( COLS <= 0 )) ; then
@@ -174,20 +134,12 @@ hrs() {
     done
 }
 
-alias ts=tt
-# function ts () {
-#     declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
-#     node --enable-source-maps "$PROJECT/bin/index.cjs" "$@"
-# }
+# completion ##################################################################
+if command -v aws >/dev/null 2>&1 && command -v aws_completer >/dev/null 2>&1; then
+    complete -C "$(command -v aws_completer)" aws
+fi
 
-#compdef tt
-###-begin-tt-completions-###
-#
-# yargs command completion script
-#
-# Installation: tt completion >> ~/.zshrc
-#    or tt completion >> ~/.zprofile on OSX.
-#
+# tt and tennyson.ts ##########################################################
 _tt_yargs_completions()
 {
     local reply
@@ -200,36 +152,7 @@ _tt_yargs_completions()
 compdef _tt_yargs_completions tt
 ###-end-index.cjs-completions-###
 
-
-function tsf () {
-    declare -r PROJECT="$HOME/repos/tennysontbardwell/tennyson.ts"
-    export NODE_PATH="$PROJECT/build"
-    echo node "$PROJECT/build/tennyson/index.js" "$@"
-    node "$PROJECT/build/tennyson/index.js" "$@"
-}
-
-function tsp () {
-    declare -r PROJECT="$HOME/repos/tennysontbardwell/misc-projects/personal.ts"
-    node --enable-source-maps "$PROJECT/bin/index.js" "$@"
-}
-
-# function tp() {
-#     export BASH_EVAL_FILE="$(mktemp)"
-#     (cd ~/repos/tennysontbardwell/tennyson.ts/build; NODE_PATH=. node --enable-source-maps ./tennyson/app/scripts/hometty.js < /dev/tty)
-#     [ ! 0 -eq "$(wc  -c "$BASH_EVAL_FILE" | sed -e 's/^ *\([0-9]\+\) .*/\1/' | tr -d '\n')" ] \
-#         && eval "$(cat "$BASH_EVAL_FILE")"
-#     rm "$BASH_EVAL_FILE"
-# }
-
-# function loop_tp() {
-#     while :
-#     do
-#         tp
-#         osascript -e 'tell application "Finder"' -e 'set visible of process "iTerm2" to false' -e 'end tell'
-#     done
-# }
-
-function tp_widget() {
+function tt_widget() {
     export BASH_EVAL_FILE="$(mktemp)"
     tt hometty < /dev/tty
     [ ! 0 -eq "$(wc -c "$BASH_EVAL_FILE" | sed -e 's/^ *\([0-9]\+\) .*/\1/' | tr -d '\n')" ] \
@@ -238,11 +161,7 @@ function tp_widget() {
     zle reset-prompt
 }
 
-zle     -N            tp_widget
-bindkey -M emacs '^Y' tp_widget
-bindkey -M vicmd '^Y' tp_widget
-bindkey -M viins '^Y' tp_widget
-
-if command -v aws >/dev/null 2>&1 && command -v aws_completer >/dev/null 2>&1; then
-    complete -C "$(command -v aws_completer)" aws
-fi
+zle     -N            tt_widget
+bindkey -M emacs '^Y' tt_widget
+bindkey -M vicmd '^Y' tt_widget
+bindkey -M viins '^Y' tt_widget

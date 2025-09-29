@@ -71,9 +71,12 @@ let
       # vllm
 
       ### Misc
-      yfinance
       jsonpickle
       simple-term-menu
+
+      ### api
+      yfinance
+      kaggle
 
       ## not FOSS / not mac
       # accelerate

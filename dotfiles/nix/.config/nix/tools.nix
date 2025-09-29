@@ -29,19 +29,38 @@ in
   ];
 
   paths = with pkgs; [
-    #tmp
-    firefox
-    firefox-devedition
-    web-ext
-    sops
-    age
+    # custom ##################################################################
+    tt
+    ttp
 
-    ### editors / text
+    # tmp / misc ##############################################################
+    hr
+    fpp # file selector
+    # prettier?
+    #### seems important but not sure why
+    pkg-config
+    ##### dependencies for tools
+    cairo
+    #### ranger alt
+    yazi
+    mc
+    lf
+    #### to del
+    imgcat
+    vdirsyncer
+    #### my favorites tools
+    lnav
+    ledger
+    ollama
+
+    # editors / text ##########################################################
     neovim
     emacs
     vim
-    #### emacs dependencies
+    #### spelling
     ispell
+    gspell
+    #### emacs dependencies
     glibtool # for vterm in emacs
     delta
     # zotero-translation-server
@@ -52,34 +71,48 @@ in
     plantuml
     graph-easy
 
-    ### shells
+    # shells ##################################################################
     zsh
     tmux
     pure-prompt
+    # zplug
+    #### files / dir
+    ranger
+    pls
+    tree
+    #### command modifiers / utility functions
+    watch
+    pv
+    parallel
 
-    ### searching / navigating
+    # searching / navigating ##################################################
     ripgrep
     fzf
 
-    ### system info
+    # system info #############################################################
     ncdu
     htop
     btop
 
-    ### network tools
+    # network tools ###########################################################
     #### transfer
     rsync
     wget
     socat
     curl
     rclone
+    websocat
     #### vpn
     tailscale
     #### inspection
     tshark
     termshark
 
-    ### data format transformers
+    # data ####################################################################
+    #### viz
+    visidata
+    jless
+    #### transformers
     jq
     yq-go
     xq-xml
@@ -88,47 +121,79 @@ in
     html-tidy
     xidel
 
-    ### utility functions
-    pv
-    parallel
-    pass
-
-    ### vc
+    # vc ######################################################################
     git
     git-lfs
+    git-annex
+    git-remote-gcrypt
+    #### configs
+    stow
+    #### api
+    gh # github
 
     ### media
     #### video
     ffmpeg
     mpv
+    libavif
     #### img
     imagemagick
     graphviz
     pqiv
+    inkscape
+    #### audio
+    sox
     ### pdf
     sioyek
     #### games
     ruffle
+    #### download
+    yt-dlp
+    gallery-dl
 
-    ### social
+    # social ##################################################################
     irssi
     tty-share
 
+    # NixOS ###################################################################
     ### nixos
     nixos-anywhere
+    nixpkgs-fmt
+    nixfmt-rfc-style
 
-    ### VM stacks
+    # devops ##################################################################
+    #### ssh
+    mosh
+    #### backup
+    borgbackup
+    borgmatic
+    #### VM stacks
     qemu
-    minikube
-    kubectl
     podman
     podman-tui
+    #### k8
+    minikube
+    kubectl
     kubernetes-helm
     cri-tools
     k9s
+    #### cloud
     cloudlens
+    awscli
+    #### tf
+    tenv
+    #### secrets
+    sops
+    age
+    pass
 
-    ### GNU
+    # GUIs ####################################################################
+    #### browsers
+    firefox
+    firefox-devedition
+    web-ext
+
+    # GNU #####################################################################
     coreutils-full
     findutils
     gnugrep
@@ -140,60 +205,12 @@ in
     gawk
     pwgen
 
-    # maybe keep?
-    gspell
-    vdirsyncer
-    libavif
-    pkg-config
-    fpp # file selector
-    sox # audio
-    websocat
-    yazi
-    lf
-    imgcat
-    mc
-
-    #### mac specific CLI tool overrides
+    # mac specific, override system default ###################################
     gnused
     gnutar
     perl
 
-    #### dependencies for tools
-    git-remote-gcrypt
-    inkscape
-    cairo
-    nixpkgs-fmt
-    nixfmt-rfc-style
-
-    #### my favorites tools
-    ranger
-    stow
-    # zplug
-    hr
-    watch
-    mosh
-    tree
-    git-annex
-    borgbackup
-    borgmatic
-    awscli
-    visidata
-    lnav
-    rclone
-    yt-dlp
-    gallery-dl
-    jless
-    ledger
-    graphviz
-    gh # github
-    ollama
-    tenv
-
-    # trying out
-    pls
-    # prettier?
-
-    ### compression & data
+    # compression and data encodings ##########################################
     zstd
     xz
     brotli
@@ -201,7 +218,7 @@ in
     hdf5
     zip
 
-    ### software stacks
+    # software stacks #########################################################
     #### java
     zulu
     zulu17
@@ -215,24 +232,22 @@ in
     go
     typescript
 
-    #### fun random things
-
-    ## animations
+    # fun random things #######################################################
+    #### animations
     cmatrix
     # globe-cli
     # sl
     # cbonsai
-
-    ## activity
+    #### activity
     # hollywood
     # genact
-
-    ### fun TUI text
+    #### fun TUI text
     cowsay
     figlet
     lolcat
     # ponysay
 
+    # to del, old #############################################################
     #### tried out in the past - CLI tools
     # openai-whisper =
     # kubernetes-cli =
@@ -249,9 +264,5 @@ in
     # gitcheck-git   = multi git repo checker
     # percol
     # nnn            = file browser in cli
-
-    # custom
-    tt
-    ttp
   ];
 }

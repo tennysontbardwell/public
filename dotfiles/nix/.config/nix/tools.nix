@@ -29,50 +29,57 @@ in
   ];
 
   paths = with pkgs; [
-
     #tmp
-    pqiv
     firefox
     firefox-devedition
     web-ext
     sops
     age
 
-    #### general tools
-
-    # editors / top
-    tmux
+    ### editors / text
     neovim
     emacs
     vim
-    zsh
-    pure-prompt
-
-    # editors dependencies / assister-s
+    #### emacs dependencies
+    ispell
+    glibtool # for vterm in emacs
+    delta
+    # zotero-translation-server
+    #### latex
     pandoc
     texlive.combined.scheme-full
-    ispell
-    glibtool # vterm in emacs
+    #### ascii graphs
+    plantuml
+    graph-easy
 
-    # searching / navigating
+    ### shells
+    zsh
+    tmux
+    pure-prompt
+
+    ### searching / navigating
     ripgrep
     fzf
 
-    # system info
+    ### system info
     ncdu
     htop
     btop
 
-    # network tools
-    tailscale
+    ### network tools
+    #### transfer
     rsync
     wget
     socat
     curl
+    rclone
+    #### vpn
+    tailscale
+    #### inspection
     tshark
     termshark
 
-    # data format transformers
+    ### data format transformers
     jq
     yq-go
     xq-xml
@@ -81,30 +88,36 @@ in
     html-tidy
     xidel
 
-    # utility functions
+    ### utility functions
     pv
     parallel
     pass
 
-    # vc
+    ### vc
     git
     git-lfs
 
-    # media
+    ### media
+    #### video
     ffmpeg
+    mpv
+    #### img
     imagemagick
     graphviz
-    mpv
+    pqiv
+    ### pdf
+    sioyek
+    #### games
+    ruffle
 
-    # misc
-    nixos-anywhere
+    ### social
     irssi
     tty-share
-    sioyek
-    plantuml
-    graph-easy
 
-    #### VM stacks
+    ### nixos
+    nixos-anywhere
+
+    ### VM stacks
     qemu
     minikube
     kubectl
@@ -115,8 +128,7 @@ in
     k9s
     cloudlens
 
-
-    #### GNU
+    ### GNU
     coreutils-full
     findutils
     gnugrep
@@ -128,16 +140,11 @@ in
     gawk
     pwgen
 
-    #### EMACs?
-    delta
-    # zotero-translation-server
-
     # maybe keep?
     gspell
     vdirsyncer
     libavif
     pkg-config
-    rclone
     fpp # file selector
     sox # audio
     websocat
@@ -186,7 +193,7 @@ in
     pls
     # prettier?
 
-    #### compression & data
+    ### compression & data
     zstd
     xz
     brotli
@@ -194,12 +201,12 @@ in
     hdf5
     zip
 
-    #### software stacks
-    # java
+    ### software stacks
+    #### java
     zulu
     zulu17
     maven
-    # web
+    #### web
     nodejs
     nodePackages.prettier
     bun
@@ -220,13 +227,11 @@ in
     # hollywood
     # genact
 
-    ## text
+    ### fun TUI text
     cowsay
     figlet
     lolcat
     # ponysay
-
-    ## misc
 
     #### tried out in the past - CLI tools
     # openai-whisper =

@@ -25,6 +25,9 @@
 (setq dotspacemacs-search-tools '("rg" "ag" "ack" "grep"))
 (setq calendar-week-start-day 1)
 (global-activity-watch-mode 1)
+
+
+;; pulsar
 (pulsar-global-mode)
 (setq
  pulsar-iterations 10
@@ -93,5 +96,8 @@
 (defun tennyson/nov-mode-hook ()
   (evil-motion-state))
 (add-hook 'nov-mode-hook 'tennyson/nov-mode-hook)
+
+;; EAF
+(setq eaf-python-command "/Users/tennyson/.emacs.d/elpa/30.2/develop/eaf-20250829.10453/app/.venv/bin/python")
 
 ;; Unorganized ;;

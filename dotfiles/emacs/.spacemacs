@@ -177,10 +177,10 @@ This function should only modify configuration layer settings."
 
      ;; tool ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-     ;; dap ;; debugger from vs code
-     bm
      ;; command-log ;; show keys as typed
+     ;; dap ;; debugger from vs code
      ;; debug ;; realgud debugger
+     bm
      finance
      ipython-notebook
      lsp

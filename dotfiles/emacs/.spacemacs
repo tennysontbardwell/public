@@ -32,34 +32,93 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(toml
-     lua
-     autohotkey
-     php
-     ;; ocaml
+   '(
+     ;; readers ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
      epub
+     pdf
+     speed-reading
+
+     (elfeed
+      :variables
+      rmh-elfeed-org-files (list "~/.emacs.d/private/elfeed.org")
+      )
+
+     ;; checkers ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     ;; syntax-checking
+     spell-checking
+
+     ;; os ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     nixos
+
+     ;; completion ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     ;; helm
+
+     (auto-completion
+      :disabled-for org ;; TODO confirm that this works
+      )
+
+     (ivy
+      :variables
+      ivy-initial-inputs-alist ()
+      )
+
+     ;; emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     better-defaults
+
+     (org
+      :variables
+      org-enable-modern-support nil
+      org-enable-appear-support nil
+      org-appear-trigger 'manual
+      org-enable-bootstrap-support t
+      org-enable-reveal-js-support t
+      org-enable-roam-support nil
+      )
+
+     ;; email ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     gnus
+
+     ;; filetree ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     (treemacs :variables
+               treemacs-use-scope-type 'Perspectives)
+
+     ;; fun ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     ;; emoji
+
+     ;; langs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     ;; ocaml
+     autohotkey
      csv
-     ;; languages
-     ruby
-     yaml
+     emacs-lisp
+     ess ;; R
+     graphviz
      html
-     react
      javascript
      latex
+     lua
      markdown
-     pdf
+     php
+     react
+     ruby
+     shell-scripts
+     toml
+     vimscript
+     yaml
+
      (python
       :variables
       python-backend 'lsp
       python-formatter 'yapf
       )
-     terraform
-     vimscript
-     ipython-notebook
-     nixos
-     ess
 
-     ;; languages + configs
      (typescript
       :variables
       typescript-backend 'lsp
@@ -71,11 +130,13 @@ This function should only modify configuration layer settings."
       ;; company-tooltip-idle-delay nil
       ;; company-idle-delay nil
       )
+
      (json
       :variables
       json-fmt-tool 'prettier
       json-fmt-on-save t
       json-backend 'lsp)
+
      (lsp
       :variables
       company-idle-delay 0.5
@@ -90,80 +151,66 @@ This function should only modify configuration layer settings."
       ;; lsp-ui-sideline-enable nil
       )
 
-     ;; functionality
-     multiple-cursors
-     ranger
-     themes-megapack
-
-     ;; functionality + config
-     (ivy
+     (bibtex
       :variables
-      ivy-initial-inputs-alist ()
+      bibtex-enable-ebib-support t
+      ebib-preload-bib-files '("~/papers/personal.bib")
+      ebib-file-search-dirs '("~/papers/files")
+      ebib-import-directory '("~/papers/files")
       )
 
-     ;; misc
-     (auto-completion
-      :disabled-for org
-      ) ;; TODO confirm that this works
-     better-defaults
-     bm
-     emacs-lisp
-     (git :variables git-enable-magit-delta-plugin t)
-     finance
-     (elfeed :variables rmh-elfeed-org-files (list "~/.emacs.d/private/elfeed.org"))
-     gnus
-     ;; helm
-     ivy
-     graphviz
+     ;; source-control ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-     ;; anything else
-     (bibtex :variables
-             bibtex-enable-ebib-support t
-             ebib-preload-bib-files '("~/papers/personal.bib")
-             ebib-file-search-dirs '("~/papers/files")
-             ebib-import-directory '("~/papers/files"))
-     lsp
-     multiple-cursors
-     (org :variables
-          org-enable-modern-support nil
-          org-enable-appear-support nil
-          org-appear-trigger 'manual
-          org-enable-bootstrap-support t
-          org-enable-reveal-js-support t
-          org-enable-roam-support nil)
-     pandoc
-     systemd
-     tide
-     (shell :variables
-            shell-default-shell 'multivterm
-            shell-default-full-span nil
-                                        ; close-window-with-terminal t
-            shell-default-height 30
-            shell-default-position 'bottom)
-     spell-checking
-     ;; syntax-checking
+     (git
+      :variables
+      git-enable-magit-delta-plugin t
+      )
+
      (version-control
       :variables
-      version-control-diff-tool 'diff-hl)
-     ;; (treemacs :variables
-     ;;           treemacs-use-scope-type 'Perspectives)
+      version-control-diff-tool 'diff-hl
+      )
 
+     ;; themes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-     ;; new
-     llm-client
-     hackernews
+     themes-megapack
 
-     openai
-     ;; eaf
-     ;; command-log ;; show keys as typed
+     ;; tool ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
      ;; dap ;; debugger from vs code
+     bm
+     ;; command-log ;; show keys as typed
      ;; debug ;; realgud debugger
-     emoji
-     ;; selectric
-     shell-scripts
-     speed-reading
-     ;; nav-flash
+     finance
+     ipython-notebook
+     lsp
+     multiple-cursors
+     pandoc
+     ranger
+     systemd
+     terraform
+     tide
+
+     (shell
+      :variables
+      shell-default-shell 'multivterm
+      shell-default-full-span nil
+      ;; close-window-with-terminal t
+      shell-default-height 30
+      shell-default-position 'bottom
+      )
+
+     ;; web-services ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+     hackernews
+     llm-client
+     openai
+
+     ;; window management ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
      ;; exwm
+
+     ;; unsorted ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
      )
 
    ;; List of additional packages that will be installed without being wrapped
@@ -176,29 +223,29 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
    '(
+     ;; cdlatex
      ;; chromatext
+     ;; eat
      ;; git-annex
      ;; hass
-     ;; magit-annex
-     ;; cdlatex
+     ;; hyperbole
      ;; jupyter
+     ;; magit-annex
      ;; org-bars
      ;; org-board
+     ;; org-transclusion
      ;; org-web-tools
      ;; zmq
      activity-watch-mode
      dired-subtree
-     ;; eat
      evil-lispy
      exec-path-from-shell
      fold-this
-     ;; hyperbole
+     gptel
      ivy-posframe
      magit-lfs
      org-mac-link
-     ;; org-transclusion
      osm
-     gptel
      pulsar
      timu-macos-theme
      yasnippet-snippets
@@ -747,22 +794,23 @@ This function is called at the very end of Spacemacs initialization."
                 chatgpt cherry-blossom-theme chocolate-theme chruby
                 clean-aindent-mode clues-theme code-cells code-review codegpt
                 color-theme-sanityinc-solarized color-theme-sanityinc-tomorrow
-                column-enforce-mode company-anaconda company-auctex company-emoji
-                company-lua company-math company-nixos-options company-php
-                company-phpactor company-reftex company-terraform company-web
-                counsel-css counsel-gtags counsel-projectile csv-mode
-                cyberpunk-theme cython-mode dactyl-mode dakrone-theme dall-e
-                dap-mode darkmine-theme darkokai-theme darktooth-theme define-word
-                devdocs diff-hl diminish dired-quick-sort dired-subtree
-                disable-mouse django-theme doom-themes dotenv-mode dracula-theme
-                drag-stuff drupal-mode dumb-jump eaf eat ebib ef-themes ein
-                elfeed-goodies elfeed-org elisp-def elisp-demos elisp-slime-nav
-                ellama emmet-mode emoji-cheat-sheet-plus emr esh-help
-                eshell-prompt-extras eshell-z espresso-theme ess ess-R-data-view
-                eval-sexp-fu evil-anzu evil-args evil-cleverparens evil-collection
-                evil-easymotion evil-escape evil-evilified-state evil-exchange
-                evil-goggles evil-iedit-state evil-indent-plus evil-ledger
-                evil-lion evil-lisp-state evil-lispy evil-matchit evil-mc
+                column-enforce-mode command-log-mode company-anaconda
+                company-auctex company-emoji company-lua company-math
+                company-nixos-options company-php company-phpactor company-reftex
+                company-terraform company-web counsel-css counsel-gtags
+                counsel-projectile csv-mode cyberpunk-theme cython-mode
+                dactyl-mode dakrone-theme dall-e dap-mode darkmine-theme
+                darkokai-theme darktooth-theme define-word devdocs diff-hl
+                diminish dired-quick-sort dired-subtree disable-mouse django-theme
+                doom-themes dotenv-mode dracula-theme drag-stuff drupal-mode
+                dumb-jump eaf eat ebib ef-themes ein elfeed-goodies elfeed-org
+                elisp-def elisp-demos elisp-slime-nav ellama emmet-mode
+                emoji-cheat-sheet-plus emr esh-help eshell-prompt-extras eshell-z
+                espresso-theme ess ess-R-data-view eval-sexp-fu evil-anzu
+                evil-args evil-cleverparens evil-collection evil-easymotion
+                evil-escape evil-evilified-state evil-exchange evil-goggles
+                evil-iedit-state evil-indent-plus evil-ledger evil-lion
+                evil-lisp-state evil-lispy evil-matchit evil-mc
                 evil-nerd-commenter evil-numbers evil-org evil-surround evil-tex
                 evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode
                 evil-visualstar exec-path-from-shell exotica-theme expand-region
@@ -780,14 +828,14 @@ This function is called at the very end of Spacemacs initialization."
                 info+ inkpot-theme inspector ir-black-theme ivy-avy ivy-bibtex
                 ivy-hydra ivy-posframe ivy-purpose ivy-xref ivy-yasnippet
                 jazz-theme jbeans-theme journalctl-mode js-doc js2-refactor
-                json-mode json-navigator json-reformat kaolin-themes
-                light-soap-theme live-py-mode livid-mode lorem-ipsum lsp-ivy
-                lsp-latex lsp-origami lsp-pyright lua-mode lush-theme macrostep
-                madhat2r-theme magit-lfs majapahit-themes markdown-toc
-                material-theme minimal-theme minitest modus-themes moe-theme
-                molokai-theme monochrome-theme monokai-theme multi-line multi-term
-                multi-vterm mustang-theme mwim nameless naquadah-theme nix-mode
-                noctilux-theme nodejs-repl nov npm-mode obsidian-theme
+                json-mode json-navigator json-reformat kaolin-themes keycast
+                light-soap-theme live-py-mode livid-mode load-relative loc-changes
+                lorem-ipsum lsp-ivy lsp-latex lsp-origami lsp-pyright lua-mode
+                lush-theme macrostep madhat2r-theme magit-lfs majapahit-themes
+                markdown-toc material-theme minimal-theme minitest modus-themes
+                moe-theme molokai-theme monochrome-theme monokai-theme multi-line
+                multi-term multi-vterm mustang-theme mwim nameless naquadah-theme
+                nix-mode noctilux-theme nodejs-repl nov npm-mode obsidian-theme
                 occidental-theme oldlace-theme omtose-phellack-themes
                 open-junk-file org-cliplink org-contrib org-download org-mac-link
                 org-mime org-pomodoro org-present org-projectile org-re-reveal
@@ -798,7 +846,7 @@ This function is called at the very end of Spacemacs initialization."
                 pip-requirements pipenv pippel planet-theme poetry polymode
                 prettier-js professional-theme pug-mode pulsar purple-haze-theme
                 py-isort pydoc pyenv-mode pylookup pytest python-pytest quickrun
-                railscasts-theme rainbow-delimiters rake ranger rbenv
+                railscasts-theme rainbow-delimiters rake ranger rbenv realgud
                 rebecca-theme restart-emacs reverse-theme rjsx-mode robe
                 rspec-mode rubocop rubocopfmt ruby-hash-syntax ruby-refactor
                 ruby-test-mode ruby-tools rvm sass-mode scss-mode
@@ -809,15 +857,16 @@ This function is called at the very end of Spacemacs initialization."
                 spray string-edit-at-point subatomic-theme subatomic256-theme
                 sublime-themes sunny-day-theme symbol-overlay symon systemd
                 tagedit tango-2-theme tango-plus-theme tangotango-theme tao-theme
-                term-cursor terminal-here tide timu-macos-theme toc-org toml-mode
-                toxi-theme treemacs-evil treemacs-icons-dired treemacs-magit
-                treemacs-persp treemacs-projectile twilight-anti-bright-theme
-                twilight-bright-theme twilight-theme typescript-mode ujelly-theme
-                underwater-theme undo-fu-session unfill vi-tilde-fringe
-                vim-powerline vimrc-mode volatile-highlights vundo web-beautify
-                web-mode websocket wfnames wgrep white-sand-theme winum
-                writeroom-mode ws-butler yaml-mode yapfify yasnippet-snippets
-                zen-and-art-theme zenburn-theme zonokai-emacs zotra)))
+                term-cursor terminal-here test-simple tide timu-macos-theme
+                toc-org toml-mode toxi-theme treemacs-evil treemacs-icons-dired
+                treemacs-magit treemacs-persp treemacs-projectile
+                twilight-anti-bright-theme twilight-bright-theme twilight-theme
+                typescript-mode ujelly-theme underwater-theme undo-fu-session
+                unfill vi-tilde-fringe vim-powerline vimrc-mode
+                volatile-highlights vundo web-beautify web-mode websocket wfnames
+                wgrep white-sand-theme winum writeroom-mode ws-butler yaml-mode
+                yapfify yasnippet-snippets zen-and-art-theme zenburn-theme
+                zonokai-emacs zotra)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.

@@ -88,8 +88,32 @@
 
 
 ;; Vterm ;;
+;; https://kagi.com/assistant/503d0002-e0fe-4637-a239-a3bbc7d67655
+(defun tennyson/setup-terminal-keys ()
+  "Set up terminal-like keybindings in comint modes, overriding evil."
+  (let ((key-bindings
+         '(
+           ;; ("C-a" . vterm-send-C-a)
+           ;; ("C-e" . vterm-send-C-e)
+           ;; ("C-p" . comint-previous-input)
+           ;; ("C-n" . comint-next-input)
+           ;; ("C-k" . kill-line)
+           ("C-y" . vterm-send-C-y)
+           ;; ("C-d" . delete-char)
+           ("C-c" . vterm-send-C-c)
+           ;; ("C-l" . recenter-top-bottom)
+           ;; ("C-r" . comint-history-isearch-backward)
+           )))
+    (dolist (binding key-bindings)
+      (let ((key (car binding))
+            (command (cdr binding)))
+        ;; Override in both insert and normal states
+        (evil-local-set-key 'insert (kbd key) command)
+        (evil-local-set-key 'normal (kbd key) command)))))
+
 (setq vterm-max-scrollback 10000
       vterm-timer-delay 0.01)
+(add-hook 'vterm-mode-hook 'tennyson/setup-terminal-keys)
 
 
 ;; Nov ;;

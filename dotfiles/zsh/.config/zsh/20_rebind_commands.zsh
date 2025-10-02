@@ -3,7 +3,6 @@ alias ag='ag -i'
 alias df='df -h'
 alias du="du -h"
 # alias emacs="emacs -nw"
-alias emc="emacsclient -nw -c"
 alias -g G="| grep -i"
 alias glo="git log --decorate=full --all --stat"
 alias glog="git log --oneline --decorate --graph --all"

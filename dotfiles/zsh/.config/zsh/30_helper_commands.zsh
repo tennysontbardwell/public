@@ -18,6 +18,8 @@ alias pmmd="podman machine stop"
 alias ttmp='cd `mktemp -d`'
 alias tttmp='take $HOME/tmp/$(date +%Y-%m-%d--%H%M%S)'
 alias unpushed='git log --branches --not --remotes --no-walk --decorate --oneline'
+alias emc="emacsclient -nw -c"
+alias gemc='emacsclient --eval "(dired \"$pwd\")"' # go to pwd in emc
 
 # small functions #############################################################
 

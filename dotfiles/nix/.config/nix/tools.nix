@@ -187,16 +187,17 @@ in
     web-ext
 
     # GNU #####################################################################
+    autoconf
+    automake
+    cmake
     coreutils-full
     findutils
-    gnugrep
-    gnupg
-    gnumake
-    cmake
-    automake
-    autoconf
     gawk
+    gnugrep
+    gnumake
+    gnupg
     pwgen
+    util-linux
 
     # mac specific, override system default ###################################
     gnused
@@ -227,18 +228,17 @@ in
 
     # fun random things #######################################################
     #### animations
+    cbonsai
     cmatrix
-    # globe-cli
+    globe-cli
     # sl
-    # cbonsai
     #### activity
     # hollywood
-    # genact
+    genact
     #### fun TUI text
     cowsay
     figlet
     lolcat
-    # ponysay
 
     # to del, old #############################################################
     #### tried out in the past - CLI tools
@@ -255,7 +255,5 @@ in
     # autojump
     # entr           = filesystem watcher, example: `find . -name '*.py' | entr ./myfile.py`
     # gitcheck-git   = multi git repo checker
-    # percol
-    # nnn            = file browser in cli
   ];
 }

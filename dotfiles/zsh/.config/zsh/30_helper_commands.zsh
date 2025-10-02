@@ -1,25 +1,25 @@
 # aliases #####################################################################
-alias vnice=tbardwell__vnice
+# alias r="ranger-cd"
+alias ccal='ncal -3b'
+alias emc="emacsclient -nw -c"
+alias gemc='emacsclient --eval "(dired \"$pwd\")"' # go to pwd in emc
 alias ggwip='gst && (gwip || :) && ggpnp'
 alias new='bbg terminator --working-dir=$PWD' # new terminal same dir
+alias pm="podman"
+alias pmm="podman machine"
+alias pmmd="podman machine stop"
+alias pmmi="podman machine info"
+alias pmmu="podman machine start"
 alias priv='HISTFILE_BK=HISTFILE && unset HISTFILE' # History management
-# alias r="ranger-cd"
 alias r="yazi-cd"
 alias tree1="tree -L 1"
 alias tree2="tree -L 2"
 alias tree3="tree -L 3"
 alias tree4="tree -L 4"
-alias ccal='ncal -3b'
-alias pm="podman"
-alias pmm="podman machine"
-alias pmmi="podman machine info"
-alias pmmu="podman machine start"
-alias pmmd="podman machine stop"
 alias ttmp='cd `mktemp -d`'
 alias tttmp='take $HOME/tmp/$(date +%Y-%m-%d--%H%M%S)'
 alias unpushed='git log --branches --not --remotes --no-walk --decorate --oneline'
-alias emc="emacsclient -nw -c"
-alias gemc='emacsclient --eval "(dired \"$pwd\")"' # go to pwd in emc
+alias vnice=tbardwell__vnice
 
 # small functions #############################################################
 

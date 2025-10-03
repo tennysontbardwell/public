@@ -134,6 +134,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    automake
     fzf
     mpv
     git
@@ -153,13 +154,16 @@
     # pulseaudio
     pwvucontrol
     xscreensaver
+    ghostty
   #  wget
   ];
 
-  # fonts.packages = with pkgs; [
-  #   nerdfonts
-  #   # (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-  # ];
+  fonts.packages = with pkgs; [
+    noto-fonts
+    #nerdfonts.fira-code
+    # nerdfonts.droid-sans-mono
+    # (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+  ];
   
 
   # Some programs need SUID wrappers, can be configured further or are

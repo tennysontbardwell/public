@@ -170,6 +170,7 @@ in
     cloudlens
     awscli
     #### tf
+    # nodePackages.cdktf-cli
     tenv
     #### nixos
     nixos-anywhere
@@ -217,14 +218,18 @@ in
     zulu
     zulu17
     maven
-    #### web
-    nodejs
-    nodePackages.prettier
+    #### js runtime
     bun
+    nodejs
+    #### js pkg manger
     yarn
-    php
-    go
+    pnpm
+    #### js dev
+    nodePackages.prettier
     typescript
+    #### other
+    go
+    php
 
     # fun random things #######################################################
     #### animations

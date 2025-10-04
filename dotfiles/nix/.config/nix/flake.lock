@@ -57,6 +57,22 @@
         "type": "github"
       }
     },
+    "nixos-laptop-nixpkgs": {
+      "locked": {
+        "lastModified": 1759281824,
+        "narHash": "sha256-FIBE1qXv9TKvSNwst6FumyHwCRH3BlWDpfsnqRDCll0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5b5be50345d4113d04ba58c444348849f5585b4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1757902469,
@@ -77,6 +93,7 @@
         "disko": "disko",
         "mac-nixpkgs": "mac-nixpkgs",
         "nix-darwin": "nix-darwin",
+        "nixos-laptop-nixpkgs": "nixos-laptop-nixpkgs",
         "nixpkgs": "nixpkgs"
       }
     }

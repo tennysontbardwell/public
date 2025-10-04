@@ -31,6 +31,12 @@ onyx-bounce:
 nix-darwin-switch-first-time:
 	sudo nix run nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch
 
+nixos-laptop:
+	nixos-rebuild --flake '.#nixos-laptop' switch
+
+nixos-laptop-build:
+	nixos-rebuild --flake '.#nixos-laptop' build
+
 repl:
 	echo run ':lf flake.nix'
 	nix repl --experimental-features 'flakes nix-command'

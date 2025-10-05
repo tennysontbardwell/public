@@ -168,7 +168,7 @@ in
     k9s
     #### cloud
     cloudlens
-    awscli
+    awscli2
     #### tf
     # nodePackages.cdktf-cli
     tenv

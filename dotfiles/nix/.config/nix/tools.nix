@@ -157,18 +157,21 @@ in
     borgbackup
     borgmatic
     #### VM stacks
-    qemu
+    # packer # not free
     podman
     podman-tui
+    qemu
     #### k8
-    minikube
-    kubectl
-    kubernetes-helm
     cri-tools
     k9s
+    kubectl
+    kubernetes-helm
+    minikube
+    talosctl
     #### cloud
-    cloudlens
     awscli2
+    cloudlens
+    hcloud
     #### tf
     # nodePackages.cdktf-cli
     tenv

@@ -67,6 +67,7 @@ This function should only modify configuration layer settings."
       )
 
      ;; emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
      better-defaults
 
      (org
@@ -82,6 +83,11 @@ This function should only modify configuration layer settings."
      ;; email ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
      gnus
+     (mu4e
+      :variables
+      mu4e-spacemacs-layout-name "@mu4e"
+      mu4e-spacemacs-layout-binding "m"
+      mu4e-spacemacs-kill-layout-on-exit t)
 
      ;; filetree ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

@@ -20,6 +20,29 @@
         "type": "github"
       }
     },
+    "mac-emacs-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "mac-nixpkgs"
+        ],
+        "nixpkgs-stable": [
+          "mac-nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759944776,
+        "narHash": "sha256-gvdN9D9MLggWeMF7HxFrQYOc/RP2W2oWATPdtkZCw+c=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "8f30aec081459f2d312cef92d9c9948918e9c309",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
     "mac-nixpkgs": {
       "locked": {
         "lastModified": 1757716134,
@@ -91,6 +114,7 @@
     "root": {
       "inputs": {
         "disko": "disko",
+        "mac-emacs-overlay": "mac-emacs-overlay",
         "mac-nixpkgs": "mac-nixpkgs",
         "nix-darwin": "nix-darwin",
         "nixos-laptop-nixpkgs": "nixos-laptop-nixpkgs",

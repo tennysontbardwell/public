@@ -45,6 +45,7 @@ in
     lnav
     ledger
     ollama
+    (import ./imessage-exporter.nix { inherit pkgs; }).imessage-exporter
 
     # editors / text ##########################################################
     neovim

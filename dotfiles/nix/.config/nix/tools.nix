@@ -55,6 +55,11 @@ in
     ledger
     ollama
     (import ./imessage-exporter.nix { inherit pkgs; }).imessage-exporter
+    bat
+    highlight
+    kitty
+    broot
+    gdb
     #### email
     isync
     mu
@@ -173,6 +178,7 @@ in
     #### k8
     cri-tools
     k9s
+    kompose
     kubectl
     kubernetes-helm
     minikube

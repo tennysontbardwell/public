@@ -165,6 +165,9 @@ This function should only modify configuration layer settings."
       ebib-import-directory '("~/papers/files")
       )
 
+     ;; misc ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     copy-as-format
+
      ;; source-control ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
      (git
@@ -803,14 +806,14 @@ This function is called at the very end of Spacemacs initialization."
                 column-enforce-mode command-log-mode company-anaconda
                 company-auctex company-emoji company-lua company-math
                 company-nixos-options company-php company-phpactor company-reftex
-                company-terraform company-web counsel-css counsel-gtags
-                counsel-projectile csv-mode cyberpunk-theme cython-mode
-                dactyl-mode dakrone-theme dall-e dap-mode darkmine-theme
-                darkokai-theme darktooth-theme define-word devdocs diff-hl
-                diminish dired-quick-sort dired-subtree disable-mouse django-theme
-                doom-themes dotenv-mode dracula-theme drag-stuff drupal-mode
-                dumb-jump eaf eat ebib ef-themes ein elfeed-goodies elfeed-org
-                elisp-def elisp-demos elisp-slime-nav ellama emmet-mode
+                company-terraform company-web copy-as-format counsel-css
+                counsel-gtags counsel-projectile csv-mode cyberpunk-theme
+                cython-mode dactyl-mode dakrone-theme dall-e dap-mode
+                darkmine-theme darkokai-theme darktooth-theme define-word devdocs
+                diff-hl diminish dired-quick-sort dired-subtree disable-mouse
+                django-theme doom-themes dotenv-mode dracula-theme drag-stuff
+                drupal-mode dumb-jump eaf eat ebib ef-themes ein elfeed-goodies
+                elfeed-org elisp-def elisp-demos elisp-slime-nav ellama emmet-mode
                 emoji-cheat-sheet-plus emr esh-help eshell-prompt-extras eshell-z
                 espresso-theme ess ess-R-data-view eval-sexp-fu evil-anzu
                 evil-args evil-cleverparens evil-collection evil-easymotion

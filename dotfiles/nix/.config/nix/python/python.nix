@@ -25,6 +25,7 @@ let
       aiohttp
       scrapy
       pipe
+      websockets
 
       ### Data frames & io
       numpy
@@ -32,7 +33,7 @@ let
       polars
       fastparquet
       pyarrow
-      # parquet TODO wait for fix
+      parquet # TODO wait for fix
 
       ### ML
       jupyter

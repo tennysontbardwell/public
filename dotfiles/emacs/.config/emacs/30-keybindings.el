@@ -3,7 +3,7 @@
 ;; ==== Spacemacs Keys
 (spacemacs/set-leader-keys "C-s" 'counsel-imenu)
 
-(spacemacs/set-leader-keys "ie" 'emoji-cheat-sheet-plus-insert)
+(spacemacs/set-leader-keys "ie" 'emoji-search)
 (spacemacs/set-leader-keys "jj" 'evil-avy-goto-word-or-subword-1)
 (spacemacs/set-leader-keys "w=" 'tennyson/balance-windows-horizontally)
 (spacemacs/declare-prefix "o" "personal keys")

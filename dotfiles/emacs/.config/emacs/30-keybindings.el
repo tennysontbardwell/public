@@ -3,8 +3,8 @@
 ;; ==== Spacemacs Keys
 (spacemacs/set-leader-keys "C-s" 'counsel-imenu)
 
+(spacemacs/set-leader-keys "ie" 'emoji-search)
 (spacemacs/set-leader-keys "jj" 'evil-avy-goto-word-or-subword-1)
-(spacemacs/set-leader-keys "ie" 'emoji-insert)
 (spacemacs/set-leader-keys "w=" 'tennyson/balance-windows-horizontally)
 (spacemacs/declare-prefix "o" "personal keys")
 (spacemacs/declare-prefix "oc" "clipboard")
@@ -23,7 +23,7 @@
 (spacemacs/set-leader-keys "oiws" 'tennyson/firefox-ivy-select-and-close-tabs)
 (spacemacs/set-leader-keys "oja" 'tennyson/jest-update-file)
 (spacemacs/set-leader-keys "ooj" 'tennyson/jless-file-at-point)
-(spacemacs/set-leader-keys "oot" 'tennyson/open-dir-in-iterm)
+(spacemacs/set-leader-keys "oot" 'tennyson/cmd-in-term)
 (spacemacs/set-leader-keys "oov" 'tennyson/vd-file-at-point)
 (spacemacs/set-leader-keys "or" 'tennyson/sh-send-line-or-region)
 (spacemacs/set-leader-keys "ots" 'tennyson/toggle-invisible-search)
@@ -46,11 +46,11 @@
 
 (defun tennyson/jless-file-at-point ()
   (interactive)
-  (tennyson/cmd-in-iterm (format "jless %s" (ffap-file-at-point))))
+  (tennyson/cmd-in-term (format "jless %s" (ffap-file-at-point))))
 
 (defun tennyson/vd-file-at-point ()
   (interactive)
-  (tennyson/cmd-in-iterm (format "vd %s" (ffap-file-at-point))))
+  (tennyson/cmd-in-term (format "vd %s" (ffap-file-at-point))))
 
 (spacemacs|create-align-repeat-x "hashtag" "#")
 

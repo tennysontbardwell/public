@@ -25,6 +25,10 @@
 (setq dotspacemacs-search-tools '("rg" "ag" "ack" "grep"))
 (setq calendar-week-start-day 1)
 (global-activity-watch-mode 1)
+(smartparens-mode t) ;; needed for yas to work
+
+
+;; pulsar
 (pulsar-global-mode)
 (setq
  pulsar-iterations 10
@@ -51,8 +55,8 @@
 ;; GUI ;;
 (setq spaceline-window-numbers-unicode nil)
 (setq spaceline-workspace-numbers-unicode nil)
-;; (setq max-mini-window-height 0.25)
-(setq max-mini-window-height 1)
+(setq max-mini-window-height 0.25)
+;; (setq max-mini-window-height 1)
 
 
 ;; Web ;;
@@ -85,13 +89,40 @@
 
 
 ;; Vterm ;;
+;; https://kagi.com/assistant/503d0002-e0fe-4637-a239-a3bbc7d67655
+(defun tennyson/setup-terminal-keys ()
+  "Set up terminal-like keybindings in comint modes, overriding evil."
+  (let ((key-bindings
+         '(
+           ;; ("C-a" . vterm-send-C-a)
+           ;; ("C-e" . vterm-send-C-e)
+           ;; ("C-p" . comint-previous-input)
+           ;; ("C-n" . comint-next-input)
+           ;; ("C-k" . kill-line)
+           ("C-y" . vterm-send-C-y)
+           ;; ("C-d" . delete-char)
+           ("C-c" . vterm-send-C-c)
+           ;; ("C-l" . recenter-top-bottom)
+           ;; ("C-r" . comint-history-isearch-backward)
+           )))
+    (dolist (binding key-bindings)
+      (let ((key (car binding))
+            (command (cdr binding)))
+        ;; Override in both insert and normal states
+        (evil-local-set-key 'insert (kbd key) command)
+        (evil-local-set-key 'normal (kbd key) command)))))
+
 (setq vterm-max-scrollback 10000
       vterm-timer-delay 0.01)
+(add-hook 'vterm-mode-hook 'tennyson/setup-terminal-keys)
 
 
 ;; Nov ;;
 (defun tennyson/nov-mode-hook ()
   (evil-motion-state))
 (add-hook 'nov-mode-hook 'tennyson/nov-mode-hook)
+
+;; EAF
+(setq eaf-python-command "/Users/tennyson/.emacs.d/elpa/30.2/develop/eaf-20250829.10453/app/.venv/bin/python")
 
 ;; Unorganized ;;

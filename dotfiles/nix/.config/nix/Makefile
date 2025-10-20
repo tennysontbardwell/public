@@ -18,8 +18,11 @@ pan-upgrade:
 onyx:
 	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- switch --flake '.#onyx'
 
+onyx-build:
+	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- build --flake '.#onyx'
+
 onyx-upgrade:
-	nix flake update mac-nixpkgs mac-unstable home-manager nix-darwin
+	nix flake update mac-nixpkgs nix-darwin mac-emacs-overlay
 	make onyx
 
 onyx-bounce:
@@ -27,6 +30,12 @@ onyx-bounce:
 
 nix-darwin-switch-first-time:
 	sudo nix run nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch
+
+nixos-laptop:
+	nixos-rebuild --flake '.#nixos-laptop' switch
+
+nixos-laptop-build:
+	nixos-rebuild --flake '.#nixos-laptop' build
 
 repl:
 	echo run ':lf flake.nix'

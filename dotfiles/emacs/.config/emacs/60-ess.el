@@ -1,7 +1,7 @@
 (setq ess-indent-level 2)
 
 ;; https://kagi.com/assistant/503d0002-e0fe-4637-a239-a3bbc7d67655
-(defun tennyson/setup-terminal-keys ()
+(defun tennyson/ess-r-hook ()
   "Set up terminal-like keybindings in comint modes, overriding evil."
   (let ((key-bindings '(("C-a" . beginning-of-line)
                         ("C-e" . end-of-line)
@@ -20,4 +20,4 @@
         (evil-local-set-key 'normal (kbd key) command)))))
 
 ;; Apply to inferior-ess-r-mode
-(add-hook 'inferior-ess-r-mode-hook 'tennyson/setup-terminal-keys)
+(add-hook 'inferior-ess-r-mode-hook 'tennyson/ess-r-hook)

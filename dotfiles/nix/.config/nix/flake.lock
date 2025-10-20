@@ -20,13 +20,36 @@
         "type": "github"
       }
     },
+    "mac-emacs-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "mac-nixpkgs"
+        ],
+        "nixpkgs-stable": [
+          "mac-nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1760202459,
+        "narHash": "sha256-194ZIDYgu5rXk3Qehl9Iei8NYcPFjgZHb1QBk0+dNaU=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "e19f3a17f3829b3f0db76b7a72c78307d3f173e8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
     "mac-nixpkgs": {
       "locked": {
-        "lastModified": 1757716134,
-        "narHash": "sha256-OYoZLWvmCnCTCJQwaQlpK1IO5nkLnLLoUW8wwmPmrfU=",
+        "lastModified": 1760103274,
+        "narHash": "sha256-3pfFKrcs1+EIGqPg0VA+rfeySrrAOKgM6IIH0D0KCOI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e85b5aa112a98805a016bbf6291e726debbc448a",
+        "rev": "12c702c6157fbd004a7745055153162297a3d2ce",
         "type": "github"
       },
       "original": {
@@ -43,17 +66,33 @@
         ]
       },
       "locked": {
-        "lastModified": 1757432263,
-        "narHash": "sha256-qHn+/0+IOz5cG68BZUwL9BV3EO/e9eNKCjH3+N7wMdI=",
+        "lastModified": 1759509947,
+        "narHash": "sha256-4XifSIHfpJKcCf5bZZRhj8C4aCpjNBaE3kXr02s4rHU=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "1fef4404de4d1596aa5ab2bd68078370e1b9dcdb",
+        "rev": "000eadb231812ad6ea6aebd7526974aaf4e79355",
         "type": "github"
       },
       "original": {
         "owner": "LnL7",
         "ref": "nix-darwin-25.05",
         "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "nixos-laptop-nixpkgs": {
+      "locked": {
+        "lastModified": 1759281824,
+        "narHash": "sha256-FIBE1qXv9TKvSNwst6FumyHwCRH3BlWDpfsnqRDCll0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5b5be50345d4113d04ba58c444348849f5585b4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -75,8 +114,10 @@
     "root": {
       "inputs": {
         "disko": "disko",
+        "mac-emacs-overlay": "mac-emacs-overlay",
         "mac-nixpkgs": "mac-nixpkgs",
         "nix-darwin": "nix-darwin",
+        "nixos-laptop-nixpkgs": "nixos-laptop-nixpkgs",
         "nixpkgs": "nixpkgs"
       }
     }

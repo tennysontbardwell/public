@@ -27,7 +27,7 @@ in
     kdePackages.dolphin
     gnome-screenshot
     i3
-    rxvt-unicode
+    # rxvt-unicode # broken
     synapse
     xfce.thunar
     # wifi-menu

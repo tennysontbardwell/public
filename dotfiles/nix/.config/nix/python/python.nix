@@ -33,7 +33,7 @@ let
       polars
       fastparquet
       pyarrow
-      parquet # TODO wait for fix
+      parquet
 
       ### ML
       jupyter
@@ -86,7 +86,7 @@ let
       # bitsandbytes
 
       ### python build system
-      conda
+      # conda # broken on pan
     ]
   );
 

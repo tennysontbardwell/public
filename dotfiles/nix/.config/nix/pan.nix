@@ -109,22 +109,26 @@ in
     virtualHosts."pan.tennysontbardwell.com" =  {
       enableACME = true;
       forceSSL = true;
-      locations."/radicale/" = {
-        proxyPass = "http://127.0.0.1:5232/";
+     #locations."/radicale/" = {
+     #  proxyPass = "http://127.0.0.1:5232/";
+     #  proxyWebsockets = true; # needed if you need to use WebSocket
+     #  extraConfig = ''
+     #    proxy_pass_header Authorization;
+     #    proxy_set_header  X-Script-Name /radicale;
+     #    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+     #    proxy_set_header Host $host; # Add this line
+     #    proxy_set_header  X-Forwarded-Host $host;
+     #    proxy_set_header  X-Forwarded-Port $server_port;
+     #    proxy_set_header  X-Forwarded-Proto $scheme;
+     #  '';
+     #};
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8096/";
         proxyWebsockets = true; # needed if you need to use WebSocket
         extraConfig = ''
-          proxy_pass_header Authorization;
-          proxy_set_header  X-Script-Name /radicale;
-          proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header Host $host; # Add this line
-          proxy_set_header  X-Forwarded-Host $host;
-          proxy_set_header  X-Forwarded-Port $server_port;
-          proxy_set_header  X-Forwarded-Proto $scheme;
+          proxy_set_header Host $host;
+          proxy_set_header X-Forwarded-Proto https;
         '';
-      };
-      locations."/jellyfin/" = {
-        proxyPass = "http://127.0.0.1:8096";
-        proxyWebsockets = true; # needed if you need to use WebSocket
       };
     };
   };

@@ -143,6 +143,7 @@ in
     ### media
     #### video
     ffmpeg
+    ffmpegthumbnailer
     mpv
     libavif
     #### img

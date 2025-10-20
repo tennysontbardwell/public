@@ -149,12 +149,19 @@ in
       "firefox@developer-edition"
       "ghostty"
       "hammerspoon"
+      "iterm2"
       "readest"
+      "tailscale"
       "tailscale-app"
       "thunderbird"
       "tor-browser"
       "ungoogled-chromium"
       "visual-studio-code"
+      "vlc"
+      "waterfox"
+      "zoom"
+      # "qflipper"
+      # "the-battle-for-wesnoth"
     ];
   };
   fonts.packages = with pkgs; [

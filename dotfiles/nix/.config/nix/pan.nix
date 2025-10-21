@@ -148,30 +148,30 @@ in
 #    }
 #  '';
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/kubernetes-storage 0755 root root -"
-  ];
+# systemd.tmpfiles.rules = [
+#   "d /var/lib/kubernetes-storage 0755 root root -"
+# ];
 
-  services.kubernetes = {
-    roles = ["master" "node"];
-    # masterAddress = "pan.tennysontbardwell.com";
-    masterAddress = "pan";
-    # apiserverAddress = "https://pan.tennysontbardwell.com:6443";
-    apiserverAddress = "https://pan:6443";
-    # kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
-    kubelet.kubeconfig.server = "https://pan:6443";
-    # easyCerts = true;
-    apiserver = {
-      securePort = 6443;
-      advertiseAddress = "95.217.85.40";
-    };
+# services.kubernetes = {
+#   roles = ["master" "node"];
+#   # masterAddress = "pan.tennysontbardwell.com";
+#   masterAddress = "pan";
+#   # apiserverAddress = "https://pan.tennysontbardwell.com:6443";
+#   apiserverAddress = "https://pan:6443";
+#   # kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
+#   kubelet.kubeconfig.server = "https://pan:6443";
+#   # easyCerts = true;
+#   apiserver = {
+#     securePort = 6443;
+#     advertiseAddress = "95.217.85.40";
+#   };
 
-    # use coredns
-    addons.dns.enable = true;
+#   # use coredns
+#   addons.dns.enable = true;
 
-    # needed if you use swap
-    # kubelet.extraOpts = "--fail-swap-on=false";
-  };
+#   # needed if you use swap
+#   # kubelet.extraOpts = "--fail-swap-on=false";
+# };
 
   virtualisation.podman = {
     enable = true;

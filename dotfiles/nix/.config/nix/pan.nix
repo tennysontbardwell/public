@@ -71,7 +71,7 @@ in
   networking.hostName = "pan";
 
   services.openssh.enable = true;
-  services.tailscale.enable = true;
+  # services.tailscale.enable = true;
   security.acme = {
     acceptTerms = true;
     defaults.email = "dev-null@tennysontbardwell.com";

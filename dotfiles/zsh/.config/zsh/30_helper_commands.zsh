@@ -21,6 +21,7 @@ alias tttmp='take $HOME/tmp/$(date +%Y-%m-%d--%H%M%S)'
 alias unpushed='git log --branches --not --remotes --no-walk --decorate --oneline'
 alias vnice=tbardwell__vnice
 alias y="yazi-cd"
+alias ytt="cd ~/repos/tennysontbardwell/misc-projects/personal.ts/; yarn"
 
 # small functions #############################################################
 
@@ -31,6 +32,7 @@ fork () { nohup "$@" > /dev/null 2>&1 &; disown } # and disown
 gist() { pbpaste | gh gist create | pbcopy; }
 hhead() { head -$(expr $(tput lines) - 2) } # head which fits window size
 take() { mkdir -p $@ && cd ${@:$#} }
+serveit() { python -m http.server 3000 }
 
 # big functions ###############################################################
 

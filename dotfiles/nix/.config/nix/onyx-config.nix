@@ -3,25 +3,102 @@ let
   system = "aarch64-darwin";
   packages = (import ./packages.nix { inherit lib pkgs; });
   common_paths = packages.common_paths { inherit system pkgs; };
+  user_dir = "/Users/tennyson";
+  user_logs = "${user_dir}/.local/var/log";
 
-  mboxSync = mbox: freq: {
-    serviceConfig = {
-      Label = "org.tennyson.mbsync-${mbox}";
-      UserName = "tennyson";
-      StartInterval = freq; # every 1m
-      RunAtLoad = true;
-      WorkingDirectory = "/Users/tennyson";
-      ProgramArguments = [
-        "${pkgs.isync}/bin/mbsync"
-        "${mbox}"
-      ];
-      StandardOutPath = "/Users/tennyson/.local/var/log/mbsync-${mbox}.out";
-      StandardErrorPath = "/Users/tennyson/.local/var/log/mbsync-${mbox}.error.log";
-      EnvironmentVariables = {
-        PATH = "${pkgs.sops}/bin:${pkgs.gnupg}/bin:/usr/bin:/bin";
+  scheduledScript =
+    {
+      name,
+      runtimeInputs,
+      scriptText,
+      scheduleConfig,
+    }:
+    let
+      wrapper = pkgs.writeShellApplication {
+        inherit name runtimeInputs;
+        text = scriptText;
+      };
+    in
+    {
+      serviceConfig = {
+        Label = "org.tennyson.${name}";
+        UserName = "tennyson";
+        RunAtLoad = true;
+        WorkingDirectory = "${user_dir}";
+        ProgramArguments = [ "${wrapper}/bin/${name}" ];
+        StandardOutPath = "${user_logs}/${name}.out";
+        StandardErrorPath = "${user_logs}/${name}.error.log";
+      }
+      // scheduleConfig;
+    };
+
+  service =
+    {
+      name,
+      runtimeInputs,
+      scriptText,
+    }:
+    let
+      wrapper = pkgs.writeShellApplication {
+        inherit name runtimeInputs;
+        text = scriptText;
+      };
+    in
+    {
+      serviceConfig = {
+        Label = "org.tennyson.${name}";
+        KeepAlive = true;
+        RunAtLoad = true;
+        WorkingDirectory = "${user_dir}";
+        ProgramArguments = [ "${wrapper}/bin/${name}" ];
+        StandardOutPath = "${user_logs}/${name}.log";
+        StandardErrorPath = "${user_logs}/${name}.error.log";
       };
     };
-  };
+
+  periodicScript =
+    {
+      name,
+      freqMins,
+      runtimeInputs,
+      scriptText,
+    }:
+    scheduledScript {
+      inherit name runtimeInputs scriptText;
+      scheduleConfig = {
+        StartInterval = freqMins;
+      };
+    };
+
+  cronJob =
+    {
+      name,
+      runtimeInputs,
+      scriptText,
+      StartCalendarInterval,
+    }:
+    scheduledScript {
+      inherit name runtimeInputs scriptText;
+      scheduleConfig = {
+        inherit StartCalendarInterval;
+      };
+    };
+
+  mboxSync =
+    mbox: freqMins:
+    periodicScript {
+      name = "mbsync-${mbox}";
+      inherit freqMins;
+      runtimeInputs = with pkgs; [
+        isync
+        sops
+        gnupg
+        uutils-coreutils-noprefix
+      ];
+      scriptText = ''mbsync ${mbox}
+        date --rfc-email | tee /dev/stderr
+        '';
+    };
 in
 {
   # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps
@@ -65,33 +142,32 @@ in
     '';
   };
 
-  launchd.user.agents.firefox-server =
-    let
-      python = pkgs.python3.withPackages (
+  launchd.user.agents.firefox-server = service {
+    name = "firefox-server";
+    runtimeInputs = [
+      (pkgs.python3.withPackages (
         ps: with ps; [
           websockets
           aiohttp
         ]
-      );
-    in
-    {
-      serviceConfig = {
-        Label = "com.tennysonb.firefox-server";
-        ProgramArguments = [
-          "${python}/bin/python3"
-          "/Users/tennyson/repos/tennysontbardwell/misc-projects/firefox/my-extension/server.py"
-        ];
-        KeepAlive = true;
-        RunAtLoad = true;
-        StandardOutPath = "/Users/tennyson/.local/var/log/firefox-server.log";
-        StandardErrorPath = "/Users/tennyson/.local/var/log/firefox-server.error.log";
-      };
-    };
+      ))
+    ];
+    scriptText = "python /Users/tennyson/repos/tennysontbardwell/misc-projects/firefox/my-extension/server.py";
+  };
 
   launchd.daemons.mbsync-fastmail = mboxSync "fastmail" 60;
   launchd.daemons.mbsync-gmail-inbox = mboxSync "gmail-inbox" 60;
   launchd.daemons.mbsync-allmail = mboxSync "gmail-allmail" (3600 * 5);
   launchd.daemons.mbsync-gmail = mboxSync "gmail" (3600 * 1);
+  launchd.daemons.auto-color-appearance = cronJob {
+    name = "auto-color-appearance";
+    runtimeInputs = [ ];
+    scriptText = "defaults write -g AppleInterfaceStyleSwitchesAutomatically -bool true";
+    StartCalendarInterval = {
+      Hour = 4;
+      Minute = 30;
+    };
+  };
 
   security.pam.services.sudo_local.touchIdAuth = true;
   system = {

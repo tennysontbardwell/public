@@ -60,6 +60,7 @@ in
     kitty
     broot
     gdb
+    tokei
     #### email
     isync
     mu
@@ -74,6 +75,7 @@ in
     #### latex
     pandoc
     texlive.combined.scheme-full
+    ghostscript
     #### ascii graphs
     plantuml
     graph-easy

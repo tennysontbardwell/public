@@ -26,7 +26,9 @@ onyx-upgrade:
 	make onyx
 
 onyx-bounce:
-	sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+	# sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+	sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.activate-system.plist
+	sudo launchctl enable system/org.nixos.activate-system.plist
 
 nix-darwin-switch-first-time:
 	sudo nix run nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch

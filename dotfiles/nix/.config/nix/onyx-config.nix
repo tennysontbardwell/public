@@ -159,6 +159,7 @@ in
       "visual-studio-code"
       "vlc"
       "waterfox"
+      "weasis"
       "zoom"
       # "qflipper"
       # "the-battle-for-wesnoth"

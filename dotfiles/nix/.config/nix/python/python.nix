@@ -2,6 +2,7 @@
 let
   python3 = pkgs.python3.override {
     self = python3;
+    # x11Support = true;
     packageOverrides = pyfinal: pyprev: {
       snapshot-pyppeteer = pyfinal.callPackage ./snapshot-pyppeteer.nix { };
       tennyson = pyfinal.callPackage ./tennyson.py.nix { };
@@ -106,5 +107,6 @@ in
     uv
     jetbrains.pycharm-community
     pipx
+    poetry
   ];
 }

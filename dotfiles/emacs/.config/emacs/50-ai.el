@@ -60,7 +60,7 @@ Display the results in a new buffer."
   (interactive)
   (tennyson/run-ai-on-region-with-instructions
    "Proof read this and suggest minor corrections"
-   "o4-mini"))
+   "o3"))
 
 (defun tennyson/ai-coderewrite ()
   (interactive)

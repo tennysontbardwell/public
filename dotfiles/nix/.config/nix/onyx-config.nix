@@ -95,8 +95,9 @@ let
         gnupg
         uutils-coreutils-noprefix
       ];
-      scriptText = ''mbsync ${mbox}
+      scriptText = ''
         date --rfc-email | tee /dev/stderr
+        mbsync ${mbox}
         '';
     };
 in
@@ -226,6 +227,7 @@ in
       "ghostty"
       "hammerspoon"
       "iterm2"
+      "mullvad-vpn"
       "readest"
       "tailscale"
       "tailscale-app"

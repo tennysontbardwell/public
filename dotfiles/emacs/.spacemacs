@@ -32,11 +32,12 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(rust
+   '(swift
+     rust
      ;; readers ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
      epub
-     pdf
+     ;; pdf ;; currently broken on macos with nix for me
      speed-reading
 
      (elfeed
@@ -83,13 +84,14 @@ This function should only modify configuration layer settings."
      ;; email ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
      gnus
-     (mu4e
-      :variables
-      mu4e-org-compose-support t
-      org-mu4e-convert-to-html t
-      mu4e-spacemacs-layout-name "@mu4e"
-      mu4e-spacemacs-layout-binding "m"
-      mu4e-spacemacs-kill-layout-on-exit t)
+     ;; (mu4e
+     ;;  :variables
+     ;;  mu4e-org-compose-support t
+     ;;  org-mu4e-convert-to-html t
+     ;;  mu4e-spacemacs-layout-name "@mu4e"
+     ;;  mu4e-spacemacs-layout-binding "m"
+     ;;  mu4e-spacemacs-kill-layout-on-exit t)
+     notmuch
 
      ;; filetree ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -162,9 +164,9 @@ This function should only modify configuration layer settings."
      (bibtex
       :variables
       bibtex-enable-ebib-support t
-      ebib-preload-bib-files '("~/papers/personal.bib")
-      ebib-file-search-dirs '("~/papers/files")
-      ebib-import-directory '("~/papers/files")
+      ebib-preload-bib-files '("~/repos/tennysontbardwell/personal/bib/personal.bib")
+      ebib-file-search-dirs '("~/repos/tennysontbardwell/personal/papers")
+      ebib-import-directory '("~/repos/tennysontbardwell/personal/papers")
       )
 
      ;; misc ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -810,19 +812,19 @@ This function is called at the very end of Spacemacs initialization."
                 company-auctex company-emoji company-lua company-math
                 company-nixos-options company-php company-phpactor company-reftex
                 company-terraform company-web copy-as-format counsel-css
-                counsel-gtags counsel-projectile csv-mode cyberpunk-theme
-                cython-mode dactyl-mode dakrone-theme dall-e dap-mode
-                darkmine-theme darkokai-theme darktooth-theme define-word devdocs
-                diff-hl diminish dired-quick-sort dired-subtree disable-mouse
-                django-theme doom-themes dotenv-mode dracula-theme drag-stuff
-                drupal-mode dumb-jump eaf eat ebib ef-themes ein elfeed-goodies
-                elfeed-org elisp-def elisp-demos elisp-slime-nav ellama emmet-mode
-                emoji-cheat-sheet-plus emr esh-help eshell-prompt-extras eshell-z
-                espresso-theme ess ess-R-data-view eval-sexp-fu evil-anzu
-                evil-args evil-cleverparens evil-collection evil-easymotion
-                evil-escape evil-evilified-state evil-exchange evil-goggles
-                evil-iedit-state evil-indent-plus evil-ledger evil-lion
-                evil-lisp-state evil-lispy evil-matchit evil-mc
+                counsel-gtags counsel-notmuch counsel-projectile csv-mode
+                cyberpunk-theme cython-mode dactyl-mode dakrone-theme dall-e
+                dap-mode darkmine-theme darkokai-theme darktooth-theme define-word
+                devdocs diff-hl diminish dired-quick-sort dired-subtree
+                disable-mouse django-theme doom-themes dotenv-mode dracula-theme
+                drag-stuff drupal-mode dumb-jump eaf eat ebib ef-themes ein
+                elfeed-goodies elfeed-org elisp-def elisp-demos elisp-slime-nav
+                ellama emmet-mode emoji-cheat-sheet-plus emr esh-help
+                eshell-prompt-extras eshell-z espresso-theme ess ess-R-data-view
+                eval-sexp-fu evil-anzu evil-args evil-cleverparens evil-collection
+                evil-easymotion evil-escape evil-evilified-state evil-exchange
+                evil-goggles evil-iedit-state evil-indent-plus evil-ledger
+                evil-lion evil-lisp-state evil-lispy evil-matchit evil-mc
                 evil-nerd-commenter evil-numbers evil-org evil-surround evil-tex
                 evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode
                 evil-visualstar exec-path-from-shell exotica-theme expand-region
@@ -847,14 +849,14 @@ This function is called at the very end of Spacemacs initialization."
                 majapahit-themes markdown-toc material-theme minimal-theme
                 minitest modus-themes moe-theme molokai-theme monochrome-theme
                 monokai-theme multi-line multi-term multi-vterm mustang-theme mwim
-                nameless naquadah-theme nix-mode noctilux-theme nodejs-repl nov
-                npm-mode obsidian-theme occidental-theme oldlace-theme
-                omtose-phellack-themes open-junk-file org-cliplink org-contrib
-                org-download org-mac-link org-mime org-pomodoro org-present
-                org-projectile org-re-reveal org-ref org-rich-yank org-superstar
-                organic-green-theme orgit-forge osm overseer ox-reveal ox-twbs
-                pandoc-mode paradox password-generator pdf-view-restore
-                phoenix-dark-mono-theme phoenix-dark-pink-theme
+                nameless naquadah-theme nix-mode noctilux-theme nodejs-repl
+                notmuch nov npm-mode obsidian-theme occidental-theme ol-notmuch
+                oldlace-theme omtose-phellack-themes open-junk-file org-cliplink
+                org-contrib org-download org-mac-link org-mime org-pomodoro
+                org-present org-projectile org-re-reveal org-ref org-rich-yank
+                org-superstar organic-green-theme orgit-forge osm overseer
+                ox-reveal ox-twbs pandoc-mode paradox password-generator
+                pdf-view-restore phoenix-dark-mono-theme phoenix-dark-pink-theme
                 php-auto-yasnippets php-extras phpunit pip-requirements pipenv
                 pippel planet-theme poetry polymode prettier-js professional-theme
                 pug-mode pulsar purple-haze-theme py-isort pydoc pyenv-mode

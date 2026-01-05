@@ -63,7 +63,10 @@ in
     tokei
     #### email
     isync
+    msmtp
     mu
+    mutt
+    notmuch
 
     # editors / text ##########################################################
     neovim
@@ -76,6 +79,7 @@ in
     pandoc
     texlive.combined.scheme-full
     ghostscript
+    typst
     #### ascii graphs
     plantuml
     graph-easy
@@ -149,10 +153,11 @@ in
     mpv
     libavif
     #### img
-    imagemagick
     graphviz
-    pqiv
+    imagemagick
     inkscape
+    libpng
+    pqiv
     #### audio
     sox
     ### pdf
@@ -218,6 +223,7 @@ in
     gnugrep
     gnumake
     gnupg
+    pkg-config
     pwgen
     util-linux
 

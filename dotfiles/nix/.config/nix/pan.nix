@@ -71,7 +71,7 @@ in
   networking.hostName = "pan";
 
   services.openssh.enable = true;
-  services.tailscale.enable = true;
+  # services.tailscale.enable = true;
   security.acme = {
     acceptTerms = true;
     defaults.email = "dev-null@tennysontbardwell.com";
@@ -109,22 +109,26 @@ in
     virtualHosts."pan.tennysontbardwell.com" =  {
       enableACME = true;
       forceSSL = true;
-      locations."/radicale/" = {
-        proxyPass = "http://127.0.0.1:5232/";
+     #locations."/radicale/" = {
+     #  proxyPass = "http://127.0.0.1:5232/";
+     #  proxyWebsockets = true; # needed if you need to use WebSocket
+     #  extraConfig = ''
+     #    proxy_pass_header Authorization;
+     #    proxy_set_header  X-Script-Name /radicale;
+     #    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+     #    proxy_set_header Host $host; # Add this line
+     #    proxy_set_header  X-Forwarded-Host $host;
+     #    proxy_set_header  X-Forwarded-Port $server_port;
+     #    proxy_set_header  X-Forwarded-Proto $scheme;
+     #  '';
+     #};
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8096/";
         proxyWebsockets = true; # needed if you need to use WebSocket
         extraConfig = ''
-          proxy_pass_header Authorization;
-          proxy_set_header  X-Script-Name /radicale;
-          proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header Host $host; # Add this line
-          proxy_set_header  X-Forwarded-Host $host;
-          proxy_set_header  X-Forwarded-Port $server_port;
-          proxy_set_header  X-Forwarded-Proto $scheme;
+          proxy_set_header Host $host;
+          proxy_set_header X-Forwarded-Proto https;
         '';
-      };
-      locations."/jellyfin/" = {
-        proxyPass = "http://127.0.0.1:8096";
-        proxyWebsockets = true; # needed if you need to use WebSocket
       };
     };
   };
@@ -144,30 +148,30 @@ in
 #    }
 #  '';
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/kubernetes-storage 0755 root root -"
-  ];
+# systemd.tmpfiles.rules = [
+#   "d /var/lib/kubernetes-storage 0755 root root -"
+# ];
 
-  services.kubernetes = {
-    roles = ["master" "node"];
-    # masterAddress = "pan.tennysontbardwell.com";
-    masterAddress = "pan";
-    # apiserverAddress = "https://pan.tennysontbardwell.com:6443";
-    apiserverAddress = "https://pan:6443";
-    # kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
-    kubelet.kubeconfig.server = "https://pan:6443";
-    # easyCerts = true;
-    apiserver = {
-      securePort = 6443;
-      advertiseAddress = "95.217.85.40";
-    };
+# services.kubernetes = {
+#   roles = ["master" "node"];
+#   # masterAddress = "pan.tennysontbardwell.com";
+#   masterAddress = "pan";
+#   # apiserverAddress = "https://pan.tennysontbardwell.com:6443";
+#   apiserverAddress = "https://pan:6443";
+#   # kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
+#   kubelet.kubeconfig.server = "https://pan:6443";
+#   # easyCerts = true;
+#   apiserver = {
+#     securePort = 6443;
+#     advertiseAddress = "95.217.85.40";
+#   };
 
-    # use coredns
-    addons.dns.enable = true;
+#   # use coredns
+#   addons.dns.enable = true;
 
-    # needed if you use swap
-    # kubelet.extraOpts = "--fail-swap-on=false";
-  };
+#   # needed if you use swap
+#   # kubelet.extraOpts = "--fail-swap-on=false";
+# };
 
   virtualisation.podman = {
     enable = true;

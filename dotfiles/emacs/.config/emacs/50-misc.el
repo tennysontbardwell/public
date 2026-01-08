@@ -25,6 +25,7 @@
 (setq dotspacemacs-search-tools '("rg" "ag" "ack" "grep"))
 (setq calendar-week-start-day 1)
 (global-activity-watch-mode 1)
+(smartparens-mode t) ;; needed for yas to work
 
 
 ;; pulsar
@@ -54,8 +55,8 @@
 ;; GUI ;;
 (setq spaceline-window-numbers-unicode nil)
 (setq spaceline-workspace-numbers-unicode nil)
-;; (setq max-mini-window-height 0.25)
-(setq max-mini-window-height 1)
+(setq max-mini-window-height 0.25)
+;; (setq max-mini-window-height 1)
 
 
 ;; Web ;;

@@ -11,7 +11,7 @@ alias pmmd="podman machine stop"
 alias pmmi="podman machine info"
 alias pmmu="podman machine start"
 alias priv='HISTFILE_BK=HISTFILE && unset HISTFILE' # History management
-alias r="yazi-cd"
+alias r="ranger-cd"
 alias tree1="tree -L 1"
 alias tree2="tree -L 2"
 alias tree3="tree -L 3"
@@ -20,6 +20,8 @@ alias ttmp='cd `mktemp -d`'
 alias tttmp='take $HOME/tmp/$(date +%Y-%m-%d--%H%M%S)'
 alias unpushed='git log --branches --not --remotes --no-walk --decorate --oneline'
 alias vnice=tbardwell__vnice
+alias y="yazi-cd"
+alias ytt="cd ~/repos/tennysontbardwell/misc-projects/personal.ts/; yarn"
 
 # small functions #############################################################
 
@@ -30,6 +32,7 @@ fork () { nohup "$@" > /dev/null 2>&1 &; disown } # and disown
 gist() { pbpaste | gh gist create | pbcopy; }
 hhead() { head -$(expr $(tput lines) - 2) } # head which fits window size
 take() { mkdir -p $@ && cd ${@:$#} }
+serveit() { python -m http.server 3000 }
 
 # big functions ###############################################################
 
@@ -76,8 +79,8 @@ function yazi-cd {
 }
 
 function ranger-widget {
-    # ranger-cd
-    yazi-cd
+    ranger-cd
+    # yazi-cd
     zle reset-prompt
 }
 

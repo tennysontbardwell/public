@@ -3,7 +3,7 @@
 ;; ==== Spacemacs Keys
 (spacemacs/set-leader-keys "C-s" 'counsel-imenu)
 
-(spacemacs/set-leader-keys "ie" 'emoji-cheat-sheet-plus-insert)
+(spacemacs/set-leader-keys "ie" 'emoji-search)
 (spacemacs/set-leader-keys "jj" 'evil-avy-goto-word-or-subword-1)
 (spacemacs/set-leader-keys "w=" 'tennyson/balance-windows-horizontally)
 (spacemacs/declare-prefix "o" "personal keys")
@@ -41,6 +41,7 @@
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "hr" 'tennyson/sh-send-line-or-region)
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "ht" 'org-toggle-item)
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "hT" 'org-toggle-heading)
+(spacemacs/set-leader-keys-for-major-mode 'vterm-mode "m" 'vterm-copy-mode)
 (spacemacs/set-leader-keys "pp" 'projectile-switch-project)
 
 

@@ -32,11 +32,12 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(swift
+     rust
      ;; readers ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
      epub
-     pdf
+     ;; pdf ;; currently broken on macos with nix for me
      speed-reading
 
      (elfeed
@@ -67,6 +68,7 @@ This function should only modify configuration layer settings."
       )
 
      ;; emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
      better-defaults
 
      (org
@@ -82,6 +84,14 @@ This function should only modify configuration layer settings."
      ;; email ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
      gnus
+     ;; (mu4e
+     ;;  :variables
+     ;;  mu4e-org-compose-support t
+     ;;  org-mu4e-convert-to-html t
+     ;;  mu4e-spacemacs-layout-name "@mu4e"
+     ;;  mu4e-spacemacs-layout-binding "m"
+     ;;  mu4e-spacemacs-kill-layout-on-exit t)
+     notmuch
 
      ;; filetree ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -154,10 +164,13 @@ This function should only modify configuration layer settings."
      (bibtex
       :variables
       bibtex-enable-ebib-support t
-      ebib-preload-bib-files '("~/papers/personal.bib")
-      ebib-file-search-dirs '("~/papers/files")
-      ebib-import-directory '("~/papers/files")
+      ebib-preload-bib-files '("~/repos/tennysontbardwell/personal/bib/personal.bib")
+      ebib-file-search-dirs '("~/repos/tennysontbardwell/personal/papers")
+      ebib-import-directory '("~/repos/tennysontbardwell/personal/papers")
       )
+
+     ;; misc ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     copy-as-format
 
      ;; source-control ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -245,6 +258,7 @@ This function should only modify configuration layer settings."
      ivy-posframe
      magit-lfs
      org-mac-link
+     org-mime
      osm
      pulsar
      timu-macos-theme
@@ -790,27 +804,27 @@ This function is called at the very end of Spacemacs initialization."
                 anti-zenburn-theme apropospriate-theme auctex-latexmk auto-compile
                 auto-dictionary auto-highlight-symbol auto-yasnippet badwolf-theme
                 birds-of-paradise-plus-theme blacken bm browse-at-remote
-                bubbleberry-theme bundler busybee-theme centered-cursor-mode
+                bubbleberry-theme bui bundler busybee-theme centered-cursor-mode
                 chatgpt cherry-blossom-theme chocolate-theme chruby
                 clean-aindent-mode clues-theme code-cells code-review codegpt
                 color-theme-sanityinc-solarized color-theme-sanityinc-tomorrow
                 column-enforce-mode command-log-mode company-anaconda
                 company-auctex company-emoji company-lua company-math
                 company-nixos-options company-php company-phpactor company-reftex
-                company-terraform company-web counsel-css counsel-gtags
-                counsel-projectile csv-mode cyberpunk-theme cython-mode
-                dactyl-mode dakrone-theme dall-e dap-mode darkmine-theme
-                darkokai-theme darktooth-theme define-word devdocs diff-hl
-                diminish dired-quick-sort dired-subtree disable-mouse django-theme
-                doom-themes dotenv-mode dracula-theme drag-stuff drupal-mode
-                dumb-jump eaf eat ebib ef-themes ein elfeed-goodies elfeed-org
-                elisp-def elisp-demos elisp-slime-nav ellama emmet-mode
-                emoji-cheat-sheet-plus emr esh-help eshell-prompt-extras eshell-z
-                espresso-theme ess ess-R-data-view eval-sexp-fu evil-anzu
-                evil-args evil-cleverparens evil-collection evil-easymotion
-                evil-escape evil-evilified-state evil-exchange evil-goggles
-                evil-iedit-state evil-indent-plus evil-ledger evil-lion
-                evil-lisp-state evil-lispy evil-matchit evil-mc
+                company-terraform company-web copy-as-format counsel-css
+                counsel-gtags counsel-notmuch counsel-projectile csv-mode
+                cyberpunk-theme cython-mode dactyl-mode dakrone-theme dall-e
+                dap-mode darkmine-theme darkokai-theme darktooth-theme define-word
+                devdocs diff-hl diminish dired-quick-sort dired-subtree
+                disable-mouse django-theme doom-themes dotenv-mode dracula-theme
+                drag-stuff drupal-mode dumb-jump eaf eat ebib ef-themes ein
+                elfeed-goodies elfeed-org elisp-def elisp-demos elisp-slime-nav
+                ellama emmet-mode emoji-cheat-sheet-plus emr esh-help
+                eshell-prompt-extras eshell-z espresso-theme ess ess-R-data-view
+                eval-sexp-fu evil-anzu evil-args evil-cleverparens evil-collection
+                evil-easymotion evil-escape evil-evilified-state evil-exchange
+                evil-goggles evil-iedit-state evil-indent-plus evil-ledger
+                evil-lion evil-lisp-state evil-lispy evil-matchit evil-mc
                 evil-nerd-commenter evil-numbers evil-org evil-surround evil-tex
                 evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode
                 evil-visualstar exec-path-from-shell exotica-theme expand-region
@@ -830,26 +844,27 @@ This function is called at the very end of Spacemacs initialization."
                 jazz-theme jbeans-theme journalctl-mode js-doc js2-refactor
                 json-mode json-navigator json-reformat kaolin-themes keycast
                 light-soap-theme live-py-mode livid-mode load-relative loc-changes
-                lorem-ipsum lsp-ivy lsp-latex lsp-origami lsp-pyright lua-mode
-                lush-theme macrostep madhat2r-theme magit-lfs majapahit-themes
-                markdown-toc material-theme minimal-theme minitest modus-themes
-                moe-theme molokai-theme monochrome-theme monokai-theme multi-line
-                multi-term multi-vterm mustang-theme mwim nameless naquadah-theme
-                nix-mode noctilux-theme nodejs-repl nov npm-mode obsidian-theme
-                occidental-theme oldlace-theme omtose-phellack-themes
-                open-junk-file org-cliplink org-contrib org-download org-mac-link
-                org-mime org-pomodoro org-present org-projectile org-re-reveal
-                org-ref org-rich-yank org-superstar organic-green-theme
-                orgit-forge osm overseer ox-reveal ox-twbs pandoc-mode paradox
-                password-generator pdf-view-restore phoenix-dark-mono-theme
-                phoenix-dark-pink-theme php-auto-yasnippets php-extras phpunit
-                pip-requirements pipenv pippel planet-theme poetry polymode
-                prettier-js professional-theme pug-mode pulsar purple-haze-theme
-                py-isort pydoc pyenv-mode pylookup pytest python-pytest quickrun
-                railscasts-theme rainbow-delimiters rake ranger rbenv realgud
-                rebecca-theme restart-emacs reverse-theme rjsx-mode robe
-                rspec-mode rubocop rubocopfmt ruby-hash-syntax ruby-refactor
-                ruby-test-mode ruby-tools rvm sass-mode scss-mode
+                lorem-ipsum lsp-docker lsp-ivy lsp-latex lsp-origami lsp-pyright
+                lua-mode lush-theme macrostep madhat2r-theme magit-lfs
+                majapahit-themes markdown-toc material-theme minimal-theme
+                minitest modus-themes moe-theme molokai-theme monochrome-theme
+                monokai-theme multi-line multi-term multi-vterm mustang-theme mwim
+                nameless naquadah-theme nix-mode noctilux-theme nodejs-repl
+                notmuch nov npm-mode obsidian-theme occidental-theme ol-notmuch
+                oldlace-theme omtose-phellack-themes open-junk-file org-cliplink
+                org-contrib org-download org-mac-link org-mime org-pomodoro
+                org-present org-projectile org-re-reveal org-ref org-rich-yank
+                org-superstar organic-green-theme orgit-forge osm overseer
+                ox-reveal ox-twbs pandoc-mode paradox password-generator
+                pdf-view-restore phoenix-dark-mono-theme phoenix-dark-pink-theme
+                php-auto-yasnippets php-extras phpunit pip-requirements pipenv
+                pippel planet-theme poetry polymode prettier-js professional-theme
+                pug-mode pulsar purple-haze-theme py-isort pydoc pyenv-mode
+                pylookup pytest python-pytest quickrun railscasts-theme
+                rainbow-delimiters rake ranger rbenv realgud rebecca-theme
+                restart-emacs reverse-theme rjsx-mode robe ron-mode rspec-mode
+                rubocop rubocopfmt ruby-hash-syntax ruby-refactor ruby-test-mode
+                ruby-tools rust-mode rustic rvm sass-mode scss-mode
                 seeing-is-believing seti-theme shell-pop slim-mode smeargle smex
                 smyx-theme soft-charcoal-theme soft-morning-theme soft-stone-theme
                 solarized-theme soothe-theme space-doc spacegray-theme spaceline

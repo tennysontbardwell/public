@@ -2,6 +2,7 @@
 let
   python3 = pkgs.python3.override {
     self = python3;
+    # x11Support = true;
     packageOverrides = pyfinal: pyprev: {
       snapshot-pyppeteer = pyfinal.callPackage ./snapshot-pyppeteer.nix { };
       tennyson = pyfinal.callPackage ./tennyson.py.nix { };
@@ -25,6 +26,7 @@ let
       aiohttp
       scrapy
       pipe
+      websockets
 
       ### Data frames & io
       numpy
@@ -32,7 +34,7 @@ let
       polars
       fastparquet
       pyarrow
-      # parquet TODO wait for fix
+      parquet
 
       ### ML
       jupyter
@@ -85,7 +87,7 @@ let
       # bitsandbytes
 
       ### python build system
-      conda
+      # conda # broken on pan
     ]
   );
 
@@ -105,5 +107,6 @@ in
     uv
     jetbrains.pycharm-community
     pipx
+    poetry
   ];
 }

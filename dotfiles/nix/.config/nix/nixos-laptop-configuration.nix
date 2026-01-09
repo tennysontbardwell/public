@@ -107,6 +107,8 @@ in
     #media-session.enable = true;
   };
 
+  security.pam.services.xscreensaver.enable = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 

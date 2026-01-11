@@ -35,6 +35,10 @@
       disko,
       mac-emacs-overlay,
     }:
+    let
+      dockerSystem = "aarch64-linux";
+      pkgsDocker = import nixpkgs { system = dockerSystem; };
+    in
     {
       nix-darwin.overlays = [
         mac-emacs-overlay.overlay
@@ -69,5 +73,14 @@
 
         # pkgs = pkgs linux.system;
       };
+
+      packages.${dockerSystem}.hello-docker = pkgsDocker.dockerTools.buildImage {
+        name = "hello-docker";
+        config = {
+          Cmd = [ "${pkgsDocker.hello}/bin/hello" ];
+        };
+      };
+
+      packages.aarch64-darwin.hello-docker = self.packages.aarch64-linux.hello-docker;
     };
 }

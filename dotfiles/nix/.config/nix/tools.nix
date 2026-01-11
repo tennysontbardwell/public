@@ -180,6 +180,7 @@ in
     borgmatic
     #### VM stacks
     # packer # not free
+    # lima
     podman
     podman-tui
     qemu

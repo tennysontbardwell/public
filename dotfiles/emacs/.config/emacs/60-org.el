@@ -32,6 +32,7 @@
                     (set-process-sentinel
                      proc
                      (lambda (process event)
+                       (message "Waiting for proc to finish")
                        (when (string= event "finished\n")
                          (let ((buf (process-buffer process)))
                            (when (buffer-live-p buf)

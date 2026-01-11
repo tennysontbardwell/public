@@ -22,7 +22,7 @@ let
     ggridges
     hexbin
     sugrrants # calendar facets
-    ggstatsplot # stats on plots
+    # ggstatsplot # stats on plots # r-RcppParallel is broken
     viridis # colors
     WeightedTreemaps # Voronoi treemaps
     ggnewscale
@@ -87,9 +87,9 @@ let
     recipes # features
     lavaan # latent factors
     systemfit # ols
-    brms
+    # brms #  # r-RcppParallel is broken is broken
     tidybayes
-    rstan
+    # rstan #  # r-RcppParallel is broken is broken
     torch
 
     # tutorials

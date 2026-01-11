@@ -1,8 +1,8 @@
 { pkgs }:
 let
   rust-overlay = import (builtins.fetchTarball {
-    url = "https://github.com/oxalica/rust-overlay/archive/dec08d5dfeca099b0058f0cc61264b04f33db42c.tar.gz";
-    sha256 = "sha256:1xpy5bf7g6rzpya6fp4f7fai5z3w3c7r7bdn9a6nfkvcrhmz9z4c";
+    url = "https://github.com/oxalica/rust-overlay/archive/71a69fd633552550de7cb05cc149e4a99ff6f3b6.tar.gz";
+    sha256 = "sha256:17nkwb4nx07g6j3b0nxajh1y304yrxh4fjipmwby28hnrap84rfq";
   });
 
   pkgsWithRust = pkgs.extend rust-overlay;

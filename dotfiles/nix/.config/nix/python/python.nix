@@ -14,7 +14,7 @@ let
   myPythonEnv = python3.withPackages (
     ps: with ps; [
       tennyson
-      rectified-flow
+      # rectified-flow
 
       ### misc/basic
       requests
@@ -41,7 +41,7 @@ let
       jupyterlab
       scikit-learn
       scikit-misc
-      spyder-kernels
+      # spyder-kernels ; pydicom not on darwin-aarch
       scipy
 
       ### plotting
@@ -53,7 +53,7 @@ let
       opencv-python-headless
       plotnine
       altair
-      vega_datasets
+      vega-datasets
       pyecharts
       seaborn
       snapshot-pyppeteer
@@ -105,7 +105,7 @@ in
   paths = with pkgs; [
     myPythonEnvWithQt
     uv
-    jetbrains.pycharm-community
+    # jetbrains.pycharm-community # discontinued on mac
     pipx
     poetry
   ];

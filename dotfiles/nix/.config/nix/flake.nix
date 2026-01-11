@@ -5,11 +5,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/";
 
-    nixos-laptop-nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixos-laptop-nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
-    mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "mac-nixpkgs";
     };
 

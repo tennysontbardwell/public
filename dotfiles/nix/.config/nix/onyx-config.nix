@@ -23,6 +23,9 @@ let
       serviceConfig = {
         Label = "org.tennyson.${name}";
         UserName = "tennyson";
+        ProcessType = "Background";
+        Nice = 20;
+        LowPriorityIO = true;
         RunAtLoad = true;
         WorkingDirectory = "${user_dir}";
         ProgramArguments = [ "${wrapper}/bin/${name}" ];
@@ -97,8 +100,8 @@ let
       ];
       scriptText = ''
         date --rfc-email | tee /dev/stderr
-        mbsync ${mbox}
-        '';
+        mbsync ${mbox} || :
+      '';
     };
 in
 {
@@ -106,7 +109,13 @@ in
   nix = {
     enable = false;
     settings.experimental-features = "nix-command flakes";
+    # linux-builder.enable = true;
   };
+  environment.etc."nix/nix.custom.conf".text = ''
+    experimental-features = nix-command flakes external-builders
+    # Determinate-specific: JSON config for the native Linux builder
+    external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
+  '';
   nixpkgs.hostPlatform = system;
   users.users.tennyson = {
     name = "tennyson";
@@ -158,8 +167,8 @@ in
 
   launchd.daemons.mbsync-fastmail = mboxSync "fastmail" 60;
   launchd.daemons.mbsync-gmail-inbox = mboxSync "gmail-inbox" 60;
-  launchd.daemons.mbsync-allmail = mboxSync "gmail-allmail" (3600 * 5);
-  launchd.daemons.mbsync-gmail = mboxSync "gmail" (3600 * 1);
+  launchd.daemons.mbsync-allmail = mboxSync "gmail-allmail" (3600 * 2);
+  launchd.daemons.mbsync-gmail = mboxSync "gmail" 180;
   launchd.daemons.auto-color-appearance = cronJob {
     name = "auto-color-appearance";
     runtimeInputs = [ ];
@@ -228,6 +237,7 @@ in
       "hammerspoon"
       "iterm2"
       "mullvad-vpn"
+      "linearmouse"
       "readest"
       "tailscale"
       "tailscale-app"

@@ -1,9 +1,10 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{ config, lib, pkgs, ... }:
 
-{ config, pkgs, ... }:
 
+let
+  system = "x86_64-linux";
+  packages = import ./packages.nix { inherit lib pkgs; };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -57,6 +58,7 @@
 
   services.xserver = {
     enable = true;
+    dpi = 72;
     desktopManager = {
       xterm.enable = false;
     };
@@ -105,6 +107,8 @@
     #media-session.enable = true;
   };
 
+  security.pam.services.xscreensaver.enable = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -132,9 +136,9 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = map lib.lowPrio ((with pkgs;  [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    automake
+    gnumake
     fzf
     mpv
     git
@@ -145,6 +149,7 @@
     btop
     texlive.combined.scheme-full
     ranger
+    yazi
     python312
     firefox
     yarn
@@ -156,7 +161,17 @@
     xscreensaver
     ghostty
   #  wget
-  ];
+  ])
+    ++ packages.common_paths {
+      pkgs = pkgs;
+      system = system;
+    }
+    ++ packages.linux_paths {
+      pkgs = pkgs;
+      system = system;
+    }
+  )
+  ;
 
   fonts.packages = with pkgs; [
     noto-fonts
@@ -164,15 +179,16 @@
     # nerdfonts.droid-sans-mono
     # (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
-  
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry-curses;
+  };
 
   # List services that you want to enable:
 

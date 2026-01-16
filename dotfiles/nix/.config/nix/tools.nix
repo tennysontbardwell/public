@@ -35,6 +35,8 @@ in
     xclip
     kubernetes
     bubblewrap
+
+    pinentry-all
   ];
 
   paths = with pkgs; [

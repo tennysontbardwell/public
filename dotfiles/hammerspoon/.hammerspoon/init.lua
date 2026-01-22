@@ -171,6 +171,62 @@ createAppMacro("5")
 --   end
 -- end)
 
+-------------------------------------------------------------------------------
+-- chooser --------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+-- Focus the last used window.
+local function focusLastFocused()
+  local wf = hs.window.filter
+  local lastFocused = wf.defaultCurrentSpace:getWindows(wf.sortByFocusedLast)
+  if #lastFocused > 0 then lastFocused[1]:focus() end
+end
+
+
+defaultLeader("P", function()
+  hs.alert.show("chooser", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
+  local function U(cp) return utf8.char(cp) end
+  local choices = {
+    {
+      text = "🌸 flower",
+      expansion = U(0x1F600),
+    }, {
+      text = "❓ question",
+      expansion = "❓",
+    }, {
+      text = "🔴 red",
+      expansion = U(0x1F534),
+    }, {
+      text = "🔵 blue",
+      expansion = U(0x1F535),
+    },
+  }
+
+  local chooser
+  chooser = hs.chooser.new(function(choice)
+    if choice ~= nil then
+
+      if choice.expansion ~= nil then
+        print(choice.text, choice.expansion, string.format("len=%s", utf8.len(choice.expansion)))
+        focusLastFocused()
+        hs.eventtap.keyStrokes(choice.expansion)
+      end
+
+      -- if choice.appName ~= nil then
+      --   hs.application.(choice.appName)
+      -- end
+
+      if choice.shellCommand ~= nil then
+        hs.execute(choice.shellCommand)
+      end
+      chooser:hide()
+    end
+  end)
+
+  chooser:width(25)
+  chooser:placeholderText("Choose app"):searchSubText(true):choices(choices):show()
+end)
+
 --------------------------------------------------------------------------------
 --- Menu Bar
 --------------------------------------------------------------------------------

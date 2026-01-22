@@ -203,7 +203,7 @@ in
       controlcenter = {
         AirDrop = false;
         BatteryShowPercentage = true;
-        Bluetooth = true;
+        Bluetooth = false;
       };
       dock.autohide-delay = 0.2;
       dock.wvous-br-corner = 4;

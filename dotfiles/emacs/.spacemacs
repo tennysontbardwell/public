@@ -256,6 +256,7 @@ This function should only modify configuration layer settings."
      fold-this
      gptel
      ivy-posframe
+     khardel
      magit-lfs
      org-mac-link
      org-mime
@@ -843,9 +844,9 @@ This function is called at the very end of Spacemacs initialization."
                 ivy-hydra ivy-posframe ivy-purpose ivy-xref ivy-yasnippet
                 jazz-theme jbeans-theme journalctl-mode js-doc js2-refactor
                 json-mode json-navigator json-reformat kaolin-themes keycast
-                light-soap-theme live-py-mode livid-mode load-relative loc-changes
-                lorem-ipsum lsp-docker lsp-ivy lsp-latex lsp-origami lsp-pyright
-                lua-mode lush-theme macrostep madhat2r-theme magit-lfs
+                khardel light-soap-theme live-py-mode livid-mode load-relative
+                loc-changes lorem-ipsum lsp-docker lsp-ivy lsp-latex lsp-origami
+                lsp-pyright lua-mode lush-theme macrostep madhat2r-theme magit-lfs
                 majapahit-themes markdown-toc material-theme minimal-theme
                 minitest modus-themes moe-theme molokai-theme monochrome-theme
                 monokai-theme multi-line multi-term multi-vterm mustang-theme mwim

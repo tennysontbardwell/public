@@ -16,6 +16,7 @@
   (let
       ((pdir "~/repos/tennysontbardwell/tennyson.ts/"))
     (progn
+      (set-window-dedicated-p (selected-window) nil)
       (find-file (expand-file-name "tennyson/app/cli/quickdev.ts" pdir))
       (split-window-right)
       (find-file (expand-file-name "README.md" pdir))
@@ -32,6 +33,7 @@
   (let
       ((pdir "~/repos/tennysontbardwell/misc-projects/personal.ts/"))
     (progn
+      (set-window-dedicated-p (selected-window) nil)
       (find-file (expand-file-name "README" pdir))
       (split-window-right)
       (find-file (expand-file-name "README" pdir))
@@ -46,6 +48,7 @@
   :binding "n"
   :body
   (progn
+    (set-window-dedicated-p (selected-window) nil)
     (tennyson/display-cols
      "~/repos/tennysontbardwell/public/dotfiles/nix/.config/nix/"
      "flake.nix"

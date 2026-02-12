@@ -26,6 +26,11 @@
 (setq calendar-week-start-day 1)
 (global-activity-watch-mode 1)
 (smartparens-mode t) ;; needed for yas to work
+(setq counsel-rg-base-command
+      '("rg" "--max-columns" "240" "--with-filename" "--no-heading"
+        "--line-number" "--color" "never" "%s" "--hidden" "--glob"
+        "!.git/"))
+
 
 
 ;; pulsar

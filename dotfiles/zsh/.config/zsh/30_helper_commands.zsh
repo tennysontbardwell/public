@@ -27,12 +27,31 @@ alias ytt="cd ~/repos/tennysontbardwell/misc-projects/personal.ts/; yarn"
 
 archive() { _archive_loc=$(dirname $1)/archive  && mkdir -p $_archive_loc && mv -i $1 $_archive_loc }
 bbg() { nohup "$@" &>/dev/null & } # runs something in bg, also hides output
+calc() { emacs -Q -nw -f full-calc }
 dockerkill() {for a in $(docker ps | cut -f 1 -d ' ' | tail -n +2); do docker update --restart=no $a; done}
 fork () { nohup "$@" > /dev/null 2>&1 &; disown } # and disown
 gist() { pbpaste | gh gist create | pbcopy; }
 hhead() { head -$(expr $(tput lines) - 2) } # head which fits window size
-take() { mkdir -p $@ && cd ${@:$#} }
 serveit() { python -m http.server 3000 }
+take() { mkdir -p $@ && cd ${@:$#} }
+
+# compleption small functions #################################################
+_fork() {
+    # completing the wrapped command name (first arg to fork)
+    if (( CURRENT == 2 )); then
+        _command_names
+        return
+    fi
+
+    # delegate completion to the wrapped command by "shifting" words left
+    words=(${words[2,-1]})
+    (( CURRENT-- ))
+
+    _normal
+}
+
+compdef _fork fork
+
 
 # big functions ###############################################################
 

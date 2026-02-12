@@ -16,7 +16,7 @@ magick \
     -gravity center \
     -background white \
     -fill black \
-    -size 320x96 \
+    -size ${SIZE:-320x96} \
     -bordercolor white \
     -font "DejaVu-Sans" \
     "caption:${ARGS}" \

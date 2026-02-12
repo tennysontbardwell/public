@@ -63,6 +63,7 @@ in
     broot
     gdb
     tokei
+    espanso
     #### email
     isync
     msmtp
@@ -72,6 +73,7 @@ in
 
     # caldav ##################################################################
     khal
+    khard
     vdirsyncer
 
     # editors / text ##########################################################

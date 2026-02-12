@@ -205,8 +205,20 @@ in
         BatteryShowPercentage = true;
         Bluetooth = false;
       };
-      dock.autohide-delay = 0.2;
-      dock.wvous-br-corner = 4;
+      dock = {
+        autohide-delay = 0.2;
+        wvous-br-corner = 4;
+        persistent-apps = [
+          "/Applications/Firefox Developer Edition.app/"
+          "/Applications/Ghostty.app/"
+          "/System/Applications/Messages.app/"
+          "/System/Applications/Facetime.app/"
+          "/System/Applications/Notes.app/"
+          "/Applications/Nix Apps/mpv.app/"
+          "/System/Applications/System Settings.app"
+        ];
+        persistent-others = [ "${user_dir}/Downloads/" ];
+      };
       menuExtraClock = {
         ShowSeconds = true;
         Show24Hour = true;

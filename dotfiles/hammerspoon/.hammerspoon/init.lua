@@ -70,13 +70,21 @@ function windowPercent(key, xSize, ySize, xOff, yOff)
   end)
 end
 
-function appKey(key, name)
+function appKey(key, name, command)
   defaultLeader(key, function()
     local app = hs.application.find(name)
     if app then
       app:setFrontmost()
     else
-      hs.alert.show("not found", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
+      if command ~= nil then
+        hs.alert.show("not open, running `" .. command .. "`", hs.alert.defaultStyle, hs.screen.mainScreen(), 1.5)
+        hs.execute(
+          "/run/current-system/sw/bin/zsh -c \"nohup "
+          .. command
+          .. " >> /Users/tennyson/Desktop/test.txt 2>&1 & ; disown\"")
+      else
+        hs.alert.show("\"".. name .. "\" not open", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
+      end
     end
   end)
 end
@@ -85,15 +93,14 @@ end
 --- Key Bindings
 --------------------------------------------------------------------------------
 
-appKey("F", "firefox")
-appKey("T", "ghostty")
-appKey("D", "emacs")
-appKey("R", "rstudio")
-appKey("S", "sioyek")
+appKey("F", "firefox", "open -a /Applications/Firefox\\ Developer\\ Edition.app")
+appKey("T", "ghostty", "open -a Ghostty")
+appKey("D", "emacs", "emacs")
+appKey("R", "rstudio", "rstudio")
+appKey("S", "sioyek", "sioyek")
 
 defaultLeader("I", function()
   hs.reload()
-  hs.alert.show("Config loaded", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
 end)
 
 windowPercent("K")
@@ -271,4 +278,4 @@ end
 --- End Matter
 --------------------------------------------------------------------------------
 
-hs.alert.show("Config loaded x", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
+hs.alert.show("Config reloaded", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)

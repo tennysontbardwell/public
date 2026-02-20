@@ -687,7 +687,9 @@ in
       ]
     ))
     #### emacs dependencies
-    glibtool # for vterm in emacs
+    aspell
+    bash-language-server
     delta
+    glibtool # for vterm in emacs
   ];
 }

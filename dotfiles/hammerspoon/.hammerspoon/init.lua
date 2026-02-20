@@ -103,6 +103,12 @@ defaultLeader("I", function()
   hs.reload()
 end)
 
+defaultLeader("space", function()
+  hs.execute("PATH=\"/run/current-system/sw/bin:$PATH\" tmux new-session -d -s main")
+  hs.execute("PATH=\"/run/current-system/sw/bin:$PATH\" tmux new-window -t main \"tt hometty\"")
+  hs.execute("PATH=\"/run/current-system/sw/bin:$PATH\" osascript -e 'tell application \"Ghostty\" to activate'")
+end)
+
 windowPercent("K")
 windowPercent("C", 0.5, 0.5, 0.25, 0.25)
 windowPercent("J", 0.5, nil)
@@ -190,49 +196,49 @@ local function focusLastFocused()
 end
 
 
-defaultLeader("P", function()
-  hs.alert.show("chooser", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
-  local function U(cp) return utf8.char(cp) end
-  local choices = {
-    {
-      text = "🌸 flower",
-      expansion = U(0x1F600),
-    }, {
-      text = "❓ question",
-      expansion = "❓",
-    }, {
-      text = "🔴 red",
-      expansion = U(0x1F534),
-    }, {
-      text = "🔵 blue",
-      expansion = U(0x1F535),
-    },
-  }
+-- defaultLeader("P", function()
+--   hs.alert.show("chooser", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
+--   local function U(cp) return utf8.char(cp) end
+--   local choices = {
+--     {
+--       text = "🌸 flower",
+--       expansion = U(0x1F600),
+--     }, {
+--       text = "❓ question",
+--       expansion = "❓",
+--     }, {
+--       text = "🔴 red",
+--       expansion = U(0x1F534),
+--     }, {
+--       text = "🔵 blue",
+--       expansion = U(0x1F535),
+--     },
+--   }
 
-  local chooser
-  chooser = hs.chooser.new(function(choice)
-    if choice ~= nil then
+--   local chooser
+--   chooser = hs.chooser.new(function(choice)
+--     if choice ~= nil then
 
-      if choice.expansion ~= nil then
-        print(choice.text, choice.expansion, string.format("len=%s", utf8.len(choice.expansion)))
-        focusLastFocused()
-        hs.eventtap.keyStrokes(choice.expansion)
-      end
+--       if choice.expansion ~= nil then
+--         print(choice.text, choice.expansion, string.format("len=%s", utf8.len(choice.expansion)))
+--         focusLastFocused()
+--         hs.eventtap.keyStrokes(choice.expansion)
+--       end
 
-      -- if choice.appName ~= nil then
-      --   hs.application.(choice.appName)
-      -- end
+--       -- if choice.appName ~= nil then
+--       --   hs.application.(choice.appName)
+--       -- end
 
-      if choice.shellCommand ~= nil then
-        hs.execute(choice.shellCommand)
-      end
-      chooser:hide()
-    end
-  end)
+--       if choice.shellCommand ~= nil then
+--         hs.execute(choice.shellCommand)
+--       end
+--       chooser:hide()
+--     end
+--   end)
 
-  chooser:width(25)
-  chooser:placeholderText("Choose app"):searchSubText(true):choices(choices):show()
-end)
+--   chooser:width(25)
+--   chooser:placeholderText("Choose app"):searchSubText(true):choices(choices):show()
+-- end)
 
 --------------------------------------------------------------------------------
 --- Menu Bar

@@ -130,6 +130,7 @@ in
         #!/usr/bin/env bash
         open -a "Firefox Developer Edition" "$@"
       '')
+      container
     ]
     ++ common_paths;
 
@@ -233,6 +234,7 @@ in
     # onActivation.cleanup = "uninstall";
 
     masApps = {
+      ScrollSnap = 6744903723;
       Xcode = 497799835;
       # "1Password 7 - Password Manager" = 1333542190;
     };

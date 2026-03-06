@@ -202,6 +202,7 @@ in
     talosctl
     #### cloud
     awscli2
+    azure-cli
     cloudlens
     hcloud
     #### tf
@@ -687,7 +688,7 @@ in
       ]
     ))
     #### emacs dependencies
-    aspell
+    (aspellWithDicts (dicts: with dicts; [ en ]))
     bash-language-server
     delta
     glibtool # for vterm in emacs

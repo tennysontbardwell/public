@@ -14,7 +14,7 @@
 
 (defun tennyson/read-lines (file)
   (with-current-buffer (find-file-noselect file)
-    (mapcar (lambda (x) (split-string x " " t))
+    (mapcar (lambda (x) (split-string x "\n" t))
             (split-string
              (buffer-substring-no-properties (point-min) (point-max))
              "\n"))))

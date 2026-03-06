@@ -55,6 +55,7 @@
 ;; Anesthetics ;;
 (setq org-startup-indented t)
 (setq org-src-window-setup 'other-window)
+(setq org-blank-before-new-entry '((heading) (plain-list-item)))
 
 
 ;; Performance ;;

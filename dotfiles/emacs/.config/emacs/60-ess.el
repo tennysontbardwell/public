@@ -17,7 +17,14 @@
             (command (cdr binding)))
         ;; Override in both insert and normal states
         (evil-local-set-key 'insert (kbd key) command)
-        (evil-local-set-key 'normal (kbd key) command)))))
+        (evil-local-set-key 'normal (kbd key) command))))
+  )
 
 ;; Apply to inferior-ess-r-mode
 (add-hook 'inferior-ess-r-mode-hook 'tennyson/ess-r-hook)
+
+
+(defun tennyson/ess-hook ()
+  (flycheck-mode -1)
+  )
+(add-hook 'ess-mode-hook 'tennyson/ess-hook 'append)

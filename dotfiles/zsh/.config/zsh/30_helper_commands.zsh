@@ -23,6 +23,9 @@ alias vnice=tbardwell__vnice
 alias y="yazi-cd"
 alias ytt="cd ~/repos/tennysontbardwell/misc-projects/personal.ts/; yarn"
 
+# unsorted ####################################################################
+galarm() { play -n synth 1 pluck E3 pluck C3 repeat 90 fade t 90 }
+
 # small functions #############################################################
 
 archive() { _archive_loc=$(dirname $1)/archive  && mkdir -p $_archive_loc && mv -i $1 $_archive_loc }

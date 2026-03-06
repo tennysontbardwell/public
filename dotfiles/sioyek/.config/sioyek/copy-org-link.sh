@@ -17,11 +17,11 @@ res=$(printf "[[shell:%s][%s]]"  \
     "$text")
 
 # Debugging
-(printf "%s\n" "$@"; echo "") > ~/Desktop/b.txt
-(printf "%q\n" "$@"; echo "") >> ~/Desktop/b.txt
-(printf "%s\n" "$cmd"; echo "") >> ~/Desktop/b.txt
-(printf "%s\n" "$text"; echo "") >> ~/Desktop/b.txt
-(rawurlencode "$cmd"; echo "") >> ~/Desktop/b.txt
-echo "$res" >> ~/Desktop/b.txt
+# (printf "%s\n" "$@"; echo "") > ~/Desktop/b.txt
+# (printf "%q\n" "$@"; echo "") >> ~/Desktop/b.txt
+# (printf "%s\n" "$cmd"; echo "") >> ~/Desktop/b.txt
+# (printf "%s\n" "$text"; echo "") >> ~/Desktop/b.txt
+# (rawurlencode "$cmd"; echo "") >> ~/Desktop/b.txt
+# echo "$res" >> ~/Desktop/b.txt
 
 echo "$res" | pbcopy

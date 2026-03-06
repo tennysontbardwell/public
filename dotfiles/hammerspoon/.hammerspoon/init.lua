@@ -105,7 +105,7 @@ end)
 
 defaultLeader("space", function()
   hs.execute("PATH=\"/run/current-system/sw/bin:$PATH\" tmux new-session -d -s main")
-  hs.execute("PATH=\"/run/current-system/sw/bin:$PATH\" tmux new-window -t main \"tt hometty\"")
+  hs.execute("PATH=\"/run/current-system/sw/bin:$PATH\" tmux new-window -t main -n hometty \"tt hometty\"")
   hs.execute("PATH=\"/run/current-system/sw/bin:$PATH\" osascript -e 'tell application \"Ghostty\" to activate'")
 end)
 

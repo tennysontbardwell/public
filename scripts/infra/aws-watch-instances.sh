@@ -4,7 +4,6 @@ IFS=$'\n\t'
 
 get_instances() {
     local jq_query='
-    [
         .Reservations[].Instances[]
         | select(.State.Name != "terminated")
         | {
@@ -14,10 +13,12 @@ get_instances() {
             "PublicIp": .PublicIpAddress,
             "LaunchTime": .LaunchTime
         }
-    ]'
+    '
 
-    aws ec2 describe-instances | jq "$jq_query" | qsv json | xan view
+    parallel --group 'aws ec2 describe-instances --region {}' \
+        ::: us-{east,west}-{1,2} ap-east-1 \
+        | jq "$jq_query" -c | jq -cs | qsv json | xan view
 }
 
 export -f get_instances
-watch -n 60 bash -c "get_instances"
+watch -n 10 bash -c "get_instances"

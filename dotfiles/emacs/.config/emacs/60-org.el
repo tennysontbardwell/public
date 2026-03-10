@@ -142,7 +142,7 @@
   (high-priority-keys))
 
 
-(add-hook 'org-mode-hook 'my-org-mode-setup)
+(add-hook 'org-mode-hook 'my-org-mode-setup 'append)
 
 
 

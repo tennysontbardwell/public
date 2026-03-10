@@ -73,6 +73,7 @@ let
     networkD3
 
     # stats
+    limSolve
     corrr
     AER # econometrics
     invgamma
@@ -129,11 +130,16 @@ let
     # rbokeh
   ];
 
-  myREnv = pkgs.rWrapper.override{
-    packages = myRPackages;
-  };
+  # https://github.com/NixOS/nixpkgs/issues/497990
+  myREnv =
+    (pkgs.rWrapper.override {
+      packages = myRPackages;
+    }).overrideAttrs
+      (old: {
+        nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+      });
 
-  myRStudio = pkgs.rstudioWrapper.override{
+  myRStudio = pkgs.rstudioWrapper.override {
     packages = myRPackages;
   };
 

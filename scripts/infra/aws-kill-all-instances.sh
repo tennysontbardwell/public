@@ -19,5 +19,5 @@ for region in "${regions[@]}"; do
   fi
 
   echo "[$region] Terminating: ${ids[*]}"
-  aws ec2 terminate-instances --region "$region" --instance-ids "${ids[@]}"
+  aws ec2 terminate-instances --region "$region" --instance-ids "${ids[@]}" > /dev/null
 done

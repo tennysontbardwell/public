@@ -59,13 +59,14 @@ compdef _fork fork
 # big functions ###############################################################
 
 function ff {
-    dir="$(cat ~/.config/tennyson/bookmarks.txt | fzf)"
-    dir="$(eval echo -e "$dir")"
-    if [ -f "$dir" ]
-    then
-       vim "$dir"
+    res="$(cat ~/.config/tennyson/bookmarks.txt | fzf)"
+    res="$(eval echo -e "$res")"
+    if [ -z "$res" ]; then
+       :
+    elif [ -f "$res" ]; then
+       vim "$res"
     else
-       ranger-cd "$dir"
+       ranger-cd "$res"
     fi
 }
 

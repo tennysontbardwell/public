@@ -21,6 +21,11 @@ vd = function(df) {
   cmd_in_tmux("vd /tmp/from-r.csv")
 }
 
+vdjson = function(df) {
+  jsonlite::write_json(df, "/tmp/from-r.json")
+  cmd_in_tmux("vd /tmp/from-r.json")
+}
+
 format_si <- function(x, sig_figs = 3) {
   si_prefixes <- data.frame(
     power = c(-24, -21, -18, -15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15, 18, 21, 24),
@@ -51,6 +56,8 @@ si = format_si
 
 scale_x_si = function() { ggplot2::scale_x_continuous(labels = format_si) }
 scale_y_si = function() { ggplot2::scale_y_continuous(labels = format_si) }
+scale_xlog_si = function() { ggplot2::scale_x_log10(labels = format_si) }
+scale_ylog_si = function() { ggplot2::scale_y_log10(labels = format_si) }
 
 tee = function(x) {
   print(x)

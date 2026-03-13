@@ -8,3 +8,6 @@ Sheet.addCommand('^A', 'scroll-first-col', 'moveToCol(0)')
 Sheet.addCommand('^E', 'scroll-last-col', 'moveToCol(nCols - 1)')
 # Sheet.addCommand('zk', 'increase-col-10-char', 'cursorCol.width += 10')
 # Sheet.addCommand('z0', 'increase-col-10-char', 'cursorCol.width += 10')
+
+options.disp_float_fmt = "{0:,.02f}"
+options.disp_int_fmt = "{:,d}"

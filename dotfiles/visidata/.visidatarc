@@ -1,4 +1,7 @@
 options.motd_url=''
+options.disp_float_fmt = "{0:,.02f}"
+options.disp_int_fmt = "{:,d}"
+
 
 TableSheet.unbindkey('i')
 TableSheet.bindkey('i', 'edit-cell')
@@ -9,5 +12,122 @@ Sheet.addCommand('^E', 'scroll-last-col', 'moveToCol(nCols - 1)')
 # Sheet.addCommand('zk', 'increase-col-10-char', 'cursorCol.width += 10')
 # Sheet.addCommand('z0', 'increase-col-10-char', 'cursorCol.width += 10')
 
-options.disp_float_fmt = "{0:,.02f}"
-options.disp_int_fmt = "{:,d}"
+def toggle_col_format(sheet, col):
+    def cycleFormat(formats):
+        current = col.fmtstr
+        try:
+            idx = formats.index(current)
+        except ValueError:
+            idx = -1
+        col.fmtstr = formats[(idx + 1) % len(formats)]
+        vd.status(f'format: {col.fmtstr or "default"}')
+
+    if col.type is int:
+        cycleFormat(['', '{:,}', '#x'])
+    elif col.type is float:
+        cycleFormat(['', '{:,.2f}', '{:,.4f}', '{:.2e}'])
+    else:
+        vd.status(f'Column type {col.type.__name__} not supported for format toggle')
+
+Sheet.addCommand(
+    'z;',                          # keybinding (change to your preference)
+    'toggle-col-format',           # longname
+    'toggle_col_format(sheet, cursorCol)',  # Python expression to execute
+    'cycle display format for current column based on type'
+)
+
+from visidata import vd, Sheet, CellColorizer
+
+# ── SI Prefix Table (descending order) ──────────────────────────
+SI_PREFIXES = [
+    (1e15,  'P'),
+    (1e12,  'T'),
+    (1e9,   'G'),
+    (1e6,   'M'),
+    (1e3,   'k'),
+    (1e0,   '' ),
+    (1e-3,  'm'),
+    (1e-6,  'µ'),
+    (1e-9,  'n'),
+    (1e-12, 'p'),
+    (1e-15, 'f'),
+]
+
+# ── Color per SI prefix ─────────────────────────────────────────
+SI_COLORS = {
+    'P': 'bold magenta',
+    'T': 'bold red',
+    'G': 'red',
+    'M': 'bold yellow',
+    'k': 'yellow',
+    '' : '',              # default / no color
+    'm': 'green',
+    'µ': 'cyan',
+    'n': 'bold cyan',
+    'p': 'blue',
+    'f': 'bold blue',
+}
+
+# ── Helper: determine which prefix applies ──────────────────────
+def get_si_prefix(val):
+    try:
+        val = float(val)
+    except (TypeError, ValueError):
+        return ''
+    if val == 0:
+        return ''
+    abs_val = abs(val)
+    for threshold, prefix in SI_PREFIXES:
+        if abs_val >= threshold:
+            return prefix
+    return 'f'
+
+# ── Formatter: value → "3.14k" ──────────────────────────────────
+def format_si(fmtstr, val):
+    if val is None:
+        return ''
+    try:
+        val = float(val)
+    except (TypeError, ValueError):
+        return str(val)
+    if val == 0:
+        return '   0.00 '
+
+    sign = '-' if val < 0 else ' '
+    abs_val = abs(val)
+
+    for threshold, prefix in SI_PREFIXES:
+        if abs_val >= threshold:
+            scaled = abs_val / threshold
+            # Use fmtstr if the user overrides it, else 3 sig figs
+            if fmtstr:
+                return sign + fmtstr.format(scaled) + prefix
+            x = f'{scaled:.2f}'
+            x = (6 - len(x)) * ' ' + x[:4] + (len(x) - 4) * ' '
+            return f'{sign}{x}{prefix}'
+
+    return f'{val:.3g}'
+
+# ── Define the type (float subclass so math still works) ────────
+class si(float):
+    """Float interpreted and displayed with SI unit prefixes."""
+    pass
+
+# ── Register the type with VisiData ─────────────────────────────
+vd.addType(si, icon='S', fmtstr='', formatter=format_si)
+
+# ── Colorizer: color cells whose column type is `si` ───────────
+def _si_colorizer(sheet, col, row, value):
+    if col is None or row is None or col.type is not si:
+        return None
+    try:
+        val = col.getTypedValue(row)
+        return SI_COLORS.get(get_si_prefix(val))
+    except Exception:
+        return None
+
+Sheet.colorizers += [CellColorizer(5, None, _si_colorizer)]
+
+# ── Keybinding: press z$ to set current column to SI type ───────
+Sheet.addCommand('z$', 'type-si', 'cursorCol.type = si; cursorCol.fmtstr = ""',
+                 'set column type to SI value')

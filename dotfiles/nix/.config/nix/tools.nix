@@ -35,6 +35,8 @@ in
     xclip
     kubernetes
     bubblewrap
+    # email
+    postfix
 
     pinentry-all
   ];
@@ -66,6 +68,7 @@ in
     espanso
     #### email
     isync
+    mailutils
     msmtp
     mu
     mutt

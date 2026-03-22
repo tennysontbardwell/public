@@ -69,6 +69,7 @@ in
 
   networking.hostId = "1c816d71";
   networking.hostName = "pan";
+  networking.domain = "tennysontbardwell.com";
 
   services.openssh.enable = true;
   # services.tailscale.enable = true;

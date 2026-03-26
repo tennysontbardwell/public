@@ -133,12 +133,14 @@ in
 
     # data ####################################################################
     #### viz
-    visidata
     jless
+    otree
+    visidata
     #### transformers
     jq
     yq-go
     xq-xml
+    opensp # SGML
     xan
     qsv
     html-tidy

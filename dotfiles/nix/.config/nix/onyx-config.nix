@@ -239,7 +239,9 @@ in
       # "1Password 7 - Password Manager" = 1333542190;
     };
     taps = [ ];
-    brews = [ ];
+    brews = [
+      "googleworkspace-cli"
+    ];
     casks = [
       "1password"
       "1password-cli"

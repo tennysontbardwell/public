@@ -81,7 +81,7 @@ function appKey(key, name, command)
         hs.execute(
           "/run/current-system/sw/bin/zsh -c \"nohup "
           .. command
-          .. " >> /Users/tennyson/Desktop/test.txt 2>&1 & ; disown\"")
+          .. " >> /dev/null 2>&1 & ; disown\"")
       else
         hs.alert.show("\"".. name .. "\" not open", hs.alert.defaultStyle, hs.screen.mainScreen(), 0.5)
       end

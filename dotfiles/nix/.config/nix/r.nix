@@ -39,6 +39,7 @@ let
     stringr # (tidyverse)
 
     # io
+    arrow
     rjson
     vvtableau # tableau comm
     readr

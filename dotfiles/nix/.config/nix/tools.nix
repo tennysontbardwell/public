@@ -39,6 +39,7 @@ in
     postfix
 
     pinentry-all
+    nftables
   ];
 
   paths = with pkgs; [

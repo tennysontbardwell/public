@@ -35,8 +35,11 @@ in
     xclip
     kubernetes
     bubblewrap
+    # email
+    postfix
 
     pinentry-all
+    nftables
   ];
 
   paths = with pkgs; [
@@ -66,6 +69,7 @@ in
     espanso
     #### email
     isync
+    mailutils
     msmtp
     # mu
     # mutt

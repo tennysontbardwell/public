@@ -59,16 +59,16 @@ in
     (import ./imessage-exporter.nix { inherit pkgs; }).imessage-exporter
     bat
     highlight
-    kitty
-    broot
+    # kitty
+    # broot
     gdb
     tokei
     espanso
     #### email
     isync
     msmtp
-    mu
-    mutt
+    # mu
+    # mutt
     notmuch
 
     # caldav ##################################################################
@@ -165,7 +165,7 @@ in
     #### img
     graphviz
     imagemagick
-    inkscape
+    # inkscape
     libpng
     pqiv
     #### audio
@@ -261,7 +261,8 @@ in
     bun
     nodejs
     #### js pkg manger
-    yarn
+    # yarn
+    yarn-berry
     pnpm
     #### js dev
     nodePackages.prettier
@@ -273,16 +274,16 @@ in
     # fun random things #######################################################
     #### animations
     cbonsai
-    cmatrix
-    globe-cli
+    # cmatrix
+    # globe-cli
     # sl
     #### activity
     # hollywood
-    genact
+    # genact
     #### fun TUI text
-    cowsay
-    figlet
-    lolcat
+    # cowsay
+    # figlet
+    # lolcat
 
     # to del, old #############################################################
     #### tried out in the past - CLI tools

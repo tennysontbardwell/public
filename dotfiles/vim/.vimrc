@@ -1,3 +1,3 @@
- for f in split(glob('~/.config/nvim/*.vim'), '\n')
-   exe 'source' f
+for f in sort(split(globpath('~/.config/nvim/config.d', '**/*.vim'), '\n'))
+    exe 'source' f
 endfor

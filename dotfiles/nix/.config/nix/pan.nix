@@ -88,48 +88,20 @@ in
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-    # other Nginx options
-    virtualHosts."radicale.pan.tennysontbardwell.com" =  {
-      serverName = "pan.tennysontbardwell.com";
-      enableACME = true;
-      forceSSL = true;
-      listen = [{port = 5233;  addr="0.0.0.0"; ssl=true;}];
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:5232/";
-        proxyWebsockets = true; # needed if you need to use WebSocket
-        extraConfig = ''
-          proxy_pass_header Authorization;
-          proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header Host $host; # Add this line
-          proxy_set_header  X-Forwarded-Host $host;
-          proxy_set_header  X-Forwarded-Port $server_port;
-          proxy_set_header  X-Forwarded-Proto $scheme;
-        '';
-      };
-    };
+    appendHttpConfig = ''
+      proxy_headers_hash_max_size 1024;
+      proxy_headers_hash_bucket_size 128;
+    '';
     virtualHosts."pan.tennysontbardwell.com" =  {
       enableACME = true;
       forceSSL = true;
-     #locations."/radicale/" = {
-     #  proxyPass = "http://127.0.0.1:5232/";
-     #  proxyWebsockets = true; # needed if you need to use WebSocket
-     #  extraConfig = ''
-     #    proxy_pass_header Authorization;
-     #    proxy_set_header  X-Script-Name /radicale;
-     #    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-     #    proxy_set_header Host $host; # Add this line
-     #    proxy_set_header  X-Forwarded-Host $host;
-     #    proxy_set_header  X-Forwarded-Port $server_port;
-     #    proxy_set_header  X-Forwarded-Proto $scheme;
-     #  '';
-     #};
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8096/";
+        proxyPass = "http://127.0.0.1:8097/";
         proxyWebsockets = true; # needed if you need to use WebSocket
-        extraConfig = ''
-          proxy_set_header Host $host;
-          proxy_set_header X-Forwarded-Proto https;
-        '';
+        #extraConfig = ''
+        #  proxy_set_header Host $host;
+        #  proxy_set_header X-Forwarded-Proto https;
+        #'';
       };
     };
   };

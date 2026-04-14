@@ -11,26 +11,6 @@ in
     (modulesPath + "/profiles/qemu-guest.nix")
     ./pan-disk-config.nix
   ];
-# nixpkgs.overlays = [
-#   (final: prev: {
-#     python3Packages = prev.python3Packages.overrideScope (python-final: python-prev: {
-#       thriftpy2 = python-prev.thriftpy2.overridePythonAttrs (old: {
-#         dependencies = (old.dependencies or []) ++ [
-#           python-final.toml
-#         ];
-#       });
-#     });
-#   })
-# ];
-# nixpkgs.overlays = [
-#     (final: prev: {
-#       pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [ (pyfinal: pyprev: {
-#         thriftpy2 = pyprev.thriftpy2.overridePythonAttrs (oldAttrs: {
-#           dependencies = oldAttrs.dependencies ++ [ pkgs.python313Packages.toml ];
-#         });
-#       })];
-#     })
-#   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   boot = {
@@ -62,10 +42,6 @@ in
       enableCryptodisk = true;
     };
   };
-  # fileSystems."/mount" = {
-  #   device = "zmain/test";
-  #   fsType = "zfs";
-  # };
 
   networking.hostId = "1c816d71";
   networking.hostName = "pan";
@@ -88,91 +64,15 @@ in
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-    # other Nginx options
-    virtualHosts."radicale.pan.tennysontbardwell.com" =  {
-      serverName = "pan.tennysontbardwell.com";
-      enableACME = true;
-      forceSSL = true;
-      listen = [{port = 5233;  addr="0.0.0.0"; ssl=true;}];
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:5232/";
-        proxyWebsockets = true; # needed if you need to use WebSocket
-        extraConfig = ''
-          proxy_pass_header Authorization;
-          proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header Host $host; # Add this line
-          proxy_set_header  X-Forwarded-Host $host;
-          proxy_set_header  X-Forwarded-Port $server_port;
-          proxy_set_header  X-Forwarded-Proto $scheme;
-        '';
-      };
-    };
     virtualHosts."pan.tennysontbardwell.com" =  {
       enableACME = true;
       forceSSL = true;
-     #locations."/radicale/" = {
-     #  proxyPass = "http://127.0.0.1:5232/";
-     #  proxyWebsockets = true; # needed if you need to use WebSocket
-     #  extraConfig = ''
-     #    proxy_pass_header Authorization;
-     #    proxy_set_header  X-Script-Name /radicale;
-     #    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-     #    proxy_set_header Host $host; # Add this line
-     #    proxy_set_header  X-Forwarded-Host $host;
-     #    proxy_set_header  X-Forwarded-Port $server_port;
-     #    proxy_set_header  X-Forwarded-Proto $scheme;
-     #  '';
-     #};
       locations."/" = {
         proxyPass = "http://127.0.0.1:8096/";
-        proxyWebsockets = true; # needed if you need to use WebSocket
-        extraConfig = ''
-          proxy_set_header Host $host;
-          proxy_set_header X-Forwarded-Proto https;
-        '';
+        proxyWebsockets = true;
       };
     };
   };
-
-#  environment.etc."containers/registries.conf".text = ''
-#    [registries.search]
-#    registries = ['docker.io']
-#  '';
-
-#  environment.etc."containers/policy.json".text = ''
-#    {
-#        "default": [
-#            {
-#                "type": "insecureAcceptAnything"
-#            }
-#        ]
-#    }
-#  '';
-
-# systemd.tmpfiles.rules = [
-#   "d /var/lib/kubernetes-storage 0755 root root -"
-# ];
-
-# services.kubernetes = {
-#   roles = ["master" "node"];
-#   # masterAddress = "pan.tennysontbardwell.com";
-#   masterAddress = "pan";
-#   # apiserverAddress = "https://pan.tennysontbardwell.com:6443";
-#   apiserverAddress = "https://pan:6443";
-#   # kubelet.kubeconfig.server = "https://pan.tennysontbardwell.com:6443";
-#   kubelet.kubeconfig.server = "https://pan:6443";
-#   # easyCerts = true;
-#   apiserver = {
-#     securePort = 6443;
-#     advertiseAddress = "95.217.85.40";
-#   };
-
-#   # use coredns
-#   addons.dns.enable = true;
-
-#   # needed if you use swap
-#   # kubelet.extraOpts = "--fail-swap-on=false";
-# };
 
   virtualisation.podman = {
     enable = true;

@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   system = "aarch64-darwin";
-  packages = (import ./packages.nix { inherit lib pkgs; });
+  packages = (import ../modules/packages.nix { inherit lib pkgs; });
   common_paths = packages.common_paths { inherit system pkgs; };
   user_dir = "/Users/tennyson";
   user_logs = "${user_dir}/.local/var/log";

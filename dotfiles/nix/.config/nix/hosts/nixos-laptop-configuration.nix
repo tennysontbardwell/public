@@ -3,7 +3,7 @@
 
 let
   system = "x86_64-linux";
-  packages = import ./packages.nix { inherit lib pkgs; };
+  packages = import ../modules/packages.nix { inherit lib pkgs; };
 in
 {
   imports =

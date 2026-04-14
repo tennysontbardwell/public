@@ -41,14 +41,14 @@
         system = "aarch64-darwin";
         modules = [
           # { nixpkgs.overlays = [ mac-emacs-overlay.overlay ]; }
-          ./onyx-config.nix
+          ./hosts/onyx-config.nix
         ];
       };
 
       nixosConfigurations.nixos-laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./nixos-laptop-configuration.nix
+          ./hosts/nixos-laptop-configuration.nix
         ];
       };
 
@@ -56,9 +56,9 @@
         system = "x86_64-linux";
         modules = [
           disko.nixosModules.disko
-          ./pan.nix
-          ./pan-disk-config.nix
-          ./pan-hardware-configuration.nix
+          ./hosts/pan.nix
+          ./hosts/pan-disk-config.nix
+          ./hosts/pan-hardware-configuration.nix
         ];
       };
 

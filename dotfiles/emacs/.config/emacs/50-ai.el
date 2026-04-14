@@ -59,7 +59,7 @@ Display the results in a new buffer."
 (defun tennyson/ai-proofread ()
   (interactive)
   (tennyson/run-ai-on-region-with-instructions
-   "Proof read this and suggest minor corrections"
+   "Proof read this and suggest minor corrections as a list of specific changes that the user will manually review and apply"
    "o3"))
 
 (defun tennyson/ai-coderewrite ()

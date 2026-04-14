@@ -23,7 +23,8 @@
       (split-window-right)
       (vterm "*tennyson.ts-watch*")
       (vterm-send-string "yarn run watch\n")
-      (call-interactively 'shell-pop)
+      (let ((default-directory pdir))
+        (call-interactively 'shell-pop))
       (evil-window-right 1)
       )))
 
@@ -40,7 +41,8 @@
       (split-window-right)
       (vterm "*personal.ts-watch*")
       (vterm-send-string "yarn run watch\n")
-      (call-interactively 'shell-pop)
+      (let ((default-directory pdir))
+        (call-interactively 'shell-pop))
       (evil-window-right 1)
       )))
 

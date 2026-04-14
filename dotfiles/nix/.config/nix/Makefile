@@ -25,8 +25,8 @@ onyx-build:
 	sudo darwin-rebuild build --flake '.#onyx'
 
 onyx-upgrade:
-	# nix flake update mac-nixpkgs nix-darwin mac-emacs-overlay
-	nix flake update mac-nixpkgs nix-darwin
+	nix flake update mac-nixpkgs nix-darwin mac-emacs-overlay
+	# nix flake update mac-nixpkgs nix-darwin
 	make onyx
 
 onyx-bounce:

@@ -106,16 +106,30 @@ let
 in
 {
   # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps
+  ids.gids.nixbld = 350;
   nix = {
-    enable = false;
+    enable = true;
+    package = pkgs.nixVersions.latest;
+
     settings.experimental-features = "nix-command flakes";
-    # linux-builder.enable = true;
+    settings.trusted-users = [ "@admin" ];
+    linux-builder.enable = true;
+
+    gc = {
+      automatic = true;
+      interval = {
+        Weekday = 0;
+        Hour = 3;
+        Minute = 0;
+      };
+      options = "--delete-older-than 30d";
+    };
   };
-  environment.etc."nix/nix.custom.conf".text = ''
-    experimental-features = nix-command flakes external-builders
-    # Determinate-specific: JSON config for the native Linux builder
-    external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
-  '';
+  # environment.etc."nix/nix.custom.conf".text = ''
+  #   experimental-features = nix-command flakes external-builders
+  #   # Determinate-specific: JSON config for the native Linux builder
+  #   external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
+  # '';
   nixpkgs.hostPlatform = system;
   users.users.tennyson = {
     name = "tennyson";

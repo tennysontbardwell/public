@@ -3,6 +3,7 @@
   description = "tennyson-nix";
 
   inputs = {
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/";
 
     mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
@@ -36,7 +37,30 @@
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          # { nixpkgs.overlays = [ mac-emacs-overlay.overlay ]; }
+          {
+            nixpkgs.overlays = [
+              mac-emacs-overlay.overlay
+
+              (final: prev: {
+                ffmpeg = prev.ffmpeg.overrideAttrs (old: {
+                  postFixup = (old.postFixup or "") + ''
+                    for f in "$out"/lib/*.dylib; do
+                      if [ -f "$f" ]; then
+                        /usr/bin/codesign --force --sign - "$f"
+                      fi
+                    done
+                    if [ -d "$out/bin" ]; then
+                      for f in "$out"/bin/*; do
+                        if [ -f "$f" ]; then
+                          /usr/bin/codesign --force --sign - "$f"
+                        fi
+                      done
+                    fi
+                  '';
+                });
+              })
+            ];
+          }
           ./hosts/onyx-config.nix
         ];
       };

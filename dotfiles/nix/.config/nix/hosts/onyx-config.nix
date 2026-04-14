@@ -125,11 +125,6 @@ in
       options = "--delete-older-than 30d";
     };
   };
-  # environment.etc."nix/nix.custom.conf".text = ''
-  #   experimental-features = nix-command flakes external-builders
-  #   # Determinate-specific: JSON config for the native Linux builder
-  #   external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
-  # '';
   nixpkgs.hostPlatform = system;
 
   users.users.tennyson = {

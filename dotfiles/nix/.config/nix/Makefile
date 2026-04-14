@@ -22,7 +22,7 @@ onyx:
 	sudo darwin-rebuild switch --flake '.#onyx'
 
 onyx-build:
-	sudo darwin-rebuild build --flake '.#onyx'
+	sudo darwin-rebuild build --flake '.#onyx' --show-trace
 
 onyx-upgrade:
 	nix flake update mac-nixpkgs nix-darwin mac-emacs-overlay

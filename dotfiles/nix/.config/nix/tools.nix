@@ -1,14 +1,12 @@
 { pkgs, ... }:
 let
   ttp = pkgs.writeScriptBin "ttp" ''
-    #!/usr/bin/env sh
+    #!/usr/bin/env dash
     bun run "$HOME/repos/tennysontbardwell/tennyson.ts/tennyson/index.ts" -- "$@"
-    # "$HOME/repos/tennysontbardwell/tennyson.ts/bin/index.cjs" "$@"
   '';
   tt = pkgs.writeScriptBin "tt" ''
-    #!/usr/bin/env sh
+    #!/usr/bin/env dash
     bun run "$HOME/repos/tennysontbardwell/misc-projects/personal.ts/tennyson-personal/bin/tt.ts" -- "$@"
-    # "$HOME/repos/tennysontbardwell/misc-projects/personal.ts/bin/index.js" "$@"
   '';
   my-emacs = pkgs.emacs.override {
     # withNS = false;
@@ -51,22 +49,15 @@ in
     #### dependencies
     pkg-config # not sure why I need this
     cairo # dependency for some tool
-    #### to disable then del
-    # hr
-    #### ranger alt
-    # lf
     #### unsorted for now
-    lnav
     ledger
-    ollama
     (import ./imessage-exporter.nix { inherit pkgs; }).imessage-exporter
     bat
     highlight
-    # kitty
-    # broot
     gdb
     tokei
     espanso
+    kitty
     #### email
     isync
     mailutils
@@ -184,7 +175,7 @@ in
 
     # social ##################################################################
     irssi
-    tty-share
+    # tty-share
 
     # devops ##################################################################
     #### ssh
@@ -222,6 +213,9 @@ in
     sops
     age
     pass
+    #### security
+    trivy
+    clamav
 
     # GUIs ####################################################################
     #### browsers
@@ -239,6 +233,7 @@ in
     gnugrep
     gnumake
     gnupg
+    openssl
     pkg-config
     pwgen
     util-linux

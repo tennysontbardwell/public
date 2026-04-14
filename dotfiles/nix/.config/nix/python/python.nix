@@ -17,15 +17,15 @@ let
       # rectified-flow
 
       ### misc/basic
-      requests
+      # requests
       lxml
       beautifulsoup4
-      pypdf
+      # pypdf
       tqdm
       pip
       aiohttp
       scrapy
-      pipe
+      # pipe
       websockets
 
       ### Data frames & io
@@ -56,13 +56,13 @@ let
       vega-datasets
       pyecharts
       seaborn
-      snapshot-pyppeteer
+      # snapshot-pyppeteer
       # pyGAM
       # econML
       # parqv
 
       # LSP
-      python-lsp-server
+      # python-lsp-server
       yapf
 
       ### AI
@@ -75,7 +75,7 @@ let
       # vllm
 
       ### Misc
-      jsonpickle
+      # jsonpickle
       simple-term-menu
 
       ### api

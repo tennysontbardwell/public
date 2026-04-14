@@ -131,6 +131,7 @@ in
   #   external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
   # '';
   nixpkgs.hostPlatform = system;
+
   users.users.tennyson = {
     name = "tennyson";
     home = "/Users/tennyson";

@@ -8,7 +8,6 @@ let
       tennyson = pyfinal.callPackage ./tennyson.py.nix { };
       rectified-flow = pyfinal.callPackage ./rectified-flow.py.nix { };
     };
-
   };
 
   myPythonEnv = python3.withPackages (

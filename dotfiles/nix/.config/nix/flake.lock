@@ -80,22 +80,6 @@
         "type": "github"
       }
     },
-    "nixos-laptop-nixpkgs": {
-      "locked": {
-        "lastModified": 1768028080,
-        "narHash": "sha256-50aDK+8eLvsLK39TzQhKNq50/HcXyP4hyxOYoPoVxjo=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "d03088749a110d52a4739348f39a63f84bb0be14",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1760931986,
@@ -117,7 +101,6 @@
         "mac-emacs-overlay": "mac-emacs-overlay",
         "mac-nixpkgs": "mac-nixpkgs",
         "nix-darwin": "nix-darwin",
-        "nixos-laptop-nixpkgs": "nixos-laptop-nixpkgs",
         "nixpkgs": "nixpkgs"
       }
     }

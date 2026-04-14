@@ -5,8 +5,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/";
 
-    nixos-laptop-nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-
     mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nix-darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-25.11";
@@ -29,7 +27,6 @@
     {
       self,
       nixpkgs,
-      nixos-laptop-nixpkgs,
       mac-nixpkgs,
       nix-darwin,
       disko,
@@ -40,38 +37,29 @@
       pkgsDocker = import nixpkgs { system = dockerSystem; };
     in
     {
-      nix-darwin.overlays = [
-        mac-emacs-overlay.overlay
-      ];
-
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          # { nixpkgs.overlays = [ mac-emacs-overlay.overlay ]; }
           ./onyx-config.nix
         ];
       };
 
       nixosConfigurations.nixos-laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-
         modules = [
           ./nixos-laptop-configuration.nix
         ];
-
-        # pkgs = pkgs linux.system;
       };
 
       nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-
         modules = [
           disko.nixosModules.disko
           ./pan.nix
           ./pan-disk-config.nix
           ./pan-hardware-configuration.nix
         ];
-
-        # pkgs = pkgs linux.system;
       };
 
       packages.${dockerSystem}.hello-docker = pkgsDocker.dockerTools.buildImage {

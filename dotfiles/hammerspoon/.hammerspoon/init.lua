@@ -95,7 +95,7 @@ end
 
 appKey("F", "firefox", "open -a /Applications/Firefox\\ Developer\\ Edition.app")
 appKey("T", "ghostty", "open -a Ghostty")
-appKey("D", "emacs", "emacs")
+appKey("D", "emacs")
 appKey("R", "rstudio", "rstudio")
 appKey("S", "sioyek", "sioyek")
 

@@ -113,6 +113,9 @@ in
 
     settings.experimental-features = "nix-command flakes";
     settings.trusted-users = [ "@admin" ];
+    settings.max-jobs = "auto";
+    settings.cores = 4;
+
     linux-builder.enable = true;
 
     gc = {

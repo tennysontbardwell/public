@@ -186,7 +186,7 @@ This function should only modify configuration layer settings."
 
      ;; themes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-     themes-megapack
+     ;; themes-megapack
 
      ;; tool ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -215,9 +215,9 @@ This function should only modify configuration layer settings."
 
      ;; web-services ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-     hackernews
-     llm-client
-     openai
+     ;; hackernews
+     ;; llm-client
+     ;; openai
 
      ;; window management ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -253,18 +253,18 @@ This function should only modify configuration layer settings."
      dired-subtree
      evil-lispy
      exec-path-from-shell
-     fold-this
-     gptel
+     ;; fold-this
+     ;; gptel
      ivy-posframe
-     khardel
-     magit-lfs
+     ;; khardel
+     ;; magit-lfs
      org-mac-link
      org-mime
      osm
      pulsar
-     timu-macos-theme
+     ;; timu-macos-theme
      yasnippet-snippets
-     zotra
+     ;; zotra
      )
 
    ;; A list of packages that cannot be updated.
@@ -290,6 +290,10 @@ It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
+
+   ;; configuration-layer-elpa-archives nil
+   ;; package-archives nil
+
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    ;; (default 5)
    dotspacemacs-elpa-timeout 5

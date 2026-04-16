@@ -49,6 +49,7 @@ in
     tokei
     espanso
     kitty
+    monolith
     #### email
     isync
     mailutils

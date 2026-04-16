@@ -22,9 +22,9 @@
       (find-file (expand-file-name "README.md" pdir))
       (split-window-right)
       (vterm "*tennyson.ts-watch*")
-      (vterm-send-string "yarn run watch\n")
+      (vterm-send-string "yarn task watch\n")
       (let ((default-directory pdir))
-        (call-interactively 'shell-pop))
+        (call-interactively 'spacemacs/default-pop-shell))
       (evil-window-right 1)
       )))
 
@@ -40,9 +40,9 @@
       (find-file (expand-file-name "README" pdir))
       (split-window-right)
       (vterm "*personal.ts-watch*")
-      (vterm-send-string "yarn run watch\n")
+      (vterm-send-string "yarn task watch\n")
       (let ((default-directory pdir))
-        (call-interactively 'shell-pop))
+        (call-interactively 'spacemacs/default-pop-shell))
       (evil-window-right 1)
       )))
 
@@ -54,6 +54,10 @@
     (tennyson/display-cols
      "~/repos/tennysontbardwell/public/dotfiles/nix/.config/nix/"
      "flake.nix"
-     "tools.nix"
-     "onyx-config.nix")
-    (evil-window-left 1)))
+     "modules/tools.nix"
+     "hosts/onyx-config.nix")
+    (evil-window-left 1)
+    (let ((default-directory pdir))
+      (call-interactively 'spacemacs/default-pop-shell))
+    (evil-window-up 1)
+    ))

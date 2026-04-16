@@ -144,6 +144,16 @@
 
 (add-hook 'org-mode-hook 'my-org-mode-setup 'append)
 
+(defun tennyson/export-html-and-open
+    (&optional async subtreep visible-only body-only ext-plist)
+  "Export current Org buffer to a temporary HTML file and open it."
+  (interactive)
+  (let ((temp-file (make-temp-file "org-export-" nil ".html")))
+    (org-html-export-as-html nil subtreep visible-only body-only ext-plist)
+    (with-current-buffer "*Org HTML Export*"
+      (write-region (point-min) (point-max) temp-file)
+      (kill-buffer))
+    (browse-url (concat "file://" (expand-file-name temp-file)))))
 
 
 ;; Archive ;;

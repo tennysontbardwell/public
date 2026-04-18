@@ -52,6 +52,14 @@
                       (message "Exported to clipboard as markdown"))
                     (kill-buffer export-buffer)))))))))))
 
+(defun tennyson/org-cycle (&optional arg)
+  (interactive "P")
+  (message "here")
+  (message "arg is %S" arg)
+  (if (integerp arg)
+      (org-fold-show-children arg)
+    (org-cycle arg)))
+
 ;; Anesthetics ;;
 (setq org-startup-indented t)
 (setq org-src-window-setup 'other-window)
@@ -120,17 +128,25 @@
           (evil-append 1)))
     ;; Do whatever enter normally does
     (funcall default-enter)))
-(evil-define-key 'insert org-mode-map
-  (kbd "RET") (lambda (&rest e) (interactive) (ozer/new-org-heading (lambda () (interactive) (evil-org-return e)))))
-(evil-define-key 'normal org-mode-map
-  (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-open-at-point)))
 
+(defun tennyson/org-return (arg)
+  (interactive "P")
+  (if (org-at-heading-p)
+      (evil-with-single-undo
+        (if (eq (org-entry-get nil "ITEM") "")
+            (evil-change (line-beginning-position) (line-end-position) 'block ?_)
+          (if (org-get-todo-state)
+              (org-insert-todo-heading-respect-content)
+            (org-insert-heading-respect-content))
+          (evil-append 1)))
+    (evil-org-return arg)))
+
+(evil-define-key '(insert normal) org-mode-map (kbd "RET") 'tennyson/org-return)
 
 ;; Unsorted ;;
 (defun my-org-mode-setup ()
-  (progn)
-  (evil-define-key 'normal org-mode-map (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-return)))
   ;; This doesn't seem to be applied automatically
+  (evil-define-minor-mode-key '(normal insert) 'evil-org-mode (kbd "<tab>") 'tennyson/org-cycle)
   (local-set-key (kbd "C-c a") 'org-agenda)
   (setq org-priority-faces
         `((?A . (:foreground ,(face-attribute 'ansi-color-red :background)))

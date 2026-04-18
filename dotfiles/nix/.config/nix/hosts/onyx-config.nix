@@ -62,14 +62,14 @@ let
   periodicScript =
     {
       name,
-      freqMins,
+      freqSecs,
       runtimeInputs,
       scriptText,
     }:
     scheduledScript {
       inherit name runtimeInputs scriptText;
       scheduleConfig = {
-        StartInterval = freqMins;
+        StartInterval = freqSecs;
       };
     };
 
@@ -88,10 +88,10 @@ let
     };
 
   mboxSync =
-    mbox: freqMins:
+    mbox: freqSecs:
     periodicScript {
       name = "mbsync-${mbox}";
-      inherit freqMins;
+      inherit freqSecs;
       runtimeInputs = with pkgs; [
         isync
         sops

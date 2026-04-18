@@ -1,4 +1,5 @@
 (defun tennyson/display-cols (pdir &rest args)
+  (set-window-dedicated-p (selected-window) nil)
   (find-file (expand-file-name (car args) pdir))
   (mapcar
    (lambda (arg)
@@ -10,8 +11,19 @@
    (cdr args))
   )
 
+(spacemacs|define-custom-layout "personal"
+  :binding "p"
+  :body
+  (let
+      ((pdir "~/repos/tennysontbardwell/personal/"))
+    (tennyson/display-cols
+     pdir
+     (format-time-string "log/%G/%G-q%q-w%V.org"))
+    (set-window-dedicated-p (selected-window) t)
+    ))
+
 (spacemacs|define-custom-layout "tennyson.ts"
-  :binding "t"
+  :binding "tt"
   :body
   (let
       ((pdir "~/repos/tennysontbardwell/tennyson.ts/"))
@@ -29,7 +41,7 @@
       )))
 
 (spacemacs|define-custom-layout "personal.ts"
-  :binding "p"
+  :binding "tp"
   :body
   (let
       ((pdir "~/repos/tennysontbardwell/misc-projects/personal.ts/"))
@@ -49,10 +61,9 @@
 (spacemacs|define-custom-layout "nix"
   :binding "n"
   :body
-  (progn
-    (set-window-dedicated-p (selected-window) nil)
+  (let ((pdir "~/repos/tennysontbardwell/public/dotfiles/nix/.config/nix/"))
     (tennyson/display-cols
-     "~/repos/tennysontbardwell/public/dotfiles/nix/.config/nix/"
+     pdir
      "flake.nix"
      "modules/tools.nix"
      "hosts/onyx-config.nix")

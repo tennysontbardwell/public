@@ -54,11 +54,8 @@
   "If visiting a PDF interactively, offer to open externally without visiting."
   (let* ((file (and filename (expand-file-name filename))))
     (if (and
-         (message "advice called")
-         (message "advice called 2")
          ;; (called-interactively-p 'any) ;; This might break macros
          (not executing-kbd-macro)
-         (message "advice called 3")
          (my/pdf-file-p file)
          (message "avoid loading")
          (y-or-n-p (format "Open %s externally (avoid loading into Emacs)? "

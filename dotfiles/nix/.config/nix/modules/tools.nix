@@ -202,9 +202,10 @@ in
     nixpkgs-fmt
     nixfmt-rfc-style
     #### secrets
-    sops
     age
     pass
+    signal-desktop
+    sops
     #### security
     trivy
     clamav

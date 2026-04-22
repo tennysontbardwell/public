@@ -3,6 +3,8 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/13465
 (setq org-src-tab-acts-natively nil)
 
+(setq org-preview-latex-default-process 'dvisvgm)
+
 (defun tennyson/fix-org-hide-on-theme-change ()
   "Fix org-hide face after theme change."
   (set-face-attribute 'org-hide nil
@@ -160,15 +162,14 @@
 
 (add-hook 'org-mode-hook 'my-org-mode-setup 'append)
 
+;; TODO this currently opens a new buffer in the other window, and then kills it, leaving behind a disrupted layout.
 (defun tennyson/export-html-and-open
     (&optional async subtreep visible-only body-only ext-plist)
   "Export current Org buffer to a temporary HTML file and open it."
   (interactive)
   (let ((temp-file (make-temp-file "org-export-" nil ".html")))
-    (org-html-export-as-html nil subtreep visible-only body-only ext-plist)
-    (with-current-buffer "*Org HTML Export*"
-      (write-region (point-min) (point-max) temp-file)
-      (kill-buffer))
+    (org-export-to-file 'html temp-file
+      async subtreep visible-only body-only ext-plist)
     (browse-url (concat "file://" (expand-file-name temp-file)))))
 
 

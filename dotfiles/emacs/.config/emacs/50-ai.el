@@ -70,6 +70,12 @@ Display the results in a new buffer."
    "Proof read this and suggest minor corrections as a list of specific changes that the user will manually review and apply"
    "o3"))
 
+(defun tennyson/ai-grammar ()
+  (interactive)
+  (tennyson/run-ai-on-region-with-instructions
+   "Proof read this and highlight typos and obviously incorrect grammatical issues the user will manually review and apply."
+   "o3"))
+
 (defun tennyson/ai-coderewrite ()
   (interactive)
   (tennyson/run-ai-on-region-with-instructions

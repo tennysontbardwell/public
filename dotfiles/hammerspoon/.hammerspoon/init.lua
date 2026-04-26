@@ -95,9 +95,9 @@ end
 
 appKey("F", "firefox", "open -a /Applications/Firefox\\ Developer\\ Edition.app")
 appKey("T", "ghostty", "open -a Ghostty")
-appKey("D", "emacs")
+appKey("D", "emacs", "open -a /Applications/Nix\\ Apps/Emacs.app")
 appKey("R", "rstudio", "rstudio")
-appKey("S", "sioyek", "sioyek")
+appKey("S", "sioyek", "open -a /Applications/Nix\\ Apps/sioyek.app")
 
 defaultLeader("I", function()
   hs.reload()
@@ -266,18 +266,56 @@ end
 -- spoon.ZeroOffset:start()
 
 
-function menuInfo(f)
-  menuitem = hs.menubar.new()
+function menuInfo(f, freq)
+  local menuitem = hs.menubar.new()
   local function updateInfo()
-    menuitem:setTitle(f())
+    local title = f()
+    menuitem:setTitle(title)
   end
-  hs.timer.doEvery(1, updateInfo)
+  hs.timer.doEvery(freq or 1, updateInfo)
   updateInfo()
 end
 
+menuInfo(function ()
+  return hs.execute("system_profiler SPPowerDataType | grep Wattage | tr -d '\\n' | tail -c 3") .. "W"
+end, 20)
+
 -- menuInfo(function ()
---   return hs.execute("system_profiler SPPowerDataType | grep Wattage | tr -d '\\n' | tail -c 3") .. "W"
+--     return hs.execute("/run/current-system/sw/bin/notmuch show --format json 'tag:p0 and tag:unread' | /run/current-system/sw/bin/jq -r 'if length > 0 then \"📬\" else \"✉\" end'"):gsub("^%s*\n?(.-)\n?%s*$", "%1")
 -- end)
+
+local function emojiToImage(emoji, size)
+  size = size or 128
+  local canvas = hs.canvas.new({x = 0, y = 0, w = size, h = size})
+  canvas[1] = {
+    type = "text",
+    text = emoji,
+    textSize = size * 0.8,
+    textAlignment = "center",
+    frame = {x = 0, y = size * 0.05, w = size, h = size}
+  }
+  local image = canvas:imageFromCanvas()
+  canvas:delete()
+  return image
+end
+
+local lastMailValue = false
+local pollTimer = hs.timer.doEvery(30, function()
+  local output, status = hs.execute("/run/current-system/sw/bin/notmuch show --format json 'tag:p0 and tag:unread' | /run/current-system/sw/bin/jq -r 'length'")
+  output = output:gsub("%s+$", "")
+  local hasNew = tonumber(output) > 0
+  if hasNew and not lastMailValue then
+    hs.notify.new(function(notification)
+        hs.application.launchOrFocus("Emacs")
+    end, {
+        title = "email",
+        informativeText = "New P0 mail",
+        contentImage = emojiToImage("📬"),
+        withdrawAfter = 0
+    }):send()
+  end
+  lastMailValue = hasNew
+end)
 
 
 --------------------------------------------------------------------------------

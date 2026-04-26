@@ -72,3 +72,19 @@
       (call-interactively 'spacemacs/default-pop-shell))
     (evil-window-up 1)
     ))
+
+(spacemacs|define-custom-layout "email"
+  :binding "e"
+  :body
+  (let
+      ((pdir "~"))
+    (progn
+      (set-window-dedicated-p (selected-window) nil)
+      (notmuch)
+      (split-window-right)
+      (evil-window-right 1)
+      (let ((default-directory pdir))
+        (call-interactively 'spacemacs/default-pop-shell))
+      (evil-window-left 1)
+      (notmuch-refresh-all-buffers)
+      )))

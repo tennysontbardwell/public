@@ -225,6 +225,9 @@ in
         persistent-apps = [
           "/Applications/Firefox Developer Edition.app/"
           "/Applications/Ghostty.app/"
+          "/Applications/Nix Apps/Emacs.app/"
+          "/Applications/Nix Apps/Signal.app/"
+          "/Applications/Nix Apps/sioyek.app/"
           "/System/Applications/Messages.app/"
           "/System/Applications/Facetime.app/"
           "/System/Applications/Notes.app/"

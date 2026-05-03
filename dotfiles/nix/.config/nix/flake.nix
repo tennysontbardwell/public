@@ -42,6 +42,12 @@
               mac-emacs-overlay.overlay
 
               (final: prev: {
+                pqiv = prev.pqiv.overrideAttrs (old: {
+                  patches = (old.patches or [ ]) ++ [
+                    ./patches/pqiv.patch
+                  ];
+                });
+
                 ffmpeg = prev.ffmpeg.overrideAttrs (old: {
                   postFixup = (old.postFixup or "") + ''
                     for f in "$out"/lib/*.dylib; do

@@ -1,0 +1,12 @@
+  --- a/pqiv.c
+  +++ b/pqiv.c
+  @@ -7025,8 +7025,8 @@ gboolean window_button_press_callback(GtkWidget *widget, GdkEventButton *event,
+                // Thumbnails are drawn such that the whole mosaique is centered. Undo
+                // that to find the correct index.
+                //
+  -             event->x -= (main_window_width % (option_thumbnails.width + 10)) / 2;
+  -             event->y -= (main_window_height % (option_thumbnails.height + 10)) / 2;
+  +             event->x -= ((main_window_width  / screen_scale_factor) % (option_thumbnails.width  + 10)) / 2;
+  +             event->y -= ((main_window_height / screen_scale_factor) % (option_thumbnails.height + 10)) / 2;
+                if(event->x < 0) event->x = 0;
+                if(event->y < 0) event->y = 0;

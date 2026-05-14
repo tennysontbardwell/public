@@ -6,13 +6,11 @@
       r      = import ./r.nix     { pkgs = pkgs; };
       python = import ./python/python.nix
         { inherit lib pkgs; };
-      emacs  = import ./emacs.nix { pkgs = pkgs; };
     in
     []
       ++ tools.paths
       ++ python.paths
       ++ r.paths
-      ++ emacs.paths
   ;
 
   linux_paths = { pkgs, system, ... }:
@@ -21,5 +19,13 @@
     in
     []
       ++ tools.linux_paths
+  ;
+
+  mac_paths = { pkgs, system, ... }:
+    let
+      emacs  = import ./emacs.nix { pkgs = pkgs; };
+    in
+    []
+      ++ emacs.paths
   ;
 }

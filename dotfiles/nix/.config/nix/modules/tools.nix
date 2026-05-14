@@ -29,6 +29,8 @@ in
 
     pinentry-all
     nftables
+
+    emacs
   ];
 
   paths = with pkgs; [

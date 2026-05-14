@@ -81,6 +81,17 @@
         };
       };
 
+      nixosConfigurations.ami = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ({ pkgs, ... }: {
+            environment.systemPackages = with pkgs; [
+              git
+            ];
+          })
+        ];
+      };
+
       packages.aarch64-darwin.hello-docker = self.packages.aarch64-linux.hello-docker;
     };
 }

@@ -98,10 +98,14 @@ in
       locations."/" = {
         proxyPass = "http://127.0.0.1:8096/";
         proxyWebsockets = true; # needed if you need to use WebSocket
-        #extraConfig = ''
-        #  proxy_set_header Host $host;
-        #  proxy_set_header X-Forwarded-Proto https;
-        #'';
+      };
+      locations."/owntracks/" = {
+        proxyPass = "http://127.0.0.1:9000/";
+        proxyWebsockets = true; # needed if you need to use WebSocket
+        extraConfig = ''
+          client_max_body_size 64k;
+          proxy_set_header Authorization $http_authorization;
+        '';
       };
     };
   };

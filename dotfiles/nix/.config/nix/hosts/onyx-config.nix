@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   system = "aarch64-darwin";
-  packages = (import ./packages.nix { inherit lib pkgs; });
+  packages = (import ../modules/packages.nix { inherit lib pkgs; });
   common_paths = packages.common_paths { inherit system pkgs; };
   user_dir = "/Users/tennyson";
   user_logs = "${user_dir}/.local/var/log";
@@ -62,14 +62,14 @@ let
   periodicScript =
     {
       name,
-      freqMins,
+      freqSecs,
       runtimeInputs,
       scriptText,
     }:
     scheduledScript {
       inherit name runtimeInputs scriptText;
       scheduleConfig = {
-        StartInterval = freqMins;
+        StartInterval = freqSecs;
       };
     };
 
@@ -88,10 +88,10 @@ let
     };
 
   mboxSync =
-    mbox: freqMins:
+    mbox: freqSecs:
     periodicScript {
       name = "mbsync-${mbox}";
-      inherit freqMins;
+      inherit freqSecs;
       runtimeInputs = with pkgs; [
         isync
         sops
@@ -106,17 +106,30 @@ let
 in
 {
   # see https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.masApps
+  ids.gids.nixbld = 350;
   nix = {
-    enable = false;
+    enable = true;
+    package = pkgs.nixVersions.latest;
+
     settings.experimental-features = "nix-command flakes";
-    # linux-builder.enable = true;
+    settings.trusted-users = [ "@admin" ];
+    settings.max-jobs = "auto";
+    settings.cores = 4;
+
+    linux-builder.enable = true;
+
+    gc = {
+      automatic = true;
+      interval = {
+        Weekday = 0;
+        Hour = 3;
+        Minute = 0;
+      };
+      options = "--delete-older-than 30d";
+    };
   };
-  environment.etc."nix/nix.custom.conf".text = ''
-    experimental-features = nix-command flakes external-builders
-    # Determinate-specific: JSON config for the native Linux builder
-    external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
-  '';
   nixpkgs.hostPlatform = system;
+
   users.users.tennyson = {
     name = "tennyson";
     home = "/Users/tennyson";
@@ -212,6 +225,9 @@ in
         persistent-apps = [
           "/Applications/Firefox Developer Edition.app/"
           "/Applications/Ghostty.app/"
+          "/Applications/Nix Apps/Emacs.app/"
+          "/Applications/Nix Apps/Signal.app/"
+          "/Applications/Nix Apps/sioyek.app/"
           "/System/Applications/Messages.app/"
           "/System/Applications/Facetime.app/"
           "/System/Applications/Notes.app/"

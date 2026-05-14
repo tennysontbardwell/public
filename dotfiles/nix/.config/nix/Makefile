@@ -15,19 +15,21 @@ pan-upgrade:
 	nix flake update nixpkgs
 	make pan
 
+onyx-setup:
+	sudo nix --extra-experimental-features nix-command --extra-experimental-features flakes run 'nix-darwin/nix-darwin-25.11#darwin-rebuild' -- switch --flake '.#onyx' --max-jobs auto
+
 onyx:
-	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- switch --flake '.#onyx'
+	sudo darwin-rebuild switch --flake '.#onyx'
 
 onyx-build:
-	nix run 'nix-darwin/nix-darwin-24.11#darwin-rebuild' -- build --flake '.#onyx'
+	sudo darwin-rebuild build --flake '.#onyx' --show-trace
 
 onyx-upgrade:
-	# nix flake update mac-nixpkgs nix-darwin mac-emacs-overlay
-	nix flake update mac-nixpkgs nix-darwin
+	nix flake update mac-nixpkgs nix-darwin mac-emacs-overlay
+	# nix flake update mac-nixpkgs nix-darwin
 	make onyx
 
 onyx-bounce:
-	# sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.nix-daemon.plist
 	sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.activate-system.plist
 	sudo launchctl enable system/org.nixos.activate-system.plist
 

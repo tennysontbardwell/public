@@ -3,6 +3,8 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/13465
 (setq org-src-tab-acts-natively nil)
 
+(setq org-preview-latex-default-process 'dvisvgm)
+
 (defun tennyson/fix-org-hide-on-theme-change ()
   "Fix org-hide face after theme change."
   (set-face-attribute 'org-hide nil
@@ -51,6 +53,14 @@
                       (kill-new (buffer-string))
                       (message "Exported to clipboard as markdown"))
                     (kill-buffer export-buffer)))))))))))
+
+(defun tennyson/org-cycle (&optional arg)
+  (interactive "P")
+  (message "here")
+  (message "arg is %S" arg)
+  (if (integerp arg)
+      (org-fold-show-children arg)
+    (org-cycle arg)))
 
 ;; Anesthetics ;;
 (setq org-startup-indented t)
@@ -120,17 +130,25 @@
           (evil-append 1)))
     ;; Do whatever enter normally does
     (funcall default-enter)))
-(evil-define-key 'insert org-mode-map
-  (kbd "RET") (lambda (&rest e) (interactive) (ozer/new-org-heading (lambda () (interactive) (evil-org-return e)))))
-(evil-define-key 'normal org-mode-map
-  (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-open-at-point)))
 
+(defun tennyson/org-return (arg)
+  (interactive "P")
+  (if (org-at-heading-p)
+      (evil-with-single-undo
+        (if (eq (org-entry-get nil "ITEM") "")
+            (evil-change (line-beginning-position) (line-end-position) 'block ?_)
+          (if (org-get-todo-state)
+              (org-insert-todo-heading-respect-content)
+            (org-insert-heading-respect-content))
+          (evil-append 1)))
+    (evil-org-return arg)))
+
+(evil-define-key '(insert normal) org-mode-map (kbd "RET") 'tennyson/org-return)
 
 ;; Unsorted ;;
 (defun my-org-mode-setup ()
-  (progn)
-  (evil-define-key 'normal org-mode-map (kbd "RET") (lambda () (interactive) (ozer/new-org-heading 'org-return)))
   ;; This doesn't seem to be applied automatically
+  (evil-define-minor-mode-key '(normal insert) 'evil-org-mode (kbd "<tab>") 'tennyson/org-cycle)
   (local-set-key (kbd "C-c a") 'org-agenda)
   (setq org-priority-faces
         `((?A . (:foreground ,(face-attribute 'ansi-color-red :background)))
@@ -144,6 +162,15 @@
 
 (add-hook 'org-mode-hook 'my-org-mode-setup 'append)
 
+;; TODO this currently opens a new buffer in the other window, and then kills it, leaving behind a disrupted layout.
+(defun tennyson/export-html-and-open
+    (&optional async subtreep visible-only body-only ext-plist)
+  "Export current Org buffer to a temporary HTML file and open it."
+  (interactive)
+  (let ((temp-file (make-temp-file "org-export-" nil ".html")))
+    (org-export-to-file 'html temp-file
+      async subtreep visible-only body-only ext-plist)
+    (browse-url (concat "file://" (expand-file-name temp-file)))))
 
 
 ;; Archive ;;

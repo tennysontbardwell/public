@@ -3,9 +3,8 @@
   description = "tennyson-nix";
 
   inputs = {
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/";
-
-    nixos-laptop-nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     mac-nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nix-darwin = {
@@ -29,56 +28,69 @@
     {
       self,
       nixpkgs,
-      nixos-laptop-nixpkgs,
       mac-nixpkgs,
       nix-darwin,
       disko,
       mac-emacs-overlay,
     }:
-    let
-      dockerSystem = "aarch64-linux";
-      pkgsDocker = import nixpkgs { system = dockerSystem; };
-    in
     {
-      nix-darwin.overlays = [
-        mac-emacs-overlay.overlay
-      ];
-
       darwinConfigurations.onyx = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./onyx-config.nix
+          {
+            nixpkgs.overlays = [
+              mac-emacs-overlay.overlay
+
+              (final: prev: {
+                pqiv = prev.pqiv.overrideAttrs (old: {
+                  patches = (old.patches or [ ]) ++ [
+                    ./patches/pqiv.patch
+                  ];
+                });
+
+                ffmpeg = prev.ffmpeg.overrideAttrs (old: {
+                  postFixup = (old.postFixup or "") + ''
+                    for f in "$out"/lib/*.dylib; do
+                      if [ -f "$f" ]; then
+                        /usr/bin/codesign --force --sign - "$f"
+                      fi
+                    done
+                    if [ -d "$out/bin" ]; then
+                      for f in "$out"/bin/*; do
+                        if [ -f "$f" ]; then
+                          /usr/bin/codesign --force --sign - "$f"
+                        fi
+                      done
+                    fi
+                  '';
+                });
+              })
+            ];
+          }
+          ./hosts/onyx-config.nix
         ];
       };
 
       nixosConfigurations.nixos-laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-
         modules = [
-          ./nixos-laptop-configuration.nix
+          ./hosts/nixos-laptop-configuration.nix
         ];
-
-        # pkgs = pkgs linux.system;
       };
 
       nixosConfigurations.pan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-
         modules = [
           disko.nixosModules.disko
-          ./pan.nix
-          ./pan-disk-config.nix
-          ./pan-hardware-configuration.nix
+          ./hosts/pan.nix
+          ./hosts/pan-disk-config.nix
+          ./hosts/pan-hardware-configuration.nix
         ];
-
-        # pkgs = pkgs linux.system;
       };
 
-      packages.${dockerSystem}.hello-docker = pkgsDocker.dockerTools.buildImage {
-        name = "hello-docker";
-        config = {
-          Cmd = [ "${pkgsDocker.hello}/bin/hello" ];
-        };
+      packages.aarch64-linux.hello-docker = import ./docker/hello.nix {
+        inherit nixpkgs;
+        system = "aarch64-linux";
       };
 
       nixosConfigurations.ami = nixpkgs.lib.nixosSystem {

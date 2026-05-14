@@ -1,15 +1,23 @@
 (defun tennyson/run-ai-on-region-with-instructions (instructions &optional model)
-  "Write the current region to a temporary file and run 'foo bar -f FILE' asynchronously.
+  "Write the current region to a temporary file and run 'tt ai'
+asynchronously. If no region is selected, use the entire buffer.
 Display the results in a new buffer."
   (interactive)
-  (unless (region-active-p)
-    (error "No active region"))
 
-  (let* ((region-content (buffer-substring-no-properties (region-beginning) (region-end)))
+  (let* ((beg (if (region-active-p) (region-beginning) (point-min)))
+         (end (if (region-active-p) (region-end) (point-max)))
+         (region-content (buffer-substring-no-properties beg end))
          (temp-file (make-temp-file "/tmp/emacs-tt-ai-input" nil ".tmp"))
-         (output-buffer-name "*foo-bar-output*")
+         (base "*ai-query*")
+         (output-buffer-name
+          (or (and (boundp 'output-buffer-name) output-buffer-name)
+              (generate-new-buffer-name base)))
          (model (or model "o4-mini"))
-         (process-name "foo-bar-process"))
+         (process-name
+          (concat
+           "ai-query-process"
+           (let ((suf (replace-regexp-in-string (regexp-quote base) "" output-buffer-name)))
+             (if (string-empty-p suf) "" suf)))))
 
     ;; Write region content to temporary file
     (with-temp-file temp-file
@@ -54,16 +62,22 @@ Display the results in a new buffer."
               (goto-char (point-max))
               (insert string)))))
 
-       (message "Started foo bar process on region. Output in buffer: %s" output-buffer-name)))))
+       (message "Started ai process on region. Output in buffer: %s" output-buffer-name)))))
 
 (defun tennyson/ai-proofread ()
   (interactive)
   (tennyson/run-ai-on-region-with-instructions
-   "Proof read this and suggest minor corrections"
+   "Proof read this and suggest minor corrections as a list of specific changes that the user will manually review and apply"
+   "o3"))
+
+(defun tennyson/ai-grammar ()
+  (interactive)
+  (tennyson/run-ai-on-region-with-instructions
+   "Proof read this and highlight typos and obviously incorrect grammatical issues the user will manually review and apply."
    "o3"))
 
 (defun tennyson/ai-coderewrite ()
   (interactive)
   (tennyson/run-ai-on-region-with-instructions
-   "Read the following code snippet and make the requested changes. Be terse and reduce redundant code. Output only the replacement code that should overwrite the input segment. Include excess information as terse comments."
+   "Read the following code snippet and make the requested changes marked with TODO. Be terse and reduce redundant code. Output only the replacement code that should overwrite the input segment. Include excess information as terse comments."
    "o3"))

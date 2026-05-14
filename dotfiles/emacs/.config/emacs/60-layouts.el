@@ -1,4 +1,5 @@
 (defun tennyson/display-cols (pdir &rest args)
+  (set-window-dedicated-p (selected-window) nil)
   (find-file (expand-file-name (car args) pdir))
   (mapcar
    (lambda (arg)
@@ -10,8 +11,19 @@
    (cdr args))
   )
 
+(spacemacs|define-custom-layout "personal"
+  :binding "p"
+  :body
+  (let
+      ((pdir "~/repos/tennysontbardwell/personal/"))
+    (tennyson/display-cols
+     pdir
+     (format-time-string "log/%G/%G-q%q-w%V.org"))
+    (set-window-dedicated-p (selected-window) t)
+    ))
+
 (spacemacs|define-custom-layout "tennyson.ts"
-  :binding "t"
+  :binding "tt"
   :body
   (let
       ((pdir "~/repos/tennysontbardwell/tennyson.ts/"))
@@ -22,13 +34,14 @@
       (find-file (expand-file-name "README.md" pdir))
       (split-window-right)
       (vterm "*tennyson.ts-watch*")
-      (vterm-send-string "yarn run watch\n")
-      (call-interactively 'shell-pop)
+      (vterm-send-string "yarn task watch\n")
+      (let ((default-directory pdir))
+        (call-interactively 'spacemacs/default-pop-shell))
       (evil-window-right 1)
       )))
 
 (spacemacs|define-custom-layout "personal.ts"
-  :binding "p"
+  :binding "tp"
   :body
   (let
       ((pdir "~/repos/tennysontbardwell/misc-projects/personal.ts/"))
@@ -39,19 +52,39 @@
       (find-file (expand-file-name "README" pdir))
       (split-window-right)
       (vterm "*personal.ts-watch*")
-      (vterm-send-string "yarn run watch\n")
-      (call-interactively 'shell-pop)
+      (vterm-send-string "yarn task watch\n")
+      (let ((default-directory pdir))
+        (call-interactively 'spacemacs/default-pop-shell))
       (evil-window-right 1)
       )))
 
 (spacemacs|define-custom-layout "nix"
   :binding "n"
   :body
-  (progn
-    (set-window-dedicated-p (selected-window) nil)
+  (let ((pdir "~/repos/tennysontbardwell/public/dotfiles/nix/.config/nix/"))
     (tennyson/display-cols
-     "~/repos/tennysontbardwell/public/dotfiles/nix/.config/nix/"
+     pdir
      "flake.nix"
-     "tools.nix"
-     "onyx-config.nix")
-    (evil-window-left 1)))
+     "modules/tools.nix"
+     "hosts/onyx-config.nix")
+    (evil-window-left 1)
+    (let ((default-directory pdir))
+      (call-interactively 'spacemacs/default-pop-shell))
+    (evil-window-up 1)
+    ))
+
+(spacemacs|define-custom-layout "email"
+  :binding "e"
+  :body
+  (let
+      ((pdir "~"))
+    (progn
+      (set-window-dedicated-p (selected-window) nil)
+      (notmuch)
+      (split-window-right)
+      (evil-window-right 1)
+      (let ((default-directory pdir))
+        (call-interactively 'spacemacs/default-pop-shell))
+      (evil-window-left 1)
+      (notmuch-refresh-all-buffers)
+      )))

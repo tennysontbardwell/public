@@ -148,6 +148,6 @@ in
 {
   paths = [
     myREnv
-    myRStudio
+    # myRStudio
   ];
 }

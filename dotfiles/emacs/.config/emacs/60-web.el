@@ -12,7 +12,7 @@
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-markup-indent-offset 2)
 
-  (evil-surround-mode1)
+  (evil-surround-mode 1)
   )
 
 (defun tennyson/ts-mode-setup ()

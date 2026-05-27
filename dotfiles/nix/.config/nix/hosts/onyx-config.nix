@@ -166,18 +166,18 @@ in
     '';
   };
 
-  launchd.user.agents.firefox-server = service {
-    name = "firefox-server";
-    runtimeInputs = [
-      (pkgs.python3.withPackages (
-        ps: with ps; [
-          websockets
-          aiohttp
-        ]
-      ))
-    ];
-    scriptText = "python /Users/tennyson/repos/tennysontbardwell/misc-projects/firefox/my-extension/server.py";
-  };
+  # launchd.user.agents.firefox-server = service {
+  #   name = "firefox-server";
+  #   runtimeInputs = [
+  #     (pkgs.python3.withPackages (
+  #       ps: with ps; [
+  #         websockets
+  #         aiohttp
+  #       ]
+  #     ))
+  #   ];
+  #   scriptText = "python /Users/tennyson/repos/tennysontbardwell/misc-projects/firefox/my-extension/server.py";
+  # };
 
   launchd.daemons.mbsync-fastmail = mboxSync "fastmail" 60;
   launchd.daemons.mbsync-gmail-inbox = mboxSync "gmail-inbox" 60;
@@ -263,14 +263,16 @@ in
       "1password-cli"
       "activitywatch"
       "alfred"
+      "blender"
       "firefox"
       "firefox@developer-edition"
       "ghostty"
       "hammerspoon"
       "iterm2"
-      "mullvad-vpn"
       "linearmouse"
+      "mullvad-vpn"
       "readest"
+      "sweet-home3d"
       "tailscale"
       "tailscale-app"
       "thunderbird"

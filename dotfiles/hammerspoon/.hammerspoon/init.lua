@@ -95,7 +95,8 @@ end
 
 appKey("F", "firefox", "open -a /Applications/Firefox\\ Developer\\ Edition.app")
 appKey("T", "ghostty", "open -a Ghostty")
-appKey("D", "emacs", "open -a /Applications/Nix\\ Apps/Emacs.app")
+-- appKey("D", "emacs", "open -a /Applications/Nix\\ Apps/Emacs.app")
+appKey("D", "emacs")
 appKey("R", "rstudio", "rstudio")
 appKey("S", "sioyek", "open -a /Applications/Nix\\ Apps/sioyek.app")
 
@@ -276,9 +277,9 @@ function menuInfo(f, freq)
   updateInfo()
 end
 
-menuInfo(function ()
-  return hs.execute("system_profiler SPPowerDataType | grep Wattage | tr -d '\\n' | tail -c 3") .. "W"
-end, 20)
+-- menuInfo(function ()
+-- return hs.execute("system_profiler SPPowerDataType | grep Wattage | tr -d '\\n' | tail -c 3") .. "W"
+-- end, 20)
 
 -- menuInfo(function ()
 --     return hs.execute("/run/current-system/sw/bin/notmuch show --format json 'tag:p0 and tag:unread' | /run/current-system/sw/bin/jq -r 'if length > 0 then \"📬\" else \"✉\" end'"):gsub("^%s*\n?(.-)\n?%s*$", "%1")

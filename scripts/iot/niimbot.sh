@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
 IFS=" "
 
 declare -r ARGS="$*"
@@ -42,9 +41,12 @@ echo Enter to continue. CTRL-C to abort...
 cd ${HOME}/repos/MultiMote/niimblue-node
 
 
+declare -r ADDRESS=D110_M-I307021136 # new
+# declare -r ADDRESS=D110_M-I303020570 # broken
+# declare -r ADDRESS=D110_M-H823110432 # austin
 pnpm run cli print \
        --transport ble \
-       --address D110_M-H823110432 \
+       --address $ADDRESS \
        --print-task D110M_V4 \
        --print-direction left \
        --density 5 \

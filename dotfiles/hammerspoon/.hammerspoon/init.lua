@@ -302,7 +302,7 @@ end
 
 local lastMailValue = false
 local pollTimer = hs.timer.doEvery(30, function()
-  local output, status = hs.execute("/run/current-system/sw/bin/notmuch show --format json 'tag:p0 and tag:unread' | /run/current-system/sw/bin/jq -r 'length'")
+  local output, status = hs.execute("/run/current-system/sw/bin/notmuch show --format json 'tag:p0 and tag:unread and tag:inbox' | /run/current-system/sw/bin/jq -r 'length'")
   output = output:gsub("%s+$", "")
   local hasNew = tonumber(output) > 0
   if hasNew and not lastMailValue then

@@ -3,6 +3,7 @@ let
   system = "aarch64-darwin";
   packages = (import ../modules/packages.nix { inherit lib pkgs; });
   common_paths = packages.common_paths { inherit system pkgs; };
+  mac_paths = packages.mac_paths { inherit system pkgs; };
   user_dir = "/Users/tennyson";
   user_logs = "${user_dir}/.local/var/log";
 
@@ -145,7 +146,8 @@ in
       '')
       container
     ]
-    ++ common_paths;
+    ++ common_paths
+    ++ mac_paths;
 
   # [[https://write.rog.gr/writing/using-touchid-with-tmux/#what-files-manages-this][Roger Steve Ruiz | Using TouchID with Tmux]]
   environment.etc."pam.d/sudo_local".text = ''

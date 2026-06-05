@@ -100,6 +100,8 @@ in
     ripgrep
     fzf
     fpp # file selector
+    #### shell script
+    shfmt
 
     # system info #############################################################
     ncdu

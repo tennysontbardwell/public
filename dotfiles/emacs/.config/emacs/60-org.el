@@ -5,6 +5,13 @@
 
 (setq org-preview-latex-default-process 'dvisvgm)
 
+;; (setq org-todo-keywords '("TODO" "DELEGATED" "WAITING" "|" "DONE" "CANCELLED"))
+(setq org-todo-keywords '("TODO" "|" "DONE" "CANCELLED"))
+;; (setq org-todo-keywords
+;;       '((sequence "TODO(t)" "|" "DONE(d)")
+;;         (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
+
+
 (defun tennyson/fix-org-hide-on-theme-change ()
   "Fix org-hide face after theme change."
   (set-face-attribute 'org-hide nil
@@ -180,3 +187,13 @@
 ;; (setq org-appear-autolinks nil)
 ;; (advice-add 'org-transclusion-propertize-source :override #'tennyson/nop)
 ;; (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
+
+(defun my/org-fold-after-done (&rest _)
+  (when (org-entry-is-done-p)
+    (org-back-to-heading t)
+    (org-fold-hide-subtree)
+    (org-next-visible-heading 1)
+    ))
+
+;; (add-hook 'org-after-todo-state-change-hook #'my/org-fold-if-done)
+(advice-add 'org-todo :after #'my/org-fold-after-done)

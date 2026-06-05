@@ -42,23 +42,30 @@
                    "#+TBLFM: @>$2=0::$2=(date(<@+1$1>)-date(<$1>))*24*60;%.0f::$3='(orgtbl-ascii-draw $2 0 600 30)")))
         (kill-new table)))))
 
+(defun firefox-bridge-request (payload)
+  "Send PAYLOAD (a string of JSON) to the firefox bridge socket, return reply."
+  (let ((sock (expand-file-name "~/.local/run/firefox-extension/server.sock")))
+    (with-temp-buffer
+      (let ((exit (call-process "curl" nil t nil
+                                "-s" "--fail"
+                                "--unix-socket" sock
+                                "-X" "POST"
+                                "-H" "Content-Type: application/json"
+                                "--data-binary" payload
+                                "http://localhost/")))
+        (unless (zerop exit)
+          (error "curl failed (exit %s): %s" exit (buffer-string)))
+        (buffer-string)))))
 
 ;; https://kagi.com/assistant/385c8795-6558-4053-a5d9-1483b95acbe8
 (defun tennyson/firefox-get-tabs ()
   "Fetch and parse tabs from Firefox extension."
   (require 'json)
-  (let* ((url-request-method "POST")
-         (url-request-data "{\"command\": \"list_tabs\"}")
-         (response (url-retrieve-synchronously "http://localhost:9001")))
-    (with-current-buffer response
-      (goto-char (point-min))
-      (re-search-forward "\n\n" nil t)
-      (let* ((json-string (buffer-substring-no-properties (point) (point-max)))
-             (json-data (json-read-from-string json-string)))
-        (kill-buffer response)
-        (if (stringp json-data)
-            (progn (message "Server error: %s" json-data) nil)
-          (append json-data nil))))))
+  (let* ((json-string (firefox-bridge-request "{\"command\": \"list_tabs\"}"))
+         (json-data (json-read-from-string json-string)))
+    (if (stringp json-data)
+        (progn (message "Server error: %s" json-data) nil)
+      (append json-data nil))))
 
 (defun tennyson/firefox-format-tab (obj &optional bullet)
   "Format tab object as org link with optional bullet."
@@ -88,14 +95,11 @@
       (when (eq (alist-get 'highlighted tab) t)
         (insert (tennyson/firefox-format-tab tab t))))))
 
-;; https://kagi.com/assistant/3d73d96a-238c-4797-bf4a-4d84c757e4eb
 (defun tennyson/firefox-close-tabs (tab-ids)
   "Close tabs by their IDs via Firefox extension API."
   (require 'json)
-  (let* ((url-request-method "POST")
-         (url-request-data (json-encode `((command . "close_tabs") (tab_ids . ,tab-ids))))
-         (response (url-retrieve-synchronously "http://localhost:9001")))
-    (when response (kill-buffer response))))
+  (firefox-bridge-request
+   (json-encode `((command . "close_tabs") (tab_ids . ,tab-ids)))))
 
 (defun tennyson/firefox-insert-frontmost-link-and-close ()
   "Insert frontmost tab as org link and close it."

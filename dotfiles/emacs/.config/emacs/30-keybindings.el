@@ -30,7 +30,9 @@
 (spacemacs/set-leader-keys "oxc" 'tennyson/org-ref-jump-to-key)
 (spacemacs/set-leader-keys "oxp" 'org-publish-all)
 (spacemacs/set-leader-keys "oxs" 'tennyson/load-funcs)
+
 (spacemacs/set-leader-keys "sC" 'evil-search-highlight-persist)
+(spacemacs/set-leader-keys "wm" 'my/maximize-in-new-tab)
 (spacemacs/set-leader-keys "xa#" 'spacemacs/align-repeat-hashtag)
 (spacemacs/set-leader-keys "xax" 'align-regexp)
 (spacemacs/set-leader-keys (kbd "x RET") 'link-hint-open-link-at-point)

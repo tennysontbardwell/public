@@ -80,7 +80,7 @@ in
         proxyPass = "http://127.0.0.1:9001/";
         proxyWebsockets = true;
         extraConfig = ''
-          client_max_body_size 64k;
+          client_max_body_size 30m;
           proxy_set_header Authorization $http_authorization;
         '';
       };

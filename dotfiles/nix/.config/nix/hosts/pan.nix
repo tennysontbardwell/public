@@ -74,11 +74,19 @@ in
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:8096/";
-        proxyWebsockets = true; # needed if you need to use WebSocket
+        proxyWebsockets = true;
+      };
+      locations."/drop/" = {
+        proxyPass = "http://127.0.0.1:9001/";
+        proxyWebsockets = true;
+        extraConfig = ''
+          client_max_body_size 64k;
+          proxy_set_header Authorization $http_authorization;
+        '';
       };
       locations."/owntracks/" = {
         proxyPass = "http://127.0.0.1:9000/";
-        proxyWebsockets = true; # needed if you need to use WebSocket
+        proxyWebsockets = true;
         extraConfig = ''
           client_max_body_size 64k;
           proxy_set_header Authorization $http_authorization;

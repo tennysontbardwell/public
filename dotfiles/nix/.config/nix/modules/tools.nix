@@ -52,6 +52,7 @@ in
     espanso
     kitty
     monolith
+    dash
     #### email
     isync
     mailutils

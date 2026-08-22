@@ -5,11 +5,22 @@
 
 (setq org-preview-latex-default-process 'dvisvgm)
 
-;; (setq org-todo-keywords '("TODO" "DELEGATED" "WAITING" "|" "DONE" "CANCELLED"))
-(setq org-todo-keywords '("TODO" "|" "DONE" "CANCELLED"))
-;; (setq org-todo-keywords
-;;       '((sequence "TODO(t)" "|" "DONE(d)")
-;;         (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
+(setq org-todo-keywords
+      '(
+        (sequence "TODO(t)" "|" "DONE(d)" "CANCELLED(c)" "WAITING(w)")
+        ))
+(setq org-todo-keyword-faces
+      '(("WAITING" . (:foreground "gray" :weight bold))))
+
+(setq
+ org-use-fast-todo-selection nil
+ )
+
+(defun tennyson/quick-select-org-todo ()
+  "Run `org-todo' with fast TODO selection temporarily enabled."
+  (interactive)
+  (let ((org-use-fast-todo-selection t))
+    (call-interactively #'org-todo)))
 
 
 (defun tennyson/fix-org-hide-on-theme-change ()
@@ -192,8 +203,39 @@
   (when (org-entry-is-done-p)
     (org-back-to-heading t)
     (org-fold-hide-subtree)
-    (org-next-visible-heading 1)
+    ;; (org-next-visible-heading 1)
     ))
 
-;; (add-hook 'org-after-todo-state-change-hook #'my/org-fold-if-done)
 (advice-add 'org-todo :after #'my/org-fold-after-done)
+
+(defun tennyson/org-yank-link-url (&optional remove-link)
+  "Copy the URL of the Org link at point to the kill ring.
+
+With prefix argument REMOVE-LINK, remove the Org link markup,
+leaving only the link description/text.  For links without a
+description, leave the raw URL."
+  (interactive "P")
+  (let* ((context (org-element-context))
+         (link (org-element-lineage context '(link) t)))
+    (unless link
+      (user-error "Point is not on an Org link"))
+
+    (let* ((url (org-element-property :raw-link link))
+           (begin (org-element-property :begin link))
+           (end (- (org-element-property :end link)
+                   (or (org-element-property :post-blank link) 0)))
+           (contents-begin (org-element-property :contents-begin link))
+           (contents-end (org-element-property :contents-end link))
+           (text (if contents-begin
+                     (buffer-substring-no-properties contents-begin contents-end)
+                   url)))
+
+      (kill-new url)
+
+      (when remove-link
+        (save-excursion
+          (goto-char begin)
+          (delete-region begin end)
+          (insert text)))
+
+      (message "Copied Org link URL: %s" url))))

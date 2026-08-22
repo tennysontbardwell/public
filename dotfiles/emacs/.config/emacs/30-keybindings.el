@@ -42,6 +42,8 @@
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "hr" 'tennyson/sh-send-line-or-region)
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "ht" 'org-toggle-item)
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "hT" 'org-toggle-heading)
+(spacemacs/set-leader-keys-for-major-mode 'org-mode "TT" 'tennyson/quick-select-org-todo)
+(spacemacs/set-leader-keys-for-major-mode 'org-mode "yl" 'tennyson/org-yank-link-url)
 (spacemacs/set-leader-keys-for-major-mode 'vterm-mode "m" 'vterm-copy-mode)
 (spacemacs/set-leader-keys "pp" 'projectile-switch-project)
 

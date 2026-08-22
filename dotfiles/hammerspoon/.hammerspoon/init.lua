@@ -44,30 +44,57 @@ function shiftDefaultLeader(key, f)
   hs.hotkey.bind({"shift", "cmd", "ctrl"}, key, f)
 end
 
-function windowPercent(key, xSize, ySize, xOff, yOff)
+function windowPercent(key, xSize, ySize, xOff, yOff, shift)
   local xOff = xOff or 0
   local yOff = yOff or 0
   local xSize = xSize or (1-xOff)
   local ySize = ySize or (1-yOff)
 
-  defaultLeader(key, function()
+  local callback = function()
     local win = hs.window.focusedWindow()
+    if not win then return end
+
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
 
-    local xOff = xOff * max.w
-    local yOff = yOff * max.h
-    local xSize = xSize * max.w
-    local ySize = ySize * max.h
+    -- Build the target frame for a given screen
+    local function targetFrame(scr)
+      local max = scr:frame()
+      return hs.geometry.rect(
+        max.x + xOff * max.w,
+        max.y + yOff * max.h,
+        xSize * max.w,
+        ySize * max.h
+      )
+    end
 
-    f.x = xOff
-    f.y = yOff
-    f.w = xSize
-    f.h = ySize
-    -- hs.alert.show(key .. '(' .. f.x .. ', ' .. f.y .. ') to (' .. f.x + f.w .. ', ' .. f.y + f.h .. ')')
-    win:setFrame(f, 0)
-  end)
+    -- Compare the current frame to a target within a pixel tolerance
+    local function matches(a, b)
+      local tol = 20
+      return math.abs(a.x - b.x) < tol
+        and math.abs(a.y - b.y) < tol
+        and math.abs(a.w - b.w) < tol
+        and math.abs(a.h - b.h) < tol
+    end
+
+    local target = targetFrame(screen)
+
+    -- If already the correct size/position, move to the next screen
+    if matches(f, target) then
+      screen = screen:next()
+      target = targetFrame(screen)
+      win:setFrame(target, 0)
+    end
+
+    -- hs.alert.show(key .. '(' .. target.x .. ', ' .. target.y .. ') to (' .. target.x + target.w .. ', ' .. target.y + target.h .. ')', 7)
+    win:setFrame(target, 0)
+  end
+
+  if shift then
+    shiftDefaultLeader(key, callback)
+  else
+    defaultLeader(key, callback)
+  end
 end
 
 function appKey(key, name, command)
@@ -111,6 +138,8 @@ defaultLeader("space", function()
 end)
 
 windowPercent("K")
+windowPercent("K", 0.6, 0.6, 0.2, 0.2, true)
+windowPercent("I", 0.96, 0.96, 0.02, 0.02, true)
 windowPercent("C", 0.5, 0.5, 0.25, 0.25)
 windowPercent("J", 0.5, nil)
 windowPercent("L", nil, nil, 0.5, nil)
@@ -245,23 +274,23 @@ end
 --- Menu Bar
 --------------------------------------------------------------------------------
 
-caffeine = hs.menubar.new()
-function setCaffeineDisplay(state)
-    if state then
-        caffeine:setTitle(utf8.char(0x274C) .. utf8.char(0x1F4A4))
-    else
-        caffeine:setTitle(utf8.char(0x1F4A4))
-    end
-end
+-- caffeine = hs.menubar.new()
+-- function setCaffeineDisplay(state)
+--     if state then
+--         caffeine:setTitle(utf8.char(0x274C) .. utf8.char(0x1F4A4))
+--     else
+--         caffeine:setTitle(utf8.char(0x1F4A4))
+--     end
+-- end
 
-function caffeineClicked()
-    setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
-end
+-- function caffeineClicked()
+--     setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
+-- end
 
-if caffeine then
-    caffeine:setClickCallback(caffeineClicked)
-    setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
-end
+-- if caffeine then
+--     caffeine:setClickCallback(caffeineClicked)
+--     setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+-- end
 
 -- hs.loadSpoon("ZeroOffset")
 -- spoon.ZeroOffset:start()

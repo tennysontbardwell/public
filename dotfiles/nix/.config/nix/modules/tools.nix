@@ -43,6 +43,7 @@ in
     pkg-config # not sure why I need this
     cairo # dependency for some tool
     #### unsorted for now
+    anki
     ledger
     (import ./imessage-exporter.nix { inherit pkgs; }).imessage-exporter
     bat
@@ -117,6 +118,7 @@ in
     rclone
     websocat
     #### vpn
+    # "tailscale-app"
     tailscale
     #### inspection
     tshark
@@ -165,6 +167,7 @@ in
     sioyek
     #### games
     ruffle
+    ###
     #### download
     yt-dlp
     gallery-dl

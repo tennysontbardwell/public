@@ -79,6 +79,7 @@ let
     AER # econometrics
     invgamma
     broom
+    empichar
 
     # ml
     tidymodels

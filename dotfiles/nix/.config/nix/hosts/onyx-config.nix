@@ -236,7 +236,22 @@ in
           "/Applications/Nix Apps/mpv.app/"
           "/System/Applications/System Settings.app"
         ];
-        persistent-others = [ "${user_dir}/Downloads/" ];
+        persistent-others =
+          let
+            list = path: {
+              folder = {
+                inherit path;
+                showas = "list";
+              };
+            };
+          in
+          [
+            (list "${user_dir}/Downloads/")
+            (list "${user_dir}/projects-local/")
+            (list "${user_dir}/projects-local/todo")
+            (list "${user_dir}/tennyson-stuff/")
+            (list "${user_dir}/tennyson-stuff/life/documents/misc")
+          ];
       };
       menuExtraClock = {
         ShowSeconds = true;
@@ -266,7 +281,7 @@ in
       "activitywatch"
       "alfred"
       "blender"
-      "firefox"
+      # "firefox"
       "firefox@developer-edition"
       "ghostty"
       "hammerspoon"
@@ -274,17 +289,17 @@ in
       "linearmouse"
       "mullvad-vpn"
       "readest"
-      "sweet-home3d"
+      # "sweet-home3d"
       "tailscale"
       "tailscale-app"
       "thunderbird"
       "tor-browser"
       "ungoogled-chromium"
-      "visual-studio-code"
+      # "visual-studio-code"
       "vlc"
-      "waterfox"
+      # "waterfox"
       "weasis"
-      "zoom"
+      # "zoom"
       # "qflipper"
       # "the-battle-for-wesnoth"
     ];

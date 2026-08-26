@@ -42,29 +42,32 @@
               mac-emacs-overlay.overlay
 
               (final: prev: {
-                pqiv = prev.pqiv.overrideAttrs (old: {
-                  patches = (old.patches or [ ]) ++ [
-                    ./patches/pqiv.patch
-                  ];
-                });
-
-                ffmpeg = prev.ffmpeg.overrideAttrs (old: {
-                  postFixup = (old.postFixup or "") + ''
-                    for f in "$out"/lib/*.dylib; do
-                      if [ -f "$f" ]; then
-                        /usr/bin/codesign --force --sign - "$f"
-                      fi
-                    done
-                    if [ -d "$out/bin" ]; then
-                      for f in "$out"/bin/*; do
-                        if [ -f "$f" ]; then
-                          /usr/bin/codesign --force --sign - "$f"
-                        fi
-                      done
-                    fi
-                  '';
-                });
+                notmuch = prev.notmuch.override { emacs = prev.emacs30; };
               })
+              # (final: prev: {
+              #   pqiv = prev.pqiv.overrideAttrs (old: {
+              #     patches = (old.patches or [ ]) ++ [
+              #       ./patches/pqiv.patch
+              #     ];
+              #   });
+
+              #   ffmpeg = prev.ffmpeg.overrideAttrs (old: {
+              #     postFixup = (old.postFixup or "") + ''
+              #       for f in "$out"/lib/*.dylib; do
+              #         if [ -f "$f" ]; then
+              #           /usr/bin/codesign --force --sign - "$f"
+              #         fi
+              #       done
+              #       if [ -d "$out/bin" ]; then
+              #         for f in "$out"/bin/*; do
+              #           if [ -f "$f" ]; then
+              #             /usr/bin/codesign --force --sign - "$f"
+              #           fi
+              #         done
+              #       fi
+              #     '';
+              #   });
+              # })
             ];
           }
           ./hosts/onyx-config.nix

@@ -1,0 +1,24 @@
+From f5e58cdb9b93b10ac32379b36b452532a32b8ece Mon Sep 17 00:00:00 2001
+From: Michael J Gruber <git@grubix.eu>
+Date: Sun, 23 Aug 2026 13:11:34 +0200
+Subject: [PATCH] test/T450-emacs-show: "id buttonization" is broken with emacs
+ >= 31
+
+---
+ test/T450-emacs-show.sh | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/test/T450-emacs-show.sh b/test/T450-emacs-show.sh
+index ff340f06..178bc9c0 100755
+--- a/test/T450-emacs-show.sh
++++ b/test/T450-emacs-show.sh
+@@ -176,6 +176,9 @@ test_emacs '(notmuch-search "from:lars@seas.harvard.edu and subject:\"Maildir st
+ test_expect_equal_file $EXPECTED/notmuch-show-indent-thread-content-off OUTPUT
+ 
+ test_begin_subtest "id buttonization"
++if ${TEST_EMACS} --quick --batch --eval '(kill-emacs (if (version< emacs-version "31") 1 0))'; then
++    test_subtest_known_broken
++fi
+ add_message '[body]="
+ id:abc
+ id:abc.def. id:abc,def, id:abc;def; id:abc:def:

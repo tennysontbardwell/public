@@ -61,8 +61,8 @@
 ;; ==== High Priority Keys
 (defun high-priority-keys ()
   (interactive)
-  (define-key evil-normal-state-map ";" 'evil-avy-goto-word-or-subword-1)
-  (define-key evil-visual-state-map ";" 'evil-avy-goto-word-or-subword-1)
+  (define-key evil-normal-state-map ";" 'evil-avy-goto-char-timer)
+  (define-key evil-visual-state-map ";" 'evil-avy-goto-char-timer)
   (define-key evil-normal-state-map "U" 'evil-jump-forward)
   (define-key evil-visual-state-map "U" 'evil-jump-forward)
   )

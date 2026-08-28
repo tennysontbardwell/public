@@ -26,7 +26,7 @@ let
     viridis # colors
     WeightedTreemaps # Voronoi treemaps
     ggnewscale
-    hrbrthemes # themes
+    # hrbrthemes # themes
     # DAGitty # causal diags
     # ggpirate
     # https://github.com/clauswilke/ggisoband
@@ -105,17 +105,17 @@ let
 
     # spatial data
     leaflet
-    leaflet_extras
-    leaflet_extras2
+    # leaflet_extras
+    # leaflet_extras2
     sf
     terra
     spData
     # spDataLarge
     mapedit
     elevatr # elevation
-    graphhopper # routing (open source)
+    # graphhopper # routing (open source)
     tidygeocoder # address lookup
-    rmapzen # alt address lookup
+    # rmapzen # alt address lookup
 
     # time series
     zoo

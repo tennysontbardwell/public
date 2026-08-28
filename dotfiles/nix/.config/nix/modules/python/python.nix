@@ -23,7 +23,7 @@ let
       tqdm
       pip
       aiohttp
-      scrapy
+      # scrapy
       # pipe
       websockets
 

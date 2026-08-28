@@ -281,6 +281,7 @@ in
       "activitywatch"
       "alfred"
       "blender"
+      "drawio"
       # "firefox"
       "firefox@developer-edition"
       "ghostty"

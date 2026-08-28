@@ -41,9 +41,9 @@
             nixpkgs.overlays = [
               mac-emacs-overlay.overlay
 
-              (final: prev: {
-                notmuch = prev.notmuch.override { emacs = prev.emacs30; };
-              })
+              # (final: prev: {
+              #   notmuch = prev.notmuch.override { emacs = prev.emacs30; };
+              # } )
               # (final: prev: {
               #   pqiv = prev.pqiv.overrideAttrs (old: {
               #     patches = (old.patches or [ ]) ++ [

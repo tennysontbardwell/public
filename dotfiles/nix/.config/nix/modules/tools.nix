@@ -39,6 +39,7 @@ in
     ttp
 
     # tmp / misc ##############################################################
+    vimiv-qt
     #### dependencies
     pkg-config # not sure why I need this
     cairo # dependency for some tool
@@ -159,7 +160,7 @@ in
     #### img
     graphviz
     imagemagick
-    # inkscape
+    inkscape
     libpng
     pqiv
     #### audio
